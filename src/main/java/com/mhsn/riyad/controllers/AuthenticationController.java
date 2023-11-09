@@ -10,7 +10,7 @@ public class AuthenticationController {
     public ModelAndView login() {
 
         ModelAndView modelAndView = new ModelAndView("/login");
-        
+
         return modelAndView;
     }
 }
