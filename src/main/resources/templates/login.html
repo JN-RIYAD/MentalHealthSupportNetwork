@@ -1,0 +1,62 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <link rel="stylesheet"
+        type="text/css"
+        href="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.css"/>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+        crossorigin="anonymous"/>
+  <style>
+    body {
+      background-image: url('https://as1.ftcdn.net/v2/jpg/03/68/56/78/1000_F_368567834_T3otD8zZNqVemY17eewXbW5M8oD3KQHe.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <br>
+  <h1 align="center">Welcome to Course Management System</h1>
+  <hr/>
+
+  <h2>Login Here</h2>
+
+  <div align="center">
+    <form th:action="@{/login}" method="POST">
+
+      <div class="form-outline mb-4">
+        <input type="email" id="form2Example1" class="form-control" placeholder = "Enter Email" name="email"/>
+      </div>
+
+
+      <div class="form-outline mb-4">
+        <input type="password" id="form2Example2" class="form-control" placeholder = "Enter Password" name="password"/>
+      </div>
+
+
+      <div class="row mb-4">
+        <div class="col">
+
+          <a href="#!">Forgot password?</a>
+        </div>
+      </div>
+
+
+      <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+
+
+      <div class="text-center">
+        <p>Not a member? <a th:href="@{/show-registration-page}">Register</a></p>
+      </div>
+    </form>
+  </div>
+
+  <br/><br/>
+</div>
+</body>
+</html>
