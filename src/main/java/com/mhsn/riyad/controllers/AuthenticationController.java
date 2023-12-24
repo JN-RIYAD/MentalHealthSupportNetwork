@@ -13,4 +13,12 @@ public class AuthenticationController {
 
         return modelAndView;
     }
+
+    @GetMapping("/list")
+    public ModelAndView list() {
+
+        ModelAndView modelAndView = new ModelAndView("/list");
+
+        return modelAndView;
+    }
 }
