@@ -9,16 +9,9 @@ public class AuthenticationController {
     @GetMapping("/")
     public ModelAndView login() {
 
-        ModelAndView modelAndView = new ModelAndView("/login");
+        ModelAndView modelAndView = new ModelAndView("/index");
 
         return modelAndView;
     }
 
-    @GetMapping("/list")
-    public ModelAndView list() {
-
-        ModelAndView modelAndView = new ModelAndView("/list");
-
-        return modelAndView;
-    }
 }
