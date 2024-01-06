@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>MHSN Login</title>
+  <title>MHSN User Registration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -120,25 +120,61 @@
     <!-- Add more buttons as needed -->
   </div>
 </div>
-<!-- Main content area for Login Page -->
+
 <main role="main" class="main-content">
   <div class="container">
     <div class="pt-3">
-      <h1>Login to Mental Health Support Network</h1>
+      <h1>Register to Mental Health Support Network</h1>
       <form>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Enter your username">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="userName">Username</label>
+            <input type="text" class="form-control" id="userName" placeholder="Enter your username">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter your email address">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" id="age" placeholder="Enter your age">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="mobileNo">Mobile Number</label>
+            <input type="text" class="form-control" id="mobileNo" placeholder="Enter your mobile number">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="gender">Gender</label>
+            <select id="gender" class="form-control">
+              <option selected disabled>Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" placeholder="Enter your address">
+          </div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" class="form-control" id="password" placeholder="Enter your password">
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
       </form>
     </div>
   </div>
 </main>
+
 <!-- Footer -->
 <footer class="footer">
   <div class="container">
