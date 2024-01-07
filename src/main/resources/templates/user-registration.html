@@ -79,6 +79,17 @@
         }
     }
   </style>
+  <script>
+    function toggleCertificatesField() {
+      var userType = document.getElementById("userType").value;
+      var certificatesField = document.getElementById("certificatesField");
+      if (userType === "Therapist") {
+        certificatesField.style.display = "block";
+      } else {
+        certificatesField.style.display = "none";
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -124,50 +135,71 @@
 <main role="main" class="main-content">
   <div class="container">
     <div class="pt-3">
-      <h1>Register to Mental Health Support Network</h1>
+      <h1>User Registration</h1>
       <form>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="userName">Username</label>
-            <input type="text" class="form-control" id="userName" placeholder="Enter your username">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter your email address">
-          </div>
+        <!-- User Type Dropdown -->
+        <div class="form-group">
+          <label for="userType">User Type</label>
+          <select class="form-control" id="userType" onchange="toggleCertificatesField()" required>
+            <option disabled selected>Select user type</option>
+            <option value="NormalUser">Normal User</option>
+            <option value="Therapist">Therapist</option>
+          </select>
         </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="age">Age</label>
-            <input type="number" class="form-control" id="age" placeholder="Enter your age">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="mobileNo">Mobile Number</label>
-            <input type="text" class="form-control" id="mobileNo" placeholder="Enter your mobile number">
-          </div>
+        <!-- Fields for Normal User Registration -->
+        <!-- Username -->
+        <div class="form-group">
+          <label for="userName">Username</label>
+          <input class="form-control" id="userName" placeholder="Enter your username" required type="text">
         </div>
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="gender">Gender</label>
-            <select id="gender" class="form-control">
-              <option selected disabled>Select your gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="Enter your address">
-          </div>
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" id="email" placeholder="Enter your email address" required type="email">
         </div>
+        <!-- Age & Mobile Number -->
+        <!-- Age -->
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input class="form-control" id="age" placeholder="Enter your age" required type="number">
+        </div>
+        <!-- Mobile Number -->
+        <div class="form-group">
+          <label for="mobileNo">Mobile Number</label>
+          <input class="form-control" id="mobileNo" placeholder="Enter your mobile number" required type="text">
+        </div>
+        <!-- Gender & Address -->
+        <!-- Gender -->
+        <div class="form-group">
+          <label for="gender">Gender</label>
+          <select class="form-control" id="gender" required>
+            <option disabled selected>Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input class="form-control" id="address" placeholder="Enter your address" required type="text">
+        </div>
+        <!-- Password & Confirm Password -->
+        <!-- Password -->
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password">
+          <input class="form-control" id="password" placeholder="Enter your password" required type="password">
         </div>
         <div class="form-group">
+          <!-- Confirm Password -->
           <label for="confirmPassword">Confirm Password</label>
-          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+          <input class="form-control" id="confirmPassword" placeholder="Confirm your password" required type="password">
+        </div>
+        <!-- Certificates Field (Hidden by default) -->
+        <div class="form-group" id="certificatesField" style="display:none;">
+          <label for="certificates">Certificates</label>
+          <input class="form-control-file" id="certificates" multiple type="file">
+          <small class="form-text text-muted" id="certificatesHelp">Upload multiple certificate files.</small>
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
       </form>
