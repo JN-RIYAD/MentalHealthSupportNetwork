@@ -23,7 +23,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/show-registration-page")
-    public ModelAndView showUserRegistrationPage() {
+    public ModelAndView showRegistrationPage() {
 
         ModelAndView modelAndView = new ModelAndView("registration");
 
