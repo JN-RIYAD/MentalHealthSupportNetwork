@@ -22,10 +22,10 @@ public class AuthenticationController {
         return modelAndView;
     }
 
-    @GetMapping("/show-user-registration-page")
+    @GetMapping("/show-registration-page")
     public ModelAndView showUserRegistrationPage() {
 
-        ModelAndView modelAndView = new ModelAndView("user-registration");
+        ModelAndView modelAndView = new ModelAndView("registration");
 
         return modelAndView;
     }
