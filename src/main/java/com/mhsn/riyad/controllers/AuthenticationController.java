@@ -9,7 +9,7 @@ public class AuthenticationController {
     @GetMapping("/")
     public ModelAndView indexPage() {
 
-        ModelAndView modelAndView = new ModelAndView("/index");
+        ModelAndView modelAndView = new ModelAndView("index");
 
         return modelAndView;
     }
@@ -17,7 +17,7 @@ public class AuthenticationController {
     @GetMapping("/show-login-page")
     public ModelAndView showLoginPage() {
 
-        ModelAndView modelAndView = new ModelAndView("/login");
+        ModelAndView modelAndView = new ModelAndView("login");
 
         return modelAndView;
     }
@@ -25,7 +25,7 @@ public class AuthenticationController {
     @GetMapping("/show-user-registration-page")
     public ModelAndView showUserRegistrationPage() {
 
-        ModelAndView modelAndView = new ModelAndView("/user-registration");
+        ModelAndView modelAndView = new ModelAndView("user-registration");
 
         return modelAndView;
     }
