@@ -20,12 +20,11 @@
 <div th:replace="fragments/sidebar :: sidebar"></div>
 
 <!-- Main content area -->
-<!-- Main content area -->
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
             <h1>Blogs</h1>
-            <a class="btn btn-success mb-3" href="#">Add New Blog</a>
+            <a class="btn btn-success mb-3" th:href="@{/show-add-blow-page}">Add New Blog</a>
             <!-- Search field -->
             <div class="input-group mb-3" style="width: 600px;">
                 <input aria-describedby="basic-addon2" aria-label="Search Blogs" class="form-control" placeholder="Search Blogs" type="text">
@@ -53,7 +52,7 @@
                     <td class="text-center">Description 1</td>
                     <td class="text-center">2024-01-01</td>
                     <td class="text-center">
-                        <a class="btn btn-info" href="#">Read</a>
+                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
                         <a class="btn btn-warning" href="#">Update</a>
                         <a class="btn btn-danger" href="#">Delete</a>
                     </td>
@@ -66,7 +65,7 @@
                     <td class="text-center">Description 2</td>
                     <td class="text-center">2024-01-02</td>
                     <td class="text-center">
-                        <a class="btn btn-info" href="#">Read</a>
+                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
                         <a class="btn btn-warning" href="#">Update</a>
                         <a class="btn btn-danger" href="#">Delete</a>
                     </td>
@@ -78,7 +77,7 @@
                     <td class="text-center">Description 3</td>
                     <td class="text-center">2024-01-03</td>
                     <td class="text-center">
-                        <a class="btn btn-info" href="#">Read</a>
+                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
                         <a class="btn btn-warning" href="#">Update</a>
                         <a class="btn btn-danger" href="#">Delete</a>
                     </td>

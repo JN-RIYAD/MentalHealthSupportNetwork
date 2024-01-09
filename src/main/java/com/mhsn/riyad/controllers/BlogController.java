@@ -14,4 +14,20 @@ public class BlogController {
         return modelAndView;
     }
 
+    @GetMapping("/show-blog-details")
+    public ModelAndView showBlogDetails() {
+
+        ModelAndView modelAndView = new ModelAndView("blogs/blog-details");
+
+        return modelAndView;
+    }
+
+    @GetMapping("/show-add-blow-page")
+    public ModelAndView showAddBlogPage() {
+
+        ModelAndView modelAndView = new ModelAndView("blogs/add-blog");
+
+        return modelAndView;
+    }
+
 }
