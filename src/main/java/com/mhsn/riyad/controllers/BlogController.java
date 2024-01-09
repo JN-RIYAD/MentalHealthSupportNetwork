@@ -22,7 +22,7 @@ public class BlogController {
         return modelAndView;
     }
 
-    @GetMapping("/show-add-blow-page")
+    @GetMapping("/show-add-blog-page")
     public ModelAndView showAddBlogPage() {
 
         ModelAndView modelAndView = new ModelAndView("blogs/add-blog");

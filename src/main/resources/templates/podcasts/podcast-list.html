@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Podcasts-MHSN</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/blog-list.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+<!-- Main content area -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <h1>Podcasts</h1>
+            <a class="btn btn-success mb-3" th:href="@{/show-add-podcast-page}">Add New Podcast</a>
+            <!-- Search field -->
+            <div class="input-group mb-3" style="width: 600px;">
+                <input aria-describedby="basic-addon2" aria-label="Search Podcasts" class="form-control" placeholder="Search Podcasts" type="text">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">Search</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Podcast Topic</th>
+                        <th class="text-center">Producer Name</th>
+                        <th class="text-center">Uploaded At</th>
+                        <th class="text-center">Duration (in minutes)</th>
+                        <th class="text-center">Podcast</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="text-center">Podcast Topic 1</td>
+                        <td class="text-center">Producer 1</td>
+                        <td class="text-center">2024-01-01</td>
+                        <td class="text-center">30</td>
+                        <td class="text-center">Podcast 1</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary"><i class="fas fa-play"></i> Play</button>
+                            <a class="btn btn-danger" href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <!-- Add more rows with dummy data -->
+                    <tr>
+                        <td class="text-center">Podcast Topic 2</td>
+                        <td class="text-center">Producer 2</td>
+                        <td class="text-center">2024-01-02</td>
+                        <td class="text-center">45</td>
+                        <td class="text-center">Podcast 2</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary"><i class="fas fa-play"></i> Play</button>
+                            <a class="btn btn-danger" href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">Podcast Topic 3</td>
+                        <td class="text-center">Producer 3</td>
+                        <td class="text-center">2024-01-03</td>
+                        <td class="text-center">60</td>
+                        <td class="text-center">Podcast 3</td>
+                        <td class="text-center">
+                            <button class="btn btn-primary"><i class="fas fa-play"></i> Play</button>
+                            <a class="btn btn-danger" href="#">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a class="mt-3" th:href="@{/}">Back to Home</a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
