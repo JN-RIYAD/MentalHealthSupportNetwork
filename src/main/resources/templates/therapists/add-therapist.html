@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Therapist-MHSN</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<!-- Main content area for Login Page -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <h1>Add Therapist</h1>
+            <form>
+                <!-- User Type Dropdown -->
+                <div class="form-group">
+                    <label for="userType">User Type</label>
+                    <select class="form-control" id="userType" onchange="toggleCertificatesField()" required>
+                        <option disabled selected>Select user type</option>
+                        <option value="Therapist">Therapist</option>
+                    </select>
+                </div>
+                <!-- Fields for Normal User Registration -->
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="userName">Username</label>
+                    <input class="form-control" id="userName" placeholder="Enter therapist's username" required type="text">
+                </div>
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" id="email" placeholder="Enter therapist's email address" required type="email">
+                </div>
+                <!-- Age & Mobile Number -->
+                <!-- Age -->
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input class="form-control" id="age" placeholder="Enter therapist's age" required type="number">
+                </div>
+                <!-- Mobile Number -->
+                <div class="form-group">
+                    <label for="mobileNo">Mobile Number</label>
+                    <input class="form-control" id="mobileNo" placeholder="Enter therapist's mobile number" required type="text">
+                </div>
+                <!-- Gender & Address -->
+                <!-- Gender -->
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" required>
+                        <option disabled selected>Select therapist's gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input class="form-control" id="address" placeholder="Enter therapist's address" required type="text">
+                </div>
+                <!-- Password & Confirm Password -->
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" placeholder="Enter therapist's password" required type="password">
+                </div>
+                <div class="form-group">
+                    <!-- Confirm Password -->
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input class="form-control" id="confirmPassword" placeholder="Confirm therapist's password" required type="password">
+                </div>
+                <!-- Certificates Field (Hidden by default) -->
+                <div class="form-group" id="certificatesField" style="display:none;">
+                    <label for="certificates">Certificates</label>
+                    <input class="form-control-file" id="certificates" multiple type="file">
+                    <small class="form-text text-muted" id="certificatesHelp">Upload multiple certificate files.</small>
+                </div>
+                <button class="btn btn-primary" type="submit">Add Therapist</button>
+            </form>
+        </div>
+    </div>
+</main>
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

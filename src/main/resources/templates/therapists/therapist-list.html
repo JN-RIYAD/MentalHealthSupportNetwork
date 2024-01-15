@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Therapists-MHSN</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <h1>Therapist List</h1>
+            <a class="btn btn-success mb-3" th:href="@{/show-add-therapist-page}">Add New Therapist</a>
+
+            <!-- Therapists Table -->
+            <h1>Therapists</h1>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Age</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Mobile</th>
+                        <th class="text-center">Address</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="text-center">Therapist 1</td>
+                        <td class="text-center">30</td>
+                        <td class="text-center">therapist1@email.com</td>
+                        <td class="text-center">1234567890</td>
+                        <td class="text-center">123 Main St</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning" href="#">Update</a>
+                            <a class="btn btn-danger" href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <!-- Add more rows with therapist data -->
+                    <tr>
+                        <td class="text-center">Therapist 2</td>
+                        <td class="text-center">35</td>
+                        <td class="text-center">therapist2@email.com</td>
+                        <td class="text-center">9876543210</td>
+                        <td class="text-center">456 Oak St</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning" href="#">Update</a>
+                            <a class="btn btn-danger" href="#">Delete</a>
+                        </td>
+                    </tr>
+                    <!-- Add more rows with therapist data -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Existing Blogs Table -->
+            <h1>Blogs</h1>
+            <!-- ... (existing blog table code) ... -->
+            <a class="mt-3" th:href="@{/}">Back to Home</a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -2,13 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add Blog-MHSN</title>
+    <title>Add Video-MHSN</title>
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    <link href="/css/blog-list.css" rel="stylesheet">
 </head>
 <body>
 
@@ -23,25 +22,26 @@
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
-            <h1>Create Blog</h1>
-            <form>
+            <h1>Add New Video</h1>
+            <form action="/submit-video" enctype="multipart/form-data" method="post">
                 <div class="form-group">
-                    <label for="blogTitle">Blog Title</label>
-                    <input class="form-control" id="blogTitle" placeholder="Enter Blog Title" type="text">
+                    <label for="videoTopic">Video Topic</label>
+                    <input class="form-control" id="videoTopic" name="videoTopic" placeholder="Enter Video Topic" required type="text">
                 </div>
                 <div class="form-group">
-                    <label for="blogTopic">Topic</label>
-                    <input class="form-control" id="blogTopic" placeholder="Enter Topic of This Blog" type="text">
+                    <label for="producerName">Producer Name</label>
+                    <input class="form-control" id="producerName" name="producerName" placeholder="Enter Producer Name" required type="text">
                 </div>
                 <div class="form-group">
-                    <label for="blogAuthor">Author</label>
-                    <input class="form-control" id="blogAuthor" placeholder="Enter Author Name" type="text">
+                    <label for="duration">Duration (in minutes)</label>
+                    <input class="form-control" id="duration" name="duration" placeholder="Enter Duration" required type="number">
                 </div>
                 <div class="form-group">
-                    <label for="blogDescription">Blog Description</label>
-                    <textarea class="form-control" id="blogDescription" placeholder="Enter Blog Description" rows="5"></textarea>
+                    <label for="videoFile">Video File</label>
+                    <input accept=".mp3, .wav" class="form-control-file" id="videoFile" name="videoFile" required type="file">
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
+                <a class="btn btn-secondary ml-2" th:href="@{/show-video-list}">Cancel</a>
             </form>
         </div>
     </div>
