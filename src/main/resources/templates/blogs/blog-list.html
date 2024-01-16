@@ -9,6 +9,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -25,15 +26,8 @@
         <div class="pt-3">
             <h1>Blogs</h1>
             <a class="btn btn-success mb-3" th:href="@{/show-add-blog-page}">Add New Blog</a>
-            <!-- Search field -->
-            <div class="input-group mb-3" style="width: 600px;">
-                <input aria-describedby="basic-addon2" aria-label="Search Blogs" class="form-control" placeholder="Search Blogs" type="text">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">Search</button>
-                </div>
-            </div>
             <div class="table-responsive">
-                <table class="table table-bordered table-fixed">
+                <table class="table table-bordered table-fixed table-striped"  id="blogTable">
                     <thead>
                     <tr>
                         <th class="text-center">Blog Title</th>
@@ -44,9 +38,9 @@
                     </thead>
                     <tbody>
                     <tr th:each="blog: ${blogList}">
-                        <td class="text-left" th:text="${blog.title}" />
-                        <td class="text-left" th:text="${blog.topic}" />
-                        <td class="text-left" th:text="${blog.author}" />
+                        <td class="text-left" th:text="${blog.title}"/>
+                        <td class="text-left" th:text="${blog.topic}"/>
+                        <td class="text-left" th:text="${blog.author}"/>
                         <td class="text-center" style="width: 200px;">
                             <a class="btn btn-info" role="button" th:href="@{/show-blog-details(id=${blog.id})}">
                                 <i class="fas fa-eye"></i> <!-- View icon -->
@@ -74,5 +68,18 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+<script>
+			$(document).ready(function() {
+				$("#blogTable").DataTable({
+						'aoColumnDefs': [{
+        				'bSortable': false,
+        				'aTargets': [-1] /* 1st one, start by the right */
+    				}]
+				});
+			})
+
+</script>
 </body>
 </html>
