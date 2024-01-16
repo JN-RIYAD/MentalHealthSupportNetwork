@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -32,57 +33,34 @@
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th class="text-center">Blog Title</th>
-                    <th class="text-center">Topic</th>
-                    <th class="text-center">Author</th>
-                    <th class="text-center">Short Description</th>
-                    <th class="text-center">Publish Date</th>
-                    <th class="text-center">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="text-center">Dummy Title 1</td>
-                    <td class="text-center">Topic 1</td>
-                    <td class="text-center">Author 1</td>
-                    <td class="text-center">Description 1</td>
-                    <td class="text-center">2024-01-01</td>
-                    <td class="text-center">
-                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
-                        <a class="btn btn-warning" href="#">Update</a>
-                        <a class="btn btn-danger" href="#">Delete</a>
-                    </td>
-                </tr>
-                <!-- Add more rows with dummy data -->
-                <tr>
-                    <td class="text-center">Dummy Title 2</td>
-                    <td class="text-center">Topic 2</td>
-                    <td class="text-center">Author 2</td>
-                    <td class="text-center">Description 2</td>
-                    <td class="text-center">2024-01-02</td>
-                    <td class="text-center">
-                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
-                        <a class="btn btn-warning" href="#">Update</a>
-                        <a class="btn btn-danger" href="#">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center">Dummy Title 3</td>
-                    <td class="text-center">Topic 3</td>
-                    <td class="text-center">Author 3</td>
-                    <td class="text-center">Description 3</td>
-                    <td class="text-center">2024-01-03</td>
-                    <td class="text-center">
-                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
-                        <a class="btn btn-warning" href="#">Update</a>
-                        <a class="btn btn-danger" href="#">Delete</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                <table class="table table-bordered table-fixed">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Blog Title</th>
+                        <th class="text-center">Topic</th>
+                        <th class="text-center">Author</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="blog: ${blogList}">
+                        <td class="text-left" th:text="${blog.title}" />
+                        <td class="text-left" th:text="${blog.topic}" />
+                        <td class="text-left" th:text="${blog.author}" />
+                        <td class="text-center" style="width: 200px;">
+                            <a class="btn btn-info" role="button" th:href="@{/show-blog-details(id=${blog.id})}">
+                                <i class="fas fa-eye"></i> <!-- View icon -->
+                            </a>
+                            <a class="btn btn-warning" href="#" role="button">
+                                <i class="fas fa-edit"></i> <!-- Update icon -->
+                            </a>
+                            <a class="btn btn-danger" href="#" role="button">
+                                <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <a class="mt-3" th:href="@{/}">Back to Home</a>
         </div>

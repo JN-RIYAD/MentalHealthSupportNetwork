@@ -23,22 +23,22 @@
     <div class="container">
         <div class="pt-3">
             <h1>Create Blog</h1>
-            <form>
+            <form method="POST" th:action="@{/blog-save}" th:object="${blog}">
                 <div class="form-group">
-                    <label for="blogTitle">Blog Title</label>
-                    <input class="form-control" id="blogTitle" placeholder="Enter Blog Title" type="text">
+                    <label for="title">Blog Title</label>
+                    <input class="form-control" id="title" placeholder="Enter Blog Title" th:field="*{title}" type="text">
                 </div>
                 <div class="form-group">
-                    <label for="blogTopic">Topic</label>
-                    <input class="form-control" id="blogTopic" placeholder="Enter Topic of This Blog" type="text">
+                    <label for="topic">Topic</label>
+                    <input class="form-control" id="topic" placeholder="Enter Topic of This Blog" th:field="*{topic}" type="text">
                 </div>
                 <div class="form-group">
-                    <label for="blogAuthor">Author</label>
-                    <input class="form-control" id="blogAuthor" placeholder="Enter Author Name" type="text">
+                    <label for="author">Author</label>
+                    <input class="form-control" id="author" placeholder="Enter Author Name"  th:field="*{author}" type="text">
                 </div>
                 <div class="form-group">
-                    <label for="blogDescription">Blog Description</label>
-                    <textarea class="form-control" id="blogDescription" placeholder="Enter Blog Description" rows="5"></textarea>
+                    <label for="description">Blog Description</label>
+                    <textarea class="form-control" id="description" placeholder="Enter Blog Description" rows="5" th:field="*{description}"></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
