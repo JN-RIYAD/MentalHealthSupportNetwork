@@ -44,39 +44,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td class="text-center">Dummy Title 1</td>
-                    <td class="text-center">Topic 1</td>
-                    <td class="text-center">Author 1</td>
-                    <td class="text-center">Description 1</td>
-                    <td class="text-center">2024-01-01</td>
+                <tr th:each="blog: ${blogList}">
+                    <td  class="text-center" th:text="${blog.title}"/>
+                    <td  class="text-center" th:text="${blog.topic}"/>
+                    <td  class="text-center" th:text="${blog.author}"/>
+                    <td  class="text-center" th:text="${blog.description}"/>
+                    <td  class="text-center" th:text="${blog.publishedDate}"/>
                     <td class="text-center">
-                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
-                        <a class="btn btn-warning" href="#">Update</a>
-                        <a class="btn btn-danger" href="#">Delete</a>
-                    </td>
-                </tr>
-                <!-- Add more rows with dummy data -->
-                <tr>
-                    <td class="text-center">Dummy Title 2</td>
-                    <td class="text-center">Topic 2</td>
-                    <td class="text-center">Author 2</td>
-                    <td class="text-center">Description 2</td>
-                    <td class="text-center">2024-01-02</td>
-                    <td class="text-center">
-                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
-                        <a class="btn btn-warning" href="#">Update</a>
-                        <a class="btn btn-danger" href="#">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center">Dummy Title 3</td>
-                    <td class="text-center">Topic 3</td>
-                    <td class="text-center">Author 3</td>
-                    <td class="text-center">Description 3</td>
-                    <td class="text-center">2024-01-03</td>
-                    <td class="text-center">
-                        <a class="btn btn-info" th:href="@{/show-blog-details}">Read</a>
+                        <a class="btn btn-info" th:href="@{/show-blog-details(id=${blog.id})}">Read</a>
                         <a class="btn btn-warning" href="#">Update</a>
                         <a class="btn btn-danger" href="#">Delete</a>
                     </td>
