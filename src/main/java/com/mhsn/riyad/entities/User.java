@@ -1,11 +1,8 @@
 package com.mhsn.riyad.entities;
 
-import com.mhsn.riyad.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @Entity
@@ -16,6 +13,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer id;
+
+    @Column(name = "role")
+    private String role;
 
     @Column(name = "user_name", columnDefinition = "nvarchar(100)")
     private String userName;
@@ -29,9 +29,8 @@ public class User {
     @Column(name = "mobile_no", length = 50)
     private String mobileNo;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
-    private Gender gender;
+    private String gender;
 
     @Column(name = "address", columnDefinition = "nvarchar(500)")
     private String address;
@@ -39,8 +38,11 @@ public class User {
     @Column(name = "password", columnDefinition = "nvarchar(500)")
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-    private List<Certificate> certificateList;
+    @Column(name = "confirm_password", columnDefinition = "nvarchar(500)")
+    private String confirmPassword;
+
+//    @Column(name = "certificate_url")
+//    private String certificateUrl;
 
 
 
