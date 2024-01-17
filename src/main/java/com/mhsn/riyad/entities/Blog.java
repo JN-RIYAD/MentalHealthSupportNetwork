@@ -13,7 +13,7 @@ import java.util.Date;
 public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "blog_id")
     private Integer id;
 
     @Column(name = "title", columnDefinition = "nvarchar(250)")
