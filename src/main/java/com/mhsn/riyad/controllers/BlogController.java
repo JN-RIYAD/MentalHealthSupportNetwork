@@ -3,12 +3,11 @@ package com.mhsn.riyad.controllers;
 import com.mhsn.riyad.entities.Blog;
 import com.mhsn.riyad.repositories.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -23,20 +22,20 @@ public class BlogController {
 
         ModelAndView modelAndView = new ModelAndView("blogs/blog-list");
         List<Blog> blogList = repository.findAll();
-        modelAndView.addObject(blogList);
+        modelAndView.addObject("blogList", blogList);
 
         return modelAndView;
     }
 
-    @GetMapping("/show-blog-details/{id}")
-    public ModelAndView showBlogDetails(@PathVariable Long id) {
+    @GetMapping("/show-blog-details")
+    public ModelAndView showBlogDetails(@RequestParam Long id) {
 
         ModelAndView modelAndView = new ModelAndView("blogs/blog-details");
 
         Optional<Blog> blog = repository.findById(id);
 
         if (blog.isPresent())
-            modelAndView.addObject(blog.get());
+            modelAndView.addObject("blog", blog.get());
 
         return modelAndView;
     }
@@ -46,13 +45,12 @@ public class BlogController {
 
         ModelAndView modelAndView = new ModelAndView("blogs/add-blog");
         Blog blog = new Blog();
-        modelAndView.addObject(blog);
-
+        modelAndView.addObject("blog", blog);
         return modelAndView;
     }
 
     @PostMapping("/blog-save")
-    public String blogSave(@RequestBody Blog blog) {
+    public String blogSave(@ModelAttribute Blog blog) {
 
         blog.setPublishedDate(new Date());
 
