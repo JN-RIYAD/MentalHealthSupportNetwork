@@ -22,7 +22,7 @@ public class User {
     @Column(name = "user_name", columnDefinition = "nvarchar(100)")
     private String userName;
 
-    @Column(name = "email", length = 100)
+    @Column(name = "email", length = 100, unique = true)
     private String email;
 
     @Column(name = "age")
