@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Entity
 @Table(name = "user")
@@ -38,13 +40,8 @@ public class User {
     @Column(name = "password", columnDefinition = "nvarchar(500)")
     private String password;
 
-    @Column(name = "confirm_password", columnDefinition = "nvarchar(500)")
-    private String confirmPassword;
-
-//    @Column(name = "certificate_url")
-//    private String certificateUrl;
-
-
-
+    @Temporal(TemporalType.DATE)
+    @Column(name = "registration_date")
+    private Date registrationDate;
 
 }
