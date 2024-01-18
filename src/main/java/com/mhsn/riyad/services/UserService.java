@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,6 +19,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
+    public boolean authenticate(String password, String encodedPassword) {
+            return passwordEncoder.matches(password, encodedPassword);
+    }
     public void saveUser(User user) {
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setRole("user");
@@ -26,8 +30,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
-
 }

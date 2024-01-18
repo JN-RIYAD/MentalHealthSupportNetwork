@@ -21,18 +21,18 @@
   <div class="container">
     <div class="pt-3">
       <h1>Login to Mental Health Support Network</h1>
-      <form>
+      <form method="POST" th:action="@{/login}">
         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="Enter your username">
+          <label for="email">Email</label>
+          <input class="form-control" id="email" placeholder="Enter your email" th:name="email" type="email">
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password">
+          <input class="form-control" id="password" placeholder="Enter your password" th:name = "password" type="password">
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
-      <p th:text="${model.error}"></p>
+      <p th:if="${error}" th:text="${error}"></p>
     </div>
   </div>
 </main>

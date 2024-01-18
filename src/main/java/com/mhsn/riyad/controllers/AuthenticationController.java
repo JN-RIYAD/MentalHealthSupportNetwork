@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class AuthenticationController {
@@ -40,36 +41,31 @@ public class AuthenticationController {
     }
 
     @GetMapping("/show-login-page")
-    public ModelAndView showLoginPage(Model model) {
-
-        ModelAndView modelAndView = new ModelAndView("login");
-        modelAndView.addObject(model);
-
-        return modelAndView;
+    public String showLoginPage() {
+        return "login";
     }
 
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, Model model) {
-
-        User user = userService.getUserByEmail(email);
-
-//        if (user != null && userService.authenticate(password, user.getPassword())) {
-//            httpSession.setAttribute("user", user);
-//
-//            if (user.getRole().equals(UserRole.Admin.getLabel())) {
-//                httpSession.setAttribute("isAdmin", true);
-//            } else if (user.getRole().equals(UserRole.Therapist.getLabel())) {
-//                httpSession.setAttribute("isTherapist", true);
-//            } else if (user.getRole().equals(UserRole.Normal.getLabel())) {
-//                httpSession.setAttribute("isNormal", true);
-//            }
-//            return "redirect:/";
-//        } else {
-//            model.addAttribute("error", "Invalid email or password");
-//            return "redirect:/show-login-page";
-//        }
-        return "redirect:/";
+        Optional<User> user = userService.findByEmail(email);
+        if (user.isPresent() && userService.authenticate(password, user.get().getPassword() )){
+            if (user.get().getRole().equals("admin")) {
+                httpSession.setAttribute("isAdmin", true);
+            }
+            else if (user.get().getRole().equals("therapist")) {
+                httpSession.setAttribute("isTherapist", true);
+            }
+            else{
+                httpSession.setAttribute("isUser", true);
+            }
+            return "index";
+        }
+        else {
+            model.addAttribute("error", "Invalid email or password");
+            return "login";
+        }
     }
+
 
     @GetMapping("/logout")
     public String logout() {
