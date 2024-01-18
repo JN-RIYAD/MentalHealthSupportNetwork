@@ -23,21 +23,14 @@ public class AuthenticationController {
     private HttpSession httpSession;
 
     @GetMapping("/")
-    public ModelAndView indexPage(Model model, HttpSession httpSession) {
-
+    public String showIndexPage(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-
-        ModelAndView modelAndView = new ModelAndView("index");
 
         if (user != null) {
             model.addAttribute("user", user);
-            if (httpSession.getAttribute("isAdmin") != null) {
-                model.addAttribute("isAdmin", true);
-            }
+            userService.setRoleInHttpSession(httpSession, user);
         }
-        modelAndView.addObject(model);
-
-        return modelAndView;
+        return "index";
     }
 
     @GetMapping("/show-login-page")
@@ -48,16 +41,13 @@ public class AuthenticationController {
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, Model model) {
         Optional<User> user = userService.findByEmail(email);
+
         if (user.isPresent() && userService.authenticate(password, user.get().getPassword() )){
-            if (user.get().getRole().equals("admin")) {
-                httpSession.setAttribute("isAdmin", true);
-            }
-            else if (user.get().getRole().equals("therapist")) {
-                httpSession.setAttribute("isTherapist", true);
-            }
-            else{
-                httpSession.setAttribute("isUser", true);
-            }
+
+            httpSession.setAttribute("user", user.get());
+
+            userService.setRoleInHttpSession(httpSession, user.get());
+
             return "index";
         }
         else {

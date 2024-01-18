@@ -1,4 +1,5 @@
 package com.mhsn.riyad.services;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.mhsn.riyad.entities.User;
@@ -33,4 +34,17 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public void setRoleInHttpSession(HttpSession httpSession, User user) {
+        if (user.getRole().equals("admin")) {
+            httpSession.setAttribute("isAdmin", true);
+        }
+        else if (user.getRole().equals("therapist")) {
+            httpSession.setAttribute("isTherapist", true);
+        }
+        else{
+            httpSession.setAttribute("isUser", true);
+        }
+    }
+
 }
