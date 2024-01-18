@@ -67,7 +67,7 @@
         <div class="form-group">
           <!-- Confirm Password -->
           <label for="confirmPassword">Confirm Password</label>
-          <input class="form-control" id="confirmPassword" th:field="*{confirmPassword}" placeholder="Confirm your password" required type="password" pattern=".{6,}">
+          <input class="form-control" id="confirmPassword" pattern=".{6,}" placeholder="Confirm your password" required type="password">
           <span id="passwordError" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary">Register</button>
