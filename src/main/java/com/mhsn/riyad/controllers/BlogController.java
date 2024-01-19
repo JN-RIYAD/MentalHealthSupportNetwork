@@ -1,11 +1,17 @@
 package com.mhsn.riyad.controllers;
 
 import com.mhsn.riyad.entities.Blog;
+import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.BlogRepository;
+import com.mhsn.riyad.services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -16,15 +22,19 @@ import java.util.Optional;
 public class BlogController {
     @Autowired
     private BlogRepository repository;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/show-blog-list")
-    public ModelAndView showBlogList() {
+    public String showBlogList(Model model, HttpSession httpSession) {
 
-        ModelAndView modelAndView = new ModelAndView("blogs/blog-list");
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
         List<Blog> blogList = repository.findAll();
-        modelAndView.addObject("blogList", blogList);
-
-        return modelAndView;
+        model.addAttribute("blogList", blogList);
+        return "blogs/blog-list";
     }
 
     @GetMapping("/show-blog-details")

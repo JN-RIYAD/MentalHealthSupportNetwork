@@ -7,6 +7,7 @@
     <div class="sidebar-sticky">
         <!-- Add more links as needed -->
         <a class="btn" th:href="@{/show-blog-list}">Blogs</a>
+<!--        <a th:unless="${user != null}" class="btn" th:href="@{/show-blog-list(userId=${0})}">Blogs</a>-->
         <a class="btn" th:href="@{/show-podcast-list}">Podcasts</a>
         <a class="btn" th:href="@{/show-video-list}">Videos</a>
         <a class="btn" th:href="@{/show-therapist-list}">Therapists</a>

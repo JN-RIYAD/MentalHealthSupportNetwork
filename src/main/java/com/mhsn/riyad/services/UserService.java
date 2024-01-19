@@ -2,6 +2,7 @@ package com.mhsn.riyad.services;
 
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,17 +35,26 @@ public class UserService {
     }
 
 
-    public void setRoleInModel(Model model, User user) {
+    public void setRoleInModelAndHttpSession(HttpSession httpSession, Model model, User user) {
+
         model.addAttribute("username", user.getUserName());
+        model.addAttribute("user", user);
+        httpSession.setAttribute("user", user);
 
         if (user.getRole().equals("admin")) {
             model.addAttribute("isAdmin", true);
+            httpSession.setAttribute("isAdmin", true);
         } else if (user.getRole().equals("therapist")) {
             model.addAttribute("isTherapist", true);
+            httpSession.setAttribute("isTherapist", true);
         } else {
             model.addAttribute("isUser", true);
+            httpSession.setAttribute("isUser", true);
         }
     }
 
 
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
+    }
 }

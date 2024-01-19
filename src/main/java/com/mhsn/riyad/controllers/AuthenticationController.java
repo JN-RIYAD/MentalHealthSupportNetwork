@@ -27,9 +27,8 @@ public class AuthenticationController {
     @GetMapping("/")
     public String showIndexPage(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-
         if (user != null) {
-            userService.setRoleInModel(model, user);
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         return "index";
     }
@@ -44,7 +43,7 @@ public class AuthenticationController {
         Optional<User> user = userService.findByEmail(email);
 
         if (user.isPresent() && userService.authenticate(password, user.get().getPassword() )){
-            userService.setRoleInModel(model, user.get());
+            userService.setRoleInModelAndHttpSession(httpSession, model, user.get());
             if (!successToastShown) {
                 model.addAttribute("success", "Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
                 successToastShown = true; // Set the flag to true
