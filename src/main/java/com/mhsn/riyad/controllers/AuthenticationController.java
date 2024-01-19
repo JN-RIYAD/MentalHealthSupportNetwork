@@ -58,29 +58,37 @@ public class AuthenticationController {
 
 
     @GetMapping("/logout")
-    public String logout() {
+    public String logout(HttpSession httpSession) {
         httpSession.invalidate();
         return "redirect:/";
     }
 
     @GetMapping("/show-registration-page")
     public ModelAndView showRegistrationPage() {
-
         User user = new User();
-
         ModelAndView modelAndView = new ModelAndView("registration");
         modelAndView.addObject("user", user);
-
         return modelAndView;
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute User user) {
-
+    public String registration(Model model, @ModelAttribute User user) {
         if (Objects.nonNull(user)) {
-            userService.saveUser(user);
+            Optional<User> existingUser = userService.findByEmail(user.getEmail());
+            if (existingUser.isPresent()){
+                model.addAttribute("error", "User already exist with this email...!!!");
+                return "registration";
+            }
+            else {
+                userService.saveUser(user);
+                model.addAttribute("success", "Registered successfully...! Login Now.");
+                return "login";
+            }
         }
-        return "redirect:/";
+       else {
+            model.addAttribute("error", "Invalid Request...!!!");
+            return "registration";
+        }
     }
 
 }

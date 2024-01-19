@@ -8,6 +8,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     <link href="css/styles.css" rel="stylesheet">
 
 </head>
@@ -25,7 +27,9 @@
     <div class="container">
         <div class="pt-3">
             <h1>Blogs</h1>
-            <a class="btn btn-success mb-3" th:href="@{/show-add-blog-page}">Add New Blog</a>
+            <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                <a class="btn btn-success mb-3" th:href="@{/show-add-blog-page}">Add New Blog</a>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-fixed table-striped"  id="blogTable">
                     <thead>
@@ -45,12 +49,16 @@
                             <a class="btn btn-info" role="button" th:href="@{/show-blog-details(id=${blog.id})}">
                                 <i class="fas fa-eye"></i> <!-- View icon -->
                             </a>
-                            <a class="btn btn-warning" href="#" role="button">
-                                <i class="fas fa-edit"></i> <!-- Update icon -->
-                            </a>
-                            <a class="btn btn-danger" href="#" role="button">
-                                <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
-                            </a>
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                                <a class="btn btn-warning" role="button" th:href="@{/update-blog(id=${blog.id})}">
+                                    <i class="fas fa-edit"></i> <!-- Edit icon -->
+                                </a>
+                            </span>
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                                <a class="btn btn-danger" role="button" th:href="@{/delete-blog(id=${blog.id})}">
+                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                </a>
+                            </span>
                         </td>
                     </tr>
                     </tbody>
@@ -70,16 +78,26 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
-<script>
-			$(document).ready(function() {
-				$("#blogTable").DataTable({
-						'aoColumnDefs': [{
-        				'bSortable': false,
-        				'aTargets': [-1] /* 1st one, start by the right */
-    				}]
-				});
-			})
 
+
+
+<script>
+    $(document).ready(function() {
+        $("#blogTable").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': true, // Enable sorting for all columns
+                'aTargets': '_all', // Target all columns
+            }],
+            'order': [], // Disable initial sorting
+            'orderCellsTop': true, // Show sorting icons in the header cells
+            'language': {
+                'paginate': {
+                    'next': '<i class="fas fa-chevron-right"></i>', // Next page icon
+                    'previous': '<i class="fas fa-chevron-left"></i>' // Previous page icon
+                }
+            }
+        });
+    });
 </script>
 </body>
 </html>

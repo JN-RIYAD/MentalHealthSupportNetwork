@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.Optional;
 @Controller
 public class BlogController {
     @Autowired
-    private BlogRepository repository;
+    private BlogRepository blogRepository;
     @Autowired
     private UserService userService;
 
@@ -32,41 +31,49 @@ public class BlogController {
         if (user != null) {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<Blog> blogList = repository.findAll();
+        List<Blog> blogList = blogRepository.findAll();
         model.addAttribute("blogList", blogList);
         return "blogs/blog-list";
     }
 
     @GetMapping("/show-blog-details")
-    public ModelAndView showBlogDetails(@RequestParam Long id) {
+    public String showBlogDetails(Model model, HttpSession httpSession, @RequestParam Long id) {
 
-        ModelAndView modelAndView = new ModelAndView("blogs/blog-details");
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
 
-        Optional<Blog> blog = repository.findById(id);
+        Optional<Blog> blog = blogRepository.findById(id);
 
-        if (blog.isPresent())
-            modelAndView.addObject("blog", blog.get());
+        model.addAttribute("blog", blog.get());
 
-        return modelAndView;
+        return "blogs/blog-details";
     }
 
     @GetMapping("/show-add-blog-page")
-    public ModelAndView showAddBlogPage() {
-
-        ModelAndView modelAndView = new ModelAndView("blogs/add-blog");
+    public String showAddBlogPage(Model model, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
         Blog blog = new Blog();
-        modelAndView.addObject("blog", blog);
-        return modelAndView;
+        model.addAttribute("blog", blog);
+        return "blogs/add-blog";
     }
 
     @PostMapping("/blog-save")
-    public String blogSave(@ModelAttribute Blog blog) {
-
+    public String blogSave(Model model, HttpSession httpSession, @ModelAttribute Blog blog) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
         blog.setPublishedDate(new Date());
+        blogRepository.save(blog);
 
-        repository.save(blog);
-
-        return "redirect:/show-blog-list";
+        List<Blog> blogList = blogRepository.findAll();
+        model.addAttribute("blogList", blogList);
+        return "blogs/blog-list";
     }
 
 }

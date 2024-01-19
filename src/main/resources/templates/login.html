@@ -31,15 +31,23 @@
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
-      <!-- Bootstrap Toast for displaying errors -->
-      <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 80px; margin-right: 30px;" th:if="${error}">
-        <div class="toast-header bg-dark">
-          <strong class="mr-auto text-white">Error</strong>
-          <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
-        </div>
-        <div class="toast-body bg-danger text-white" th:text="${error}"></div>
-      </div>
     </div>
+  </div>
+  <!-- Bootstrap Toast for displaying error message -->
+  <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 80px; margin-right: 30px;" th:if="${error}">
+    <div class="toast-header bg-dark">
+      <strong class="mr-auto text-white">Error</strong>
+      <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
+    </div>
+    <div class="toast-body bg-danger text-white" th:text="${error}"></div>
+  </div>
+  <!-- Bootstrap Toast for displaying success message -->
+  <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 50px; margin-right: 30px;" th:if="${success}">
+    <div class="toast-header bg-dark">
+      <strong class="mr-auto text-white">Success</strong>
+      <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
+    </div>
+    <div class="toast-body bg-success text-white" th:text="${success}"></div>
   </div>
 </main>
 
