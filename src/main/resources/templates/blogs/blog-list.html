@@ -31,7 +31,7 @@
                 <a class="btn btn-success mb-3" th:href="@{/show-add-blog-page}">Add New Blog</a>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered table-fixed table-striped"  id="blogTable">
+                <table class="table table-bordered table-fixed table-striped"  id="table">
                     <thead>
                     <tr>
                         <th class="text-center">Blog Title</th>
@@ -50,12 +50,12 @@
                                 <i class="fas fa-eye"></i> <!-- View icon -->
                             </a>
                             <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
-                                <a class="btn btn-warning" role="button" th:href="@{/update-blog(id=${blog.id})}">
+                                <a class="btn btn-warning" role="button" th:href="@{/show-update-blog-page(id=${blog.id})}">
                                     <i class="fas fa-edit"></i> <!-- Edit icon -->
                                 </a>
                             </span>
                             <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
-                                <a class="btn btn-danger" role="button" th:href="@{/delete-blog(id=${blog.id})}">
+                                <a class="btn btn-danger" role="button" th:href="@{/blog-delete(id=${blog.id})}">
                                     <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
                                 </a>
                             </span>
@@ -83,7 +83,7 @@
 
 <script>
     $(document).ready(function() {
-        $("#blogTable").DataTable({
+        $("#table").DataTable({
             'aoColumnDefs': [{
                 'bSortable': true, // Enable sorting for all columns
                 'aTargets': '_all', // Target all columns

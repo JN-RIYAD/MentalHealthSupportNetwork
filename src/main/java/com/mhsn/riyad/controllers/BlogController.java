@@ -62,6 +62,17 @@ public class BlogController {
         return "blogs/add-blog";
     }
 
+    @GetMapping("/show-update-blog-page")
+    public String showEditBlogPage(Model model, HttpSession httpSession, @RequestParam Long id) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        Optional<Blog> blog = blogRepository.findById(id);
+        model.addAttribute("blog", blog.get());
+        return "blogs/update-blog";
+    }
+
     @PostMapping("/blog-save")
     public String blogSave(Model model, HttpSession httpSession, @ModelAttribute Blog blog) {
         User user = (User) httpSession.getAttribute("user");
@@ -71,6 +82,31 @@ public class BlogController {
         blog.setPublishedDate(new Date());
         blogRepository.save(blog);
 
+        List<Blog> blogList = blogRepository.findAll();
+        model.addAttribute("blogList", blogList);
+        return "blogs/blog-list";
+    }
+    @PostMapping("/blog-update")
+    public String blogUpdate(Model model, HttpSession httpSession, @ModelAttribute Blog blog) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        blog.setUpdatedDate(new Date());
+        blogRepository.save(blog);
+
+        List<Blog> blogList = blogRepository.findAll();
+        model.addAttribute("blogList", blogList);
+        return "blogs/blog-list";
+    }
+
+    @GetMapping("/blog-delete")
+    public String blogDelete(Model model, HttpSession httpSession, @RequestParam Long id) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        blogRepository.deleteById(id);
         List<Blog> blogList = blogRepository.findAll();
         model.addAttribute("blogList", blogList);
         return "blogs/blog-list";

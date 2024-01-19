@@ -31,4 +31,8 @@ public class Blog {
     @Temporal(TemporalType.DATE)
     @Column(name = "published_date")
     private Date publishedDate;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "updated_date")
+    private Date updatedDate;
 }
