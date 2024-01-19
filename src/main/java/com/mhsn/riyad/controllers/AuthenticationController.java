@@ -27,8 +27,7 @@ public class AuthenticationController {
         User user = (User) httpSession.getAttribute("user");
 
         if (user != null) {
-            model.addAttribute("user", user);
-            userService.setRoleInHttpSession(httpSession, user);
+            userService.setRoleInModel(model, user);
         }
         return "index";
     }
@@ -44,9 +43,7 @@ public class AuthenticationController {
 
         if (user.isPresent() && userService.authenticate(password, user.get().getPassword() )){
 
-            httpSession.setAttribute("user", user.get());
-
-            userService.setRoleInHttpSession(httpSession, user.get());
+            userService.setRoleInModel(model, user.get());
 
             return "index";
         }

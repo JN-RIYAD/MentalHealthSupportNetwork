@@ -4,23 +4,32 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" th:fragment="navbar">
-    <a class="navbar-brand"th:href="@{/}">Mental Health Support Network</a>
+    <a class="navbar-brand" th:href="@{/}">Mental Health Support Network</a>
 
-    <!-- Button for toggling the sidebar -->
-    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
-                    Login/Register
+                    User Options
                 </a>
                 <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" th:href="@{/show-login-page}">Login</a>
-                    <a class="dropdown-item" th:href="@{/show-registration-page}">Register</a>
+                    <!-- Check if isAdmin is set in model -->
+                    <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </div>
+                    <!-- Check if isTherapist is set in model -->
+                    <div th:if="${isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist}">
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </div>
+                    <!-- Check if isUser is set in model -->
+                    <div th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                    </div>
+                    <!-- If none of the roles is set, show login and register links -->
+                    <div th:unless="${isAdmin != null or isTherapist != null or isUser != null}">
+                        <a class="dropdown-item" th:href="@{/show-login-page}">Login</a>
+                        <a class="dropdown-item" th:href="@{/show-registration-page}">Register</a>
+                    </div>
                 </div>
             </li>
         </ul>
