@@ -39,7 +39,14 @@
         with others going through similar experiences.
         Therapist directories help users find professionals who can provide treatment and support.
         Self-help tools empower users to take control of their mental health with things like articles, blogs, podcasts, and videos.</p>
-      <!-- Add your main content here -->
+    </div>
+    <!-- Bootstrap Toast for displaying success -->
+    <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 50px; margin-right: 30px;" th:if="${success}">
+      <div class="toast-header bg-dark">
+        <strong class="mr-auto text-white">Success</strong>
+        <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
+      </div>
+      <div class="toast-body bg-success text-white" th:text="${success}"></div>
     </div>
   </div>
 </main>
@@ -50,5 +57,16 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Script to activate Bootstrap Toast -->
+<script>
+  $(document).ready(function () {
+      $('.toast').toast({
+          autohide: true,
+          delay: 5000, // 5 seconds
+          animation: true,
+          position: 'top-end'
+      }).toast('show');
+  });
+</script>
 </body>
 </html>

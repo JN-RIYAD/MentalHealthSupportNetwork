@@ -22,6 +22,8 @@ public class AuthenticationController {
     @Autowired
     private HttpSession httpSession;
 
+    private boolean successToastShown = false;
+
     @GetMapping("/")
     public String showIndexPage(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -42,13 +44,15 @@ public class AuthenticationController {
         Optional<User> user = userService.findByEmail(email);
 
         if (user.isPresent() && userService.authenticate(password, user.get().getPassword() )){
-
             userService.setRoleInModel(model, user.get());
-
+            if (!successToastShown) {
+                model.addAttribute("success", "Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
+                successToastShown = true; // Set the flag to true
+            }
             return "index";
         }
         else {
-            model.addAttribute("error", "Invalid email or password");
+            model.addAttribute("error", "Invalid email or password...!!!");
             return "login";
         }
     }
