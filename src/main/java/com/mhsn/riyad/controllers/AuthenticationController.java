@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -42,15 +41,14 @@ public class AuthenticationController {
     public String login(@RequestParam String email, @RequestParam String password, Model model) {
         Optional<User> user = userService.findByEmail(email);
 
-        if (user.isPresent() && userService.authenticate(password, user.get().getPassword() )){
+        if (user.isPresent() && userService.authenticate(password, user.get().getPassword())) {
             userService.setRoleInModelAndHttpSession(httpSession, model, user.get());
             if (!successToastShown) {
                 model.addAttribute("success", "Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
                 successToastShown = true; // Set the flag to true
             }
             return "index";
-        }
-        else {
+        } else {
             model.addAttribute("error", "Invalid email or password...!!!");
             return "login";
         }
@@ -60,6 +58,7 @@ public class AuthenticationController {
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
+
         return "redirect:/";
     }
 
@@ -73,19 +72,17 @@ public class AuthenticationController {
 
     @PostMapping("/registration")
     public String registration(Model model, @ModelAttribute User user) {
-        if (Objects.nonNull(user)) {
-            Optional<User> existingUser = userService.findByEmail(user.getEmail());
-            if (existingUser.isPresent()){
+        if (user != null) {
+            User existingUser = userService.findByEmail(user.getEmail()).get();
+            if (existingUser != null) {
                 model.addAttribute("error", "User already exist with this email...!!!");
                 return "registration";
-            }
-            else {
+            } else {
                 userService.saveUser(user);
                 model.addAttribute("success", "Registered successfully...! Login Now.");
                 return "login";
             }
-        }
-       else {
+        } else {
             model.addAttribute("error", "Invalid Request...!!!");
             return "registration";
         }

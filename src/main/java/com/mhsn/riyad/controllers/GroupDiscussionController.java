@@ -1,6 +1,7 @@
 package com.mhsn.riyad.controllers;
 
 import com.mhsn.riyad.entities.Discussion;
+import com.mhsn.riyad.entities.DiscussionComment;
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.DiscussionRepository;
 import com.mhsn.riyad.services.UserService;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class GroupDiscussionController {
@@ -26,9 +26,11 @@ public class GroupDiscussionController {
 
     @GetMapping("/show-discussion-list")
     public String showDiscussionList(Model model, HttpSession httpSession) {
-
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null) {
+            model.addAttribute("error", "Login first to access group discussions");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         List<Discussion> discussionList = discussionRepository.findAll();
@@ -38,15 +40,17 @@ public class GroupDiscussionController {
 
     @GetMapping("/show-discussion-details")
     public String showDiscussionDetails(Model model, HttpSession httpSession, @RequestParam Long id) {
-
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null) {
+            model.addAttribute("error", "Login first to access group discussions");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-
-        Optional<Discussion> discussion = discussionRepository.findById(id);
-
-        model.addAttribute("discussion", discussion.get());
+        Discussion discussion = discussionRepository.findById(id).get();
+        model.addAttribute("discussion", discussion);
+        DiscussionComment newComment = new DiscussionComment();
+        model.addAttribute("newComment", newComment);
 
         return "discussions/discussion-details";
     }
@@ -54,7 +58,10 @@ public class GroupDiscussionController {
     @GetMapping("/show-add-discussion-page")
     public String showAddDiscussionPage(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null) {
+            model.addAttribute("error", "Login first to access group discussions");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         Discussion discussion = new Discussion();
@@ -63,20 +70,26 @@ public class GroupDiscussionController {
     }
 
     @GetMapping("/show-update-discussion-page")
-    public String showEditDiscussionPage(Model model, HttpSession httpSession, @RequestParam Long id) {
+    public String showUpdateDiscussionPage(Model model, HttpSession httpSession, @RequestParam Long id) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null) {
+            model.addAttribute("error", "Login first to access group discussions");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        Optional<Discussion> discussion = discussionRepository.findById(id);
-        model.addAttribute("discussion", discussion.get());
+        Discussion discussion = discussionRepository.findById(id).get();
+        model.addAttribute("discussion", discussion);
         return "discussions/update-discussion";
     }
 
     @PostMapping("/discussion-save")
     public String discussionSave(Model model, HttpSession httpSession, @ModelAttribute Discussion discussion) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null) {
+            model.addAttribute("error", "Login first to access group discussions");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         discussion.setQueryDate(new Date());
@@ -87,10 +100,14 @@ public class GroupDiscussionController {
         model.addAttribute("discussionList", discussionList);
         return "discussions/discussion-list";
     }
+
     @PostMapping("/discussion-update")
     public String discussionUpdate(Model model, HttpSession httpSession, @ModelAttribute Discussion discussion) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null) {
+            model.addAttribute("error", "Login first to access group discussions");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         discussion.setUpdatedDate(new Date());
@@ -104,7 +121,10 @@ public class GroupDiscussionController {
     @GetMapping("/discussion-delete")
     public String discussionDelete(Model model, HttpSession httpSession, @RequestParam Long id) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null) {
+            model.addAttribute("error", "Login first to access group discussions");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         discussionRepository.deleteById(id);

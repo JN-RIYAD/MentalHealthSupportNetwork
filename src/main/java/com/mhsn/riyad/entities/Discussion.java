@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -39,4 +40,8 @@ public class Discussion {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "discussion")
+    private List<DiscussionComment> commentList;
+
 }
