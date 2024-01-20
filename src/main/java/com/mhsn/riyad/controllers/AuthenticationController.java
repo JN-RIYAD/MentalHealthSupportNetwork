@@ -73,8 +73,8 @@ public class AuthenticationController {
     @PostMapping("/registration")
     public String registration(Model model, @ModelAttribute User user) {
         if (user != null) {
-            User existingUser = userService.findByEmail(user.getEmail()).get();
-            if (existingUser != null) {
+            Optional<User> existingUser = userService.findByEmail(user.getEmail());
+            if (existingUser.isPresent()) {
                 model.addAttribute("error", "User already exist with this email...!!!");
                 return "registration";
             } else {
