@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Homepage-MHSN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Homepage-MHSN</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -17,38 +17,47 @@
 <div th:replace="fragments/sidebar :: sidebar"></div>
 
 <!-- Main content area -->
-<main role="main" class="main-content">
-  <div class="container">
-    <div class="pt-3">
-      <h1>Welcome to Mental Health Support Network</h1>
-      <p class="text-justify">This is a website to help individuals facing mental health challenges. The aim is to make it easy for people to find support and resources.
-        We know that mental health is important, and sometimes it is hard to get the help we need.
-        This website aims to change that. This initiative focuses on create a safe space for individuals seeking emotional well-being,
-        focusing on simplicity, accessibility, and future advancements in mental health care.
-        Many people around the world struggle with mental health, but getting help can be tough because of the lack of services,
-        shyness, or monetary issues. This website was built to break down these barriers.
-        It will provide information, tools, and connections to support people in managing their mental health and well-being.
-        By using a friendly online community, certainly it will reduce the feeling of being alone
-        and the grief that often comes with mental health struggles.
-        This website is a safe space for people to share their experiences and find the support they need.
-        The main goal of this web-based project is to provide a user-friendly platform for individuals to connect with mental health resources.
-        Users can easily navigate the website, accessing a variety of support, materials and insights.
-        The platform draws on a wealth of knowledge to empower users to find resources that align with their needs and personal growth objectives.
-        This website is like a friend that understands and helps you navigate through tough times.
-        It will have features like virtual support groups, and self-help tools. Virtual support groups and therapists to connect
-        with others going through similar experiences.
-        Therapist directories help users find professionals who can provide treatment and support.
-        Self-help tools empower users to take control of their mental health with things like articles, blogs, podcasts, and videos.</p>
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <h1>Welcome to Mental Health Support Network</h1>
+            <p class="text-justify">This is a website to help individuals facing mental health challenges. The aim is to
+                make it easy for people to find support and resources.
+                We know that mental health is important, and sometimes it is hard to get the help we need.
+                This website aims to change that. This initiative focuses on create a safe space for individuals seeking
+                emotional well-being,
+                focusing on simplicity, accessibility, and future advancements in mental health care.
+                Many people around the world struggle with mental health, but getting help can be tough because of the
+                lack of services,
+                shyness, or monetary issues. This website was built to break down these barriers.
+                It will provide information, tools, and connections to support people in managing their mental health
+                and well-being.
+                By using a friendly online community, certainly it will reduce the feeling of being alone
+                and the grief that often comes with mental health struggles.
+                This website is a safe space for people to share their experiences and find the support they need.
+                The main goal of this web-based project is to provide a user-friendly platform for individuals to
+                connect with mental health resources.
+                Users can easily navigate the website, accessing a variety of support, materials and insights.
+                The platform draws on a wealth of knowledge to empower users to find resources that align with their
+                needs and personal growth objectives.
+                This website is like a friend that understands and helps you navigate through tough times.
+                It will have features like virtual support groups, and self-help tools. Virtual support groups and
+                therapists to connect
+                with others going through similar experiences.
+                Therapist directories help users find professionals who can provide treatment and support.
+                Self-help tools empower users to take control of their mental health with things like articles, blogs,
+                podcasts, and videos.</p>
+        </div>
     </div>
     <!-- Bootstrap Toast for displaying success -->
-  </div>
-  <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 50px; margin-right: 30px;" th:if="${success}">
-    <div class="toast-header bg-dark">
-      <strong class="mr-auto text-white">Success</strong>
-      <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
+    <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 50px; margin-right: 30px;"
+         th:if="${success}">
+        <div class="toast-header bg-dark">
+            <strong class="mr-auto text-white">Success</strong>
+            <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
+        </div>
+        <div class="toast-body bg-success text-white" th:text="${success}"></div>
     </div>
-    <div class="toast-body bg-success text-white" th:text="${success}"></div>
-  </div>
 </main>
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
@@ -59,14 +68,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Script to activate Bootstrap Toast -->
 <script>
-  $(document).ready(function () {
-      $('.toast').toast({
-          autohide: true,
-          delay: 5000, // 5 seconds
-          animation: true,
-          position: 'top-end'
-      }).toast('show');
-  });
+    $(document).ready(function () {
+        $('.toast').toast({
+            autohide: true,
+            delay: 5000, // 5 seconds
+            animation: true,
+            position: 'top-end'
+        }).toast('show');
+    });
 </script>
 </body>
 </html>

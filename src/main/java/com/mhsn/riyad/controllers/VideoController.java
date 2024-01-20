@@ -105,6 +105,7 @@ public class VideoController {
 
         List<Video> videoList = videoRepository.findAll();
         model.addAttribute("videoList", videoList);
+
         return "videos/video-list";
     }
 

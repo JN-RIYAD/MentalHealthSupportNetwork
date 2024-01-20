@@ -39,7 +39,10 @@ public class BlogController {
     @GetMapping("/show-add-blog-page")
     public String showAddBlogPage(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to save blog");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         Blog blog = new Blog();
@@ -65,7 +68,10 @@ public class BlogController {
     @GetMapping("/show-update-blog-page")
     public String showEditBlogPage(Model model, HttpSession httpSession, @RequestParam Long id) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to update blog");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         Optional<Blog> blog = blogRepository.findById(id);
@@ -76,7 +82,10 @@ public class BlogController {
     @PostMapping("/blog-save")
     public String blogSave(Model model, HttpSession httpSession, @ModelAttribute Blog blog) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to save blog");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         blog.setPublishedDate(new Date());
@@ -90,7 +99,10 @@ public class BlogController {
     @PostMapping("/blog-update")
     public String blogUpdate(Model model, HttpSession httpSession, @ModelAttribute Blog blog) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to update blog");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         blog.setUpdatedDate(new Date());
@@ -104,7 +116,10 @@ public class BlogController {
     @GetMapping("/blog-delete")
     public String blogDelete(Model model, HttpSession httpSession, @RequestParam Long id) {
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to delete blog");
+            return "login";
+        } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         blogRepository.deleteById(id);
