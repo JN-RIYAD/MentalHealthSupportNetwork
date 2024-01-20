@@ -7,8 +7,9 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    <link href="/css/blog-list.css" rel="stylesheet">
 </head>
 <body>
 
@@ -23,59 +24,38 @@
     <div class="container">
         <div class="pt-3">
             <h1>Videos</h1>
-            <a class="btn btn-success mb-3" th:href="@{/show-add-video-page}">Add New Video</a>
-            <!-- Search field -->
-            <div class="input-group mb-3" style="width: 600px;">
-                <input aria-describedby="basic-addon2" aria-label="Search Videos" class="form-control" placeholder="Search Videos" type="text">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">Search</button>
-                </div>
+            <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                <a class="btn btn-success mb-3" th:href="@{/show-add-video-page}">Add New Video</a>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-fixed table-striped" id="table">
                     <thead>
                     <tr>
                         <th class="text-center">Video Topic</th>
-                        <th class="text-center">Producer Name</th>
-                        <th class="text-center">Uploaded At</th>
-                        <th class="text-center">Duration (in minutes)</th>
-                        <th class="text-center">Video</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center" style="width: 150px;">Producer Name</th>
+                        <th class="text-center" style="width: 100px;">Uploaded On</th>
+                        <th class="text-center">Duration</th>
+                        <th class="text-center" style="width: 150px;">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-center">Video Topic 1</td>
-                        <td class="text-center">Producer 1</td>
-                        <td class="text-center">2024-01-01</td>
-                        <td class="text-center">30</td>
-                        <td class="text-center">Video 1</td>
+                    <tr th:each="video: ${videoList}">
+                        <td class="text-left" th:text="${video.videoTopic}"/>
+                        <td class="text-left" th:text="${video.producerName}"/>
+                        <td class="text-left" th:text="${video.uploadedDate}"/>
+                        <td class="text-left" th:text="${video.duration}"/>
+
                         <td class="text-center">
-                            <button class="btn btn-primary"><i class="fas fa-play"></i> Play</button>
-                            <a class="btn btn-danger" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <!-- Add more rows with dummy data -->
-                    <tr>
-                        <td class="text-center">Video Topic 2</td>
-                        <td class="text-center">Producer 2</td>
-                        <td class="text-center">2024-01-02</td>
-                        <td class="text-center">45</td>
-                        <td class="text-center">Video 2</td>
-                        <td class="text-center">
-                            <button class="btn btn-primary"><i class="fas fa-play"></i> Play</button>
-                            <a class="btn btn-danger" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">Video Topic 3</td>
-                        <td class="text-center">Producer 3</td>
-                        <td class="text-center">2024-01-03</td>
-                        <td class="text-center">60</td>
-                        <td class="text-center">Video 3</td>
-                        <td class="text-center">
-                            <button class="btn btn-primary"><i class="fas fa-play"></i> Play</button>
-                            <a class="btn btn-danger" href="#">Delete</a>
+                            <a class="btn btn-primary" role="button"
+                               target="_blank"
+                               th:href="@{/videos/{videoFileName}(videoFileName=${video.videoFileName})}">
+                                <i class="fas fa-play"></i> Play
+                            </a>
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                                <a class="btn btn-danger" role="button" th:href="@{/video-delete(id=${video.id})}">
+                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                </a>
+                            </span>
                         </td>
                     </tr>
                     </tbody>
@@ -93,5 +73,25 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function() {
+        $("#table").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': true, // Enable sorting for all columns
+                'aTargets': '_all', // Target all columns
+            }],
+            'order': [], // Disable initial sorting
+            'orderCellsTop': true, // Show sorting icons in the header cells
+            'language': {
+                'paginate': {
+                    'next': '<i class="fas fa-chevron-right"></i>', // Next page icon
+                    'previous': '<i class="fas fa-chevron-left"></i>' // Previous page icon
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -36,6 +36,17 @@ public class BlogController {
         return "blogs/blog-list";
     }
 
+    @GetMapping("/show-add-blog-page")
+    public String showAddBlogPage(Model model, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        Blog blog = new Blog();
+        model.addAttribute("blog", blog);
+        return "blogs/add-blog";
+    }
+
     @GetMapping("/show-blog-details")
     public String showBlogDetails(Model model, HttpSession httpSession, @RequestParam Long id) {
 
@@ -49,17 +60,6 @@ public class BlogController {
         model.addAttribute("blog", blog.get());
 
         return "blogs/blog-details";
-    }
-
-    @GetMapping("/show-add-blog-page")
-    public String showAddBlogPage(Model model, HttpSession httpSession) {
-        User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
-            userService.setRoleInModelAndHttpSession(httpSession, model, user);
-        }
-        Blog blog = new Blog();
-        model.addAttribute("blog", blog);
-        return "blogs/add-blog";
     }
 
     @GetMapping("/show-update-blog-page")
@@ -86,6 +86,7 @@ public class BlogController {
         model.addAttribute("blogList", blogList);
         return "blogs/blog-list";
     }
+
     @PostMapping("/blog-update")
     public String blogUpdate(Model model, HttpSession httpSession, @ModelAttribute Blog blog) {
         User user = (User) httpSession.getAttribute("user");
