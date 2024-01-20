@@ -2,12 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Discussions-MHSN</title>
+    <title>Group Discussions-MHSN</title>
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     <link href="css/styles.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -22,59 +26,43 @@
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
-            <h1>Discussions</h1>
-            <a class="btn btn-success mb-3" th:href="@{/show-add-discussion-page}">Add New Discussion</a>
-            <!-- Search field -->
-            <div class="input-group mb-3" style="width: 600px;">
-                <input aria-describedby="basic-addon2" aria-label="Search Discussions" class="form-control" placeholder="Search Discussions" type="text">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">Search</button>
-                </div>
+            <h1>Group Discussions</h1>
+            <div th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
+                <a class="btn btn-success mb-3" th:href="@{/show-add-discussion-page}">Ask New Query</a>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-fixed table-striped" id="table">
                     <thead>
                     <tr>
-                        <th class="text-center">Discussion Topic</th>
-                        <th class="text-center">Discussion Query</th>
-                        <th class="text-center">Uploaded By</th>
-                        <th class="text-center">Gender</th>
+                        <th class="text-center">Query Topic</th>
+                        <th class="text-center">Inquirer Name</th>
+                        <th class="text-center">Inquirer's Gender</th>
                         <th class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-center">Dummy Topic 1</td>
-                        <td class="text-center">Query 1</td>
-                        <td class="text-center">User 1</td>
-                        <td class="text-center">Male</td>
-                        <td class="text-center">
-                            <a class="btn btn-info" th:href="@{/show-discussion-details}">View</a>
-                            <a class="btn btn-warning" href="#">Update</a>
-                            <a class="btn btn-danger" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <!-- Add more rows with dummy data -->
-                    <tr>
-                        <td class="text-center">Dummy Topic 2</td>
-                        <td class="text-center">Query 2</td>
-                        <td class="text-center">User 2</td>
-                        <td class="text-center">Female</td>
-                        <td class="text-center">
-                            <a class="btn btn-info" th:href="@{/show-discussion-details}">View</a>
-                            <a class="btn btn-warning" href="#">Update</a>
-                            <a class="btn btn-danger" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">Dummy Topic 3</td>
-                        <td class="text-center">Query 3</td>
-                        <td class="text-center">User 3</td>
-                        <td class="text-center">Other</td>
-                        <td class="text-center">
-                            <a class="btn btn-info" th:href="@{/show-discussion-details}">View</a>
-                            <a class="btn btn-warning" href="#">Update</a>
-                            <a class="btn btn-danger" href="#">Delete</a>
+                    <tr th:each="discussion: ${discussionList}">
+                        <td class="text-left" th:text="${discussion.queryTopic}"/>
+                        <td class="text-left" th:text="${discussion.inquirerName}"/>
+                        <td class="text-left" th:text="${discussion.inquirerGender}"/>
+                        <td class="text-center" style="width: 200px;">
+                            <a class="btn btn-info" role="button"
+                               th:href="@{/show-discussion-details(id=${discussion.id})}">
+                                <i class="fas fa-eye"></i> <!-- View icon -->
+                            </a>
+                            <span th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser and discussion.user.id == userId}">
+                                <a class="btn btn-warning" role="button"
+                                   th:href="@{/show-update-discussion-page(id=${discussion.id})}">
+                                    <i class="fas fa-edit"></i> <!-- Edit icon -->
+                                </a>
+                            </span>
+                            <span th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser and discussion.user.id == userId)
+                                            or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
+                                <a class="btn btn-danger" role="button" th:href="@{/discussion-delete(id=${discussion.id})}">
+                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                </a>
+                            </span>
+
                         </td>
                     </tr>
                     </tbody>
@@ -84,6 +72,7 @@
         </div>
     </div>
 </main>
+
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
@@ -91,5 +80,27 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#table").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': true, // Enable sorting for all columns
+                'aTargets': '_all', // Target all columns
+            }],
+            'order': [], // Disable initial sorting
+            'orderCellsTop': true, // Show sorting icons in the header cells
+            'language': {
+                'paginate': {
+                    'next': '<i class="fas fa-chevron-right"></i>', // Next page icon
+                    'previous': '<i class="fas fa-chevron-left"></i>' // Previous page icon
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

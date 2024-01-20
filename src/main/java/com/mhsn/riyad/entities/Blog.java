@@ -14,7 +14,7 @@ public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "blog_id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "title", columnDefinition = "nvarchar(250)")
     private String title;

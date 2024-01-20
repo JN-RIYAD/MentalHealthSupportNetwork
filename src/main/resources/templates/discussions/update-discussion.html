@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ask Anything-MHSN</title>
+    <title>Update Query-MHSN</title>
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +22,7 @@
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
-            <h1>Ask Your Query</h1>
+            <h1>Update Your Query</h1>
             <form method="POST" th:action="@{/discussion-save}" th:object="${discussion}">
                 <div class="form-group">
                     <label for="queryTopic">Query Topic:</label>
@@ -48,6 +48,8 @@
                     <textarea class="form-control" id="queryDescription" placeholder="Enter Query Description" required
                               rows="5" th:field="*{queryDescription}"></textarea>
                 </div>
+                <input th:field="*{id}" type="hidden"/>
+
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
         </div>

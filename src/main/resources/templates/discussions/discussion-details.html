@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Discussion Details-MHSN</title>
+    <title>Query Details-MHSN</title>
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -19,20 +19,19 @@
 <div th:replace="fragments/sidebar :: sidebar"></div>
 
 <!-- Main content area -->
-<!-- Main content area -->
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
-            <h1>Discussion Detail</h1>
+            <h2 class="card-title" th:text="${discussion.queryTopic}"></h2>
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Discussion Topic 1</h4>
-                    <p class="card-text"><b>Uploaded By: </b> User 1</p>
-                    <p class="card-text"><b>Gender: </b> Male</p>
-                    <p class="card-text"><b>Discussion Query: </b> Query 1</p>
                     <hr>
-                    <p class="card-text text-justify">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...</p>
+                    <p class="card-text text-justify" th:text="${discussion.queryDescription}"></p>
+                    <hr>
+                    <h6 class="card-text">Author: <span th:text="${discussion.inquirerName}"></span> </h6>
+                    <h6 class="card-text">Inquirer Gender: <span th:text="${discussion.inquirerGender}"></span> </h6>
+                    <h6 class="card-text">Query Date: <span th:text="${discussion.queryDate}"></span> </h6>
+                    <h6 class="card-text">Updated Date: <span th:text="${discussion.updatedDate}"></span> </h6>
                 </div>
             </div>
 

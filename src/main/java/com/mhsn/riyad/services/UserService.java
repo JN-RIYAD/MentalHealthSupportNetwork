@@ -38,7 +38,9 @@ public class UserService {
     public void setRoleInModelAndHttpSession(HttpSession httpSession, Model model, User user) {
 
         model.addAttribute("username", user.getUserName());
+        model.addAttribute("userId", user.getId());
         model.addAttribute("user", user);
+
         httpSession.setAttribute("user", user);
 
         if (user.getRole().equals("admin")) {
