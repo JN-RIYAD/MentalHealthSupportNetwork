@@ -7,6 +7,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -23,10 +25,11 @@
     <div class="container">
         <div class="pt-3">
             <h1>Therapist List</h1>
+            <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
             <a class="btn btn-success mb-3" th:href="@{/show-add-therapist-page}">Add New Therapist</a>
-
+            </div>
             <!-- Therapists Table -->
-            <h1>Therapists</h1>
+
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -36,45 +39,39 @@
                         <th class="text-center">Email</th>
                         <th class="text-center">Mobile</th>
                         <th class="text-center">Address</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center" style="width: 200px;">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-center">Therapist 1</td>
-                        <td class="text-center">30</td>
-                        <td class="text-center">therapist1@email.com</td>
-                        <td class="text-center">1234567890</td>
-                        <td class="text-center">123 Main St</td>
+                    <tr th:each = "therapist: ${therapistList}">
+                        <td class="text-left" th:text="${therapist.name}"/>
+                        <td class="text-left" th:text="${therapist.age}"/>
+                        <td class="text-left" th:text="${therapist.email}"/>
+                        <td class="text-left" th:text="${therapist.mobile}"/>
+                        <td class="text-left" th:text="${therapist.address}"/>
                         <td class="text-center">
-                            <a class="btn btn-warning" href="#">Update</a>
-                            <a class="btn btn-danger" href="#">Delete</a>
+
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                                <a class="btn btn-warning" role="button"
+                                   th:href="@{/show-update-therapist-page(id=${therapist.id})}">
+                                    <i class="fas fa-edit"></i> <!-- Edit icon -->
+                                </a>
+                            </span>
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                                <a class="btn btn-danger" role="button" th:href="@{/therapist-delete(id=${therapist.id})}">
+                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                </a>
+                            </span>
                         </td>
                     </tr>
-                    <!-- Add more rows with therapist data -->
-                    <tr>
-                        <td class="text-center">Therapist 2</td>
-                        <td class="text-center">35</td>
-                        <td class="text-center">therapist2@email.com</td>
-                        <td class="text-center">9876543210</td>
-                        <td class="text-center">456 Oak St</td>
-                        <td class="text-center">
-                            <a class="btn btn-warning" href="#">Update</a>
-                            <a class="btn btn-danger" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <!-- Add more rows with therapist data -->
                     </tbody>
                 </table>
             </div>
-
-            <!-- Existing Blogs Table -->
-            <h1>Blogs</h1>
-            <!-- ... (existing blog table code) ... -->
             <a class="mt-3" th:href="@{/}">Back to Home</a>
         </div>
     </div>
 </main>
+
 
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
@@ -83,5 +80,27 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#table").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': true, // Enable sorting for all columns
+                'aTargets': '_all', // Target all columns
+            }],
+            'order': [], // Disable initial sorting
+            'orderCellsTop': true, // Show sorting icons in the header cells
+            'language': {
+                'paginate': {
+                    'next': '<i class="fas fa-chevron-right"></i>', // Next page icon
+                    'previous': '<i class="fas fa-chevron-left"></i>' // Previous page icon
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Therapist-MHSN</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <h1>Update Therapist</h1>
+            <form method="POST" th:action="@{/therapist-update}" th:object="${therapist}">
+                <div class="form-group">
+                    <label for="userName">Username</label>
+                    <input class="form-control" id="userName" placeholder="Enter therapist's username" required th:field="*{userName}" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" id="email" placeholder="Enter therapist's email address" required th:field="*{email}" type="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input class="form-control" id="age" placeholder="Enter therapist's age" required th:field="*{age}" type="number">
+                </div>
+
+                <div class="form-group">
+                    <label for="mobileNo">Mobile Number</label>
+                    <input class="form-control" id="mobileNo" placeholder="Enter therapist's mobile number" required th:field="*{mobileNo}" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input class="form-control" id="address" placeholder="Enter therapist's address" required th:field="*{address}" type="text">
+                </div>
+
+
+
+                <input th:field="*{id}" type="hidden"/>
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

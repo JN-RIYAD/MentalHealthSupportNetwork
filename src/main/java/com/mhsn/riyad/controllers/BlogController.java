@@ -31,7 +31,7 @@ public class BlogController {
         if (user != null) {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<Blog> blogList = blogRepository.findAll();
+        List<Blog> blogList = blogRepository.findAll(); //findByRole("therapist");
         model.addAttribute("blogList", blogList);
         return "blogs/blog-list";
     }

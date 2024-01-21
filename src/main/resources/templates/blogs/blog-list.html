@@ -47,6 +47,7 @@
                         <td class="text-center">
                             <a class="btn btn-info" role="button" th:href="@{/show-blog-details(id=${blog.id})}">
                                 <i class="fas fa-eye"></i> <!-- View icon -->
+                                <!--                            not needed for therapist-->
                             </a>
                             <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
                                 <a class="btn btn-warning" role="button"

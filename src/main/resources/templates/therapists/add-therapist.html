@@ -19,7 +19,7 @@
 <div th:replace="fragments/sidebar :: sidebar"></div>
 
 <!-- Main content area -->
-<!-- Main content area for Login Page -->
+
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
@@ -31,6 +31,7 @@
                     <select class="form-control" id="userType" onchange="toggleCertificatesField()" required>
                         <option disabled selected>Select user type</option>
                         <option value="Therapist">Therapist</option>
+                        <option value="User">User</option>
                     </select>
                 </div>
                 <!-- Fields for Normal User Registration -->
@@ -55,7 +56,7 @@
                     <label for="mobileNo">Mobile Number</label>
                     <input class="form-control" id="mobileNo" placeholder="Enter therapist's mobile number" required type="text">
                 </div>
-                <!-- Gender & Address -->
+
                 <!-- Gender -->
                 <div class="form-group">
                     <label for="gender">Gender</label>
