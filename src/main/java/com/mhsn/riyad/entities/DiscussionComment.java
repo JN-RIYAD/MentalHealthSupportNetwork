@@ -3,6 +3,7 @@ package com.mhsn.riyad.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -20,10 +21,12 @@ public class DiscussionComment {
     private String commentContent;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "comment_date")
     private Date commentDate;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "updated_date", nullable = true)
     private Date updatedDate;
 
@@ -34,4 +37,16 @@ public class DiscussionComment {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Override
+    public String toString() {
+        return "DiscussionComment{" +
+                "id=" + id +
+                ", commentContent='" + commentContent + '\'' +
+                ", commentDate=" + commentDate +
+                ", updatedDate=" + updatedDate +
+                ", discussion=" + discussion +
+                ", user=" + user +
+                '}';
+    }
 }

@@ -43,8 +43,23 @@ public class Discussion {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "discussion")
     private List<DiscussionComment> commentList;
+
+    @Override
+    public String toString() {
+        return "Discussion{" +
+                "id=" + id +
+                ", queryTopic='" + queryTopic + '\'' +
+                ", inquirerName='" + inquirerName + '\'' +
+                ", inquirerGender='" + inquirerGender + '\'' +
+                ", queryDescription='" + queryDescription + '\'' +
+                ", queryDate=" + queryDate +
+                ", updatedDate=" + updatedDate +
+                ", user=" + user +
+                ", commentList=" + commentList +
+                '}';
+    }
+
 
 }

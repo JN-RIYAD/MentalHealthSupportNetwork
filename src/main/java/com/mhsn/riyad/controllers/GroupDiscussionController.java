@@ -78,8 +78,8 @@ public class GroupDiscussionController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        Discussion discussion = discussionRepository.findById(id).get();
-        model.addAttribute("discussion", discussion);
+        Discussion discussionToUpdate = discussionRepository.findById(id).get();
+        model.addAttribute("discussionToUpdate", discussionToUpdate);
         return "discussions/update-discussion";
     }
 
@@ -102,7 +102,7 @@ public class GroupDiscussionController {
     }
 
     @PostMapping("/discussion-update")
-    public String discussionUpdate(Model model, HttpSession httpSession, @ModelAttribute Discussion discussion) {
+    public String discussionUpdate(Model model, HttpSession httpSession, @ModelAttribute Discussion discussionToUpdate) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group discussions");
@@ -110,9 +110,15 @@ public class GroupDiscussionController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        discussion.setUpdatedDate(new Date());
 
-        discussionRepository.save(discussion);
+        Discussion savedDiscussion = discussionRepository.findById(discussionToUpdate.getId()).get();
+        savedDiscussion.setUpdatedDate(new Date());
+        savedDiscussion.setQueryTopic(discussionToUpdate.getQueryTopic());
+        savedDiscussion.setInquirerName(discussionToUpdate.getInquirerName());
+        savedDiscussion.setInquirerGender(discussionToUpdate.getInquirerGender());
+        savedDiscussion.setQueryDescription(discussionToUpdate.getQueryDescription());
+
+        discussionRepository.save(savedDiscussion);
 
         List<Discussion> discussionList = discussionRepository.findAll();
         model.addAttribute("discussionList", discussionList);

@@ -44,4 +44,19 @@ public class User {
     @Column(name = "registration_date")
     private Date registrationDate;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", role='" + role + '\'' +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", mobileNo='" + mobileNo + '\'' +
+                ", gender='" + gender + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
+                ", registrationDate=" + registrationDate +
+                '}';
+    }
 }
