@@ -23,24 +23,28 @@
     <div class="container">
         <div class="pt-3">
             <h1>Update Blog</h1>
-            <form method="POST" th:action="@{/blog-update}" th:object="${blog}">
+            <form method="POST" th:action="@{/blog-update}" th:object="${blogToUpdate}">
                 <div class="form-group">
                     <label for="title">Blog Title</label>
-                    <input class="form-control" id="title" placeholder="Enter Blog Title" required th:field="*{title}" type="text">
+                    <input class="form-control" id="title" placeholder="Enter Blog Title" required th:field="*{title}"
+                           type="text">
                 </div>
                 <div class="form-group">
                     <label for="topic">Topic</label>
-                    <input class="form-control" id="topic" placeholder="Enter Topic of This Blog" required th:field="*{topic}" type="text">
+                    <input class="form-control" id="topic" placeholder="Enter Topic of This Blog" required
+                           th:field="*{topic}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="author">Author</label>
-                    <input class="form-control" id="author" placeholder="Enter Author Name"  required th:field="*{author}" type="text">
+                    <input class="form-control" id="author" placeholder="Enter Author Name" required
+                           th:field="*{author}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="description">Blog Description</label>
-                    <textarea class="form-control" id="description" placeholder="Enter Blog Description" required rows="5" th:field="*{description}"></textarea>
+                    <textarea class="form-control" id="description" placeholder="Enter Blog Description" required
+                              rows="5" th:field="*{description}"></textarea>
                 </div>
-                <input th:field="*{id}" type="hidden"/>
+                <input th:field="*{id}" th:value="${blogToUpdate.id}" type="hidden"/>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
         </div>

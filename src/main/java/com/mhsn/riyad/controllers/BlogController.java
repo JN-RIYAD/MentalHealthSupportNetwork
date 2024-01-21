@@ -74,8 +74,8 @@ public class BlogController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        Optional<Blog> blog = blogRepository.findById(id);
-        model.addAttribute("blog", blog.get());
+        Blog blogToUpdate = blogRepository.findById(id).get();
+        model.addAttribute("blogToUpdate", blogToUpdate);
         return "blogs/update-blog";
     }
 
@@ -97,7 +97,7 @@ public class BlogController {
     }
 
     @PostMapping("/blog-update")
-    public String blogUpdate(Model model, HttpSession httpSession, @ModelAttribute Blog blog) {
+    public String blogUpdate(Model model, HttpSession httpSession, @ModelAttribute Blog blogToUpdate) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
             model.addAttribute("error", "Login as an admin to update blog");
@@ -105,8 +105,14 @@ public class BlogController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        blog.setUpdatedDate(new Date());
-        blogRepository.save(blog);
+        Blog savedBlog = blogRepository.findById(blogToUpdate.getId()).get();
+        savedBlog.setUpdatedDate(new Date());
+        savedBlog.setTitle(blogToUpdate.getTitle());
+        savedBlog.setTopic(blogToUpdate.getTopic());
+        savedBlog.setAuthor(blogToUpdate.getAuthor());
+        savedBlog.setDescription(blogToUpdate.getDescription());
+        
+        blogRepository.save(savedBlog);
 
         List<Blog> blogList = blogRepository.findAll();
         model.addAttribute("blogList", blogList);

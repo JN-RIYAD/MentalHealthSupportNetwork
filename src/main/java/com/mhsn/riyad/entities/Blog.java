@@ -3,6 +3,7 @@ package com.mhsn.riyad.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -29,10 +30,12 @@ public class Blog {
     private String description;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "published_date")
     private Date publishedDate;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "updated_date")
     private Date updatedDate;
 }

@@ -3,6 +3,7 @@ package com.mhsn.riyad.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -30,18 +31,35 @@ public class Discussion {
     private String queryDescription;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "query_date")
     private Date queryDate;
 
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "updated_date")
     private Date updatedDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "discussion")
     private List<DiscussionComment> commentList;
+
+    @Override
+    public String toString() {
+        return "Discussion{" +
+                "id=" + id +
+                ", queryTopic='" + queryTopic + '\'' +
+                ", inquirerName='" + inquirerName + '\'' +
+                ", inquirerGender='" + inquirerGender + '\'' +
+                ", queryDescription='" + queryDescription + '\'' +
+                ", queryDate=" + queryDate +
+                ", updatedDate=" + updatedDate +
+                ", user=" + user +
+                ", commentList=" + commentList +
+                '}';
+    }
+
 
 }
