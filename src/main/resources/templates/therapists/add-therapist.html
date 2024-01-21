@@ -8,6 +8,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="js/therapist.js"></script>
 </head>
 <body>
 
@@ -24,21 +25,12 @@
     <div class="container">
         <div class="pt-3">
             <h1>Add Therapist</h1>
-            <form>
-                <!-- User Type Dropdown -->
-                <div class="form-group">
-                    <label for="userType">User Type</label>
-                    <select class="form-control" id="userType" onchange="toggleCertificatesField()" required>
-                        <option disabled selected>Select user type</option>
-                        <option value="Therapist">Therapist</option>
-                        <option value="User">User</option>
-                    </select>
-                </div>
-                <!-- Fields for Normal User Registration -->
+            <form method="POST" th:action="@{/therapist-save}" th:object="${therapist}">
+
                 <!-- Username -->
                 <div class="form-group">
                     <label for="userName">Username</label>
-                    <input class="form-control" id="userName" placeholder="Enter therapist's username" required th:field="*{userName}" type="text">
+                    <input class="form-control" id="userName"  placeholder="Enter therapist's username" required th:field="*{userName}" type="text">
                 </div>
                 <!-- Email -->
                 <div class="form-group">
@@ -59,18 +51,17 @@
 
                 <!-- Gender -->
                 <div class="form-group">
-                    <label for="gender">Gender</label>
+                    <label for="gender">Select therapist's gender</label>
                     <select class="form-control" id="gender" required th:field="*{gender}">
-                        <option disabled selected>Select therapist's gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <option th:value="male">Male</option>
+                        <option th:value="female">Female</option>
+                        <option th:value="other">Other</option>
                     </select>
                 </div>
                 <!-- Address -->
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input class="form-control" id="address" placeholder="Enter therapist's address" required th:field="*{gender}" type="text">
+                    <input class="form-control" id="address" placeholder="Enter therapist's address" required th:field="*{address}" type="text">
                 </div>
                 <!-- Password & Confirm Password -->
                 <!-- Password -->
@@ -83,23 +74,38 @@
                     <label for="confirmPassword">Confirm Password</label>
                     <input class="form-control" id="confirmPassword" placeholder="Confirm therapist's password" required th:field="*{confirmPassword}" type="password">
                 </div>
-                <!-- Certificates Field (Hidden by default) -->
-                <div class="form-group" id="certificateField" style="display:none;">
-                    <label for="certificate">Certificates</label>
-                    <input class="form-control-file" id="certificate" type="file">
-                    <small class="form-text text-muted" id="certificateHelp">Upload all scanned certificate in one file.</small>
-                </div>
+
                 <button class="btn btn-primary" type="submit">Add Therapist</button>
             </form>
         </div>
+    </div>
+    <!--  Toast-->
+    <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 80px; margin-right: 30px;" th:if="${error}">
+        <div class="toast-header bg-dark">
+            <strong class="mr-auto text-white">Error</strong>
+            <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
+        </div>
+        <div class="toast-body bg-danger text-white" th:text="${error}"></div>
     </div>
 </main>
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
 <!-- Scripts -->
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Script to activate Bootstrap Toast -->
+<script>
+  $(document).ready(function () {
+      $('.toast').toast({
+          autohide: true,
+          delay: 5000, // 5 seconds
+          animation: true,
+          position: 'top-end'
+      }).toast('show');
+  });
+</script>
 </body>
 </html>

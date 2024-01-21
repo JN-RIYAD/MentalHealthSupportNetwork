@@ -10,6 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -24,30 +25,30 @@
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
-            <h1>Therapist List</h1>
+            <h1>Therapists</h1>
             <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
-            <a class="btn btn-success mb-3" th:href="@{/show-add-therapist-page}">Add New Therapist</a>
+                <a class="btn btn-success mb-3" th:href="@{/show-add-therapist-page}">Add New Therapist</a>
             </div>
-            <!-- Therapists Table -->
-
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-fixed table-striped" id="table">
                     <thead>
                     <tr>
                         <th class="text-center">Name</th>
-                        <th class="text-center">Age</th>
                         <th class="text-center">Email</th>
+                        <th class="text-center">Age</th>
                         <th class="text-center">Mobile</th>
+                        <th class="text-center">Gender</th>
                         <th class="text-center">Address</th>
-                        <th class="text-center" style="width: 200px;">Action</th>
+                        <th class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each = "therapist: ${therapistList}">
-                        <td class="text-left" th:text="${therapist.name}"/>
-                        <td class="text-left" th:text="${therapist.age}"/>
+                    <tr th:each="therapist: ${therapistList}">
+                        <td class="text-left" th:text="${therapist.userName}"/>
                         <td class="text-left" th:text="${therapist.email}"/>
-                        <td class="text-left" th:text="${therapist.mobile}"/>
+                        <td class="text-left" th:text="${therapist.age}"/>
+                        <td class="text-left" th:text="${therapist.mobileNo}"/>
+                        <td class="text-left" th:text="${therapist.gender}"/>
                         <td class="text-left" th:text="${therapist.address}"/>
                         <td class="text-center">
 
@@ -71,7 +72,6 @@
         </div>
     </div>
 </main>
-
 
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>

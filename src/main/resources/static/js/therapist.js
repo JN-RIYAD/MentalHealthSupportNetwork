@@ -1,5 +1,4 @@
 
-
     $(document).ready(function () {
         // Add an event listener to the form on submission
         $("form").submit(function (event) {
