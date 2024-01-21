@@ -38,29 +38,29 @@
                 <!-- Username -->
                 <div class="form-group">
                     <label for="userName">Username</label>
-                    <input class="form-control" id="userName" placeholder="Enter therapist's username" required type="text">
+                    <input class="form-control" id="userName" placeholder="Enter therapist's username" required th:field="*{userName}" type="text">
                 </div>
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input class="form-control" id="email" placeholder="Enter therapist's email address" required type="email">
+                    <input class="form-control" id="email" placeholder="Enter therapist's email address" required th:field="*{email}" type="email">
                 </div>
                 <!-- Age & Mobile Number -->
                 <!-- Age -->
                 <div class="form-group">
                     <label for="age">Age</label>
-                    <input class="form-control" id="age" placeholder="Enter therapist's age" required type="number">
+                    <input class="form-control" id="age" placeholder="Enter therapist's age" required th:field="*{age}" type="number">
                 </div>
                 <!-- Mobile Number -->
                 <div class="form-group">
                     <label for="mobileNo">Mobile Number</label>
-                    <input class="form-control" id="mobileNo" placeholder="Enter therapist's mobile number" required type="text">
+                    <input class="form-control" id="mobileNo" placeholder="Enter therapist's mobile number" required th:field="*{mobileNo}" type="text">
                 </div>
 
                 <!-- Gender -->
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <select class="form-control" id="gender" required>
+                    <select class="form-control" id="gender" required th:field="*{gender}">
                         <option disabled selected>Select therapist's gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -70,18 +70,18 @@
                 <!-- Address -->
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input class="form-control" id="address" placeholder="Enter therapist's address" required type="text">
+                    <input class="form-control" id="address" placeholder="Enter therapist's address" required th:field="*{gender}" type="text">
                 </div>
                 <!-- Password & Confirm Password -->
                 <!-- Password -->
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input class="form-control" id="password" placeholder="Enter therapist's password" required type="password">
+                    <input class="form-control" id="password" placeholder="Enter therapist's password" required th:field="*{password}" type="password">
                 </div>
                 <div class="form-group">
                     <!-- Confirm Password -->
                     <label for="confirmPassword">Confirm Password</label>
-                    <input class="form-control" id="confirmPassword" placeholder="Confirm therapist's password" required type="password">
+                    <input class="form-control" id="confirmPassword" placeholder="Confirm therapist's password" required th:field="*{confirmPassword}" type="password">
                 </div>
                 <!-- Certificates Field (Hidden by default) -->
                 <div class="form-group" id="certificateField" style="display:none;">
