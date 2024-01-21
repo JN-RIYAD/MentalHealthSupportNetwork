@@ -111,6 +111,7 @@ public class GroupDiscussionController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         discussion.setUpdatedDate(new Date());
+
         discussionRepository.save(discussion);
 
         List<Discussion> discussionList = discussionRepository.findAll();
