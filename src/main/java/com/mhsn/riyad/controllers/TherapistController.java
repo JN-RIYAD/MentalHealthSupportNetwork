@@ -1,7 +1,6 @@
 package com.mhsn.riyad.controllers;
 
 import com.mhsn.riyad.entities.User;
-import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.UserRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -75,9 +74,9 @@ public class TherapistController {
         therapist.setRegistrationDate(new Date());
         userRepository.save(therapist);
 
-        List<User> therapistList = userRepository.findAll();
+        List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
-        return "therapist/therapist-list";
+        return "therapists/therapist-list";
     }
 
 
@@ -91,12 +90,10 @@ public class TherapistController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         userRepository.deleteById(id);
-        List<User> therapistList = userRepository.findAll();
+        List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
         return "therapists/therapist-list";
     }
-
-
 
 
 }

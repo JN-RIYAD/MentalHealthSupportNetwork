@@ -39,7 +39,7 @@
                         <th class="text-center">Mobile</th>
                         <th class="text-center">Gender</th>
                         <th class="text-center">Address</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center" th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -50,15 +50,14 @@
                         <td class="text-left" th:text="${therapist.mobileNo}"/>
                         <td class="text-left" th:text="${therapist.gender}"/>
                         <td class="text-left" th:text="${therapist.address}"/>
-                        <td class="text-center">
-
-                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                        <td class="text-center" th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                            <span>
                                 <a class="btn btn-warning" role="button"
                                    th:href="@{/show-update-therapist-page(id=${therapist.id})}">
                                     <i class="fas fa-edit"></i> <!-- Edit icon -->
                                 </a>
                             </span>
-                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                            <span>
                                 <a class="btn btn-danger" role="button" th:href="@{/therapist-delete(id=${therapist.id})}">
                                     <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
                                 </a>
