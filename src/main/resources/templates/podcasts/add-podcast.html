@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Podcast-MHSN</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <h1>Add New Podcast</h1>
+            <form enctype="multipart/form-data" method="POST" th:action="@{/podcast-save}" th:object="${podcast}">
+                <div class="form-group">
+                    <label for="podcastTopic">Podcast Topic</label>
+                    <input class="form-control" id="podcastTopic" placeholder="Enter Podcast Topic" required
+                           th:field="*{podcastTopic}" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="producerName">Producer Name</label>
+                    <input class="form-control" id="producerName" placeholder="Enter Producer Name"
+                           required
+                           th:field="*{producerName}" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (in minutes)</label>
+                    <input class="form-control" id="duration" placeholder="Enter Duration in minutes"
+                           th:field="*{duration}"
+                           type="number">
+                </div>
+                <div class="form-group">
+                    <label for="file">Podcast File</label>
+                    <input accept=".mp3, .4mb" class="form-control-file" id="file"
+                           name="file" onchange="validateFileSize(this)" required type="file">
+
+                </div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <a class="btn btn-secondary ml-2" th:href="@{/show-podcast-list}">Cancel</a>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function validateFileSize(input) {
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (input.files.length > 0 && input.files[0].size > maxSize) {
+        alert('The file exceeds the maximum size of 10MB. Please choose a smaller file.');
+        input.value = ''; // Clear the file input
+    }
+}
+</script>
+</body>
+</html>
