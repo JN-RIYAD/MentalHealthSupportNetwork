@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 @Controller
 public class TherapistController {
@@ -64,12 +64,7 @@ public class TherapistController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        Optional<User> savedUser = userRepository.findByEmail(therapist.getEmail());
-        if (savedUser.isPresent()) {
-            model.addAttribute("error", "Therapist exist with this email");
-            model.addAttribute("therapist", therapist);
-            return "therapists/add-therapist";
-        }
+
         therapist.setRole("therapist");
         therapist.setRegistrationDate(new Date());
         userRepository.save(therapist);
