@@ -1,5 +1,4 @@
 package com.mhsn.riyad.controllers;
-
 import com.mhsn.riyad.entities.Blog;
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.BlogRepository;
