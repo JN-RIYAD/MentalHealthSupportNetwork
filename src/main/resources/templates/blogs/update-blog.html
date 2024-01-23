@@ -26,18 +26,15 @@
             <form method="POST" th:action="@{/blog-update}" th:object="${blogToUpdate}">
                 <div class="form-group">
                     <label for="title">Blog Title</label>
-                    <input class="form-control" id="title" placeholder="Enter Blog Title" required th:field="*{title}"
-                           type="text">
+                    <input class="form-control" id="title" placeholder="Enter Blog Title" required th:field="*{title}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="topic">Topic</label>
-                    <input class="form-control" id="topic" placeholder="Enter Topic of This Blog" required
-                           th:field="*{topic}" type="text">
+                    <input class="form-control" id="topic" placeholder="Enter Topic of This Blog" required th:field="*{topic}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="author">Author</label>
-                    <input class="form-control" id="author" placeholder="Enter Author Name" required
-                           th:field="*{author}" type="text">
+                    <input class="form-control" id="author" placeholder="Enter Author Name" required th:field="*{author}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="description">Blog Description</label>

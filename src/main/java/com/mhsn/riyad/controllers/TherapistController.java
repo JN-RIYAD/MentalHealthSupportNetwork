@@ -1,5 +1,6 @@
 package com.mhsn.riyad.controllers;
 
+import com.mhsn.riyad.entities.Blog;
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.UserRepository;
 import com.mhsn.riyad.services.UserService;
@@ -74,6 +75,29 @@ public class TherapistController {
         return "therapists/therapist-list";
     }
 
+    @PostMapping("/therapist-update")
+    public String therapistUpdate(Model model, HttpSession httpSession, @ModelAttribute User therapistToUpdate) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to update therapist");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        User savedUser = userRepository.findById(therapistToUpdate.getId()).get();
+        savedUser.setRegistrationDate(new Date());
+        savedUser.setUserName(therapistToUpdate.getUserName());
+        savedUser.setEmail(therapistToUpdate.getEmail());
+        savedUser.setAge(therapistToUpdate.getAge());
+        savedUser.setMobileNo(therapistToUpdate.getMobileNo());
+        savedUser.setAddress(therapistToUpdate.getAddress());
+
+        userRepository.save(savedUser);
+
+        List<User> therapistList = userRepository.findByRole("therapist");;
+        model.addAttribute("therapistList", therapistList);
+        return "therapists/therapist-list";
+    }
 
     @GetMapping("/therapist-delete")
     public String therapistDelete(Model model, HttpSession httpSession, @RequestParam Long id) {

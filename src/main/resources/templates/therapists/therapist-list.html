@@ -51,15 +51,16 @@
                         <td class="text-left" th:text="${therapist.gender}"/>
                         <td class="text-left" th:text="${therapist.address}"/>
                         <td class="text-center" th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+
                             <span>
                                 <a class="btn btn-warning" role="button"
                                    th:href="@{/show-update-therapist-page(id=${therapist.id})}">
-                                    <i class="fas fa-edit"></i> <!-- Edit icon -->
+                                    <i class="fas fa-edit"></i>
                                 </a>
                             </span>
                             <span>
                                 <a class="btn btn-danger" role="button" th:href="@{/therapist-delete(id=${therapist.id})}">
-                                    <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                                    <i class="fas fa-trash-alt"></i>
                                 </a>
                             </span>
                         </td>
