@@ -23,7 +23,7 @@
     <div class="container">
         <div class="pt-3">
             <h1>Update Therapist</h1>
-            <form method="POST" th:action="@{/therapist-update}" th:object="${therapist}">
+            <form method="POST" th:action="@{/therapist-update}" th:object="${therapistToUpdate}">
                 <div class="form-group">
                     <label for="userName">Username</label>
                     <input class="form-control" id="userName" placeholder="Enter therapist's username" required th:field="*{userName}" type="text">
