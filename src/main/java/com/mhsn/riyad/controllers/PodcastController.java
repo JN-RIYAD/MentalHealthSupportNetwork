@@ -120,7 +120,7 @@ public class PodcastController {
         File podcastFile = new File(podcastFilePath);
 
         // Set the content type
-        response.setContentType("podcast/mp4");
+        response.setContentType("audio/mp3");
 
         // Use try-with-resources to ensure closing of the input stream
         try (InputStream inputStream = new FileInputStream(podcastFile)) {
