@@ -6,7 +6,6 @@
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -48,14 +47,39 @@
                     <label for="address">Address</label>
                     <input class="form-control" id="address" placeholder="Enter therapist's address" required th:field="*{address}" type="text">
                 </div>
-
-
-
-
+                <!-- Gender -->
+                <div class="form-group">
+                    <label for="gender">Select therapist's gender</label>
+                    <select class="form-control" id="gender" required th:field="*{gender}">
+                        <option th:value="male">Male</option>
+                        <option th:value="female">Female</option>
+                        <option th:value="other">Other</option>
+                    </select>
+                </div>
+                <!-- Password & Confirm Password -->
+                <!-- Password & Confirm Password -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input class="form-control" id="password" th:field="*{password}" placeholder="Enter password" required type="password" pattern=".{6,}">
+                </div>
+                <div class="form-group">
+                    <!-- Confirm Password -->
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input class="form-control" id="confirmPassword" pattern=".{6,}" placeholder="Confirm password" required type="password">
+                    <span id="passwordError" class="text-danger"></span>
+                </div>
                 <input th:field="*{id}" th:value="${therapistToUpdate.id}" type="hidden"/>
                 <button class="btn btn-primary" type="submit">Update</button>
             </form>
         </div>
+    </div>
+    <!--  Toast-->
+    <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 80px; margin-right: 30px;" th:if="${error}">
+        <div class="toast-header bg-dark">
+            <strong class="mr-auto text-white">Error</strong>
+            <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
+        </div>
+        <div class="toast-body bg-danger text-white" th:text="${error}"></div>
     </div>
 </main>
 
@@ -66,5 +90,38 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Script to activate Bootstrap Toast
+        $('.toast').toast({
+            autohide: true,
+            delay: 5000, // 5 seconds
+            animation: true,
+            position: 'top-end'
+        }).toast('show');
+
+        // Add an event listener to the form on submission
+        $("form").submit(function (event) {
+            // Get the values of the password and confirmPassword fields
+            var password = $("#password").val();
+            var confirmPassword = $("#confirmPassword").val();
+
+            // Check if the passwords match and are at least 6 characters long
+            if (password !== confirmPassword) {
+                // Display an error message
+                $("#passwordError").text("Passwords do not match");
+                event.preventDefault(); // Prevent form submission
+            } else if (password.length < 6) {
+                // Display an error message
+                $("#passwordError").text("Password must be at least 6 characters");
+                event.preventDefault(); // Prevent form submission
+            } else {
+                // Clear any previous error messages
+                $("#passwordError").text("");
+            }
+        });
+    });
+</script>
+
 </body>
 </html>

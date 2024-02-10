@@ -4,6 +4,8 @@ import com.mhsn.riyad.repositories.UserRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,8 @@ public class TherapistController {
 
     @Autowired
     private UserService userService;
+
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @GetMapping("/show-therapist-list")
     public String showUserList(Model model, HttpSession httpSession) {
@@ -66,6 +70,7 @@ public class TherapistController {
 
         therapist.setRole("therapist");
         therapist.setRegistrationDate(new Date());
+        therapist.setPassword(passwordEncoder.encode(therapist.getPassword()));
         userRepository.save(therapist);
 
         List<User> therapistList = userRepository.findByRole("therapist");
@@ -82,16 +87,14 @@ public class TherapistController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        User savedUser = userRepository.findById(therapistToUpdate.getId()).get();
-        savedUser.setRegistrationDate(new Date());
-        savedUser.setUserName(therapistToUpdate.getUserName());
-        savedUser.setEmail(therapistToUpdate.getEmail());
-        savedUser.setAge(therapistToUpdate.getAge());
-        savedUser.setMobileNo(therapistToUpdate.getMobileNo());
-        savedUser.setAddress(therapistToUpdate.getAddress());
-        savedUser.setPassword(therapistToUpdate.getPassword());
-
-        userRepository.save(savedUser);
+        User savedTherapist = userRepository.findById(therapistToUpdate.getId()).get();
+        savedTherapist.setUserName(therapistToUpdate.getUserName());
+        savedTherapist.setEmail(therapistToUpdate.getEmail());
+        savedTherapist.setAge(therapistToUpdate.getAge());
+        savedTherapist.setMobileNo(therapistToUpdate.getMobileNo());
+        savedTherapist.setAddress(therapistToUpdate.getAddress());
+        savedTherapist.setPassword(passwordEncoder.encode(therapistToUpdate.getPassword()));
+        userRepository.save(savedTherapist);
 
         List<User> therapistList = userRepository.findByRole("therapist");;
         model.addAttribute("therapistList", therapistList);
