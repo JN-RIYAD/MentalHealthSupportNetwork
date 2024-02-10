@@ -67,7 +67,7 @@ public class TherapistController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-
+        //TODO: duplicate email check
         therapist.setRole("therapist");
         therapist.setRegistrationDate(new Date());
         therapist.setPassword(passwordEncoder.encode(therapist.getPassword()));
@@ -88,6 +88,7 @@ public class TherapistController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         User savedTherapist = userRepository.findById(therapistToUpdate.getId()).get();
+        //TODO: duplicate email check
         savedTherapist.setUserName(therapistToUpdate.getUserName());
         savedTherapist.setEmail(therapistToUpdate.getEmail());
         savedTherapist.setAge(therapistToUpdate.getAge());
