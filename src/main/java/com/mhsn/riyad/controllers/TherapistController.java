@@ -1,4 +1,5 @@
 package com.mhsn.riyad.controllers;
+
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.UserRepository;
 import com.mhsn.riyad.services.UserService;
@@ -15,21 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
 public class TherapistController {
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private UserService userService;
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     @GetMapping("/show-therapist-list")
-    public String showUserList(Model model, HttpSession httpSession) {
+    public String showTherapistList(Model model, HttpSession httpSession) {
 
         User user = (User) httpSession.getAttribute("user");
         if (user != null) {
@@ -43,7 +43,7 @@ public class TherapistController {
     }
 
     @GetMapping("/show-add-therapist-page")
-    public String showAddUserPage(Model model, HttpSession httpSession) {
+    public String showAddTherapistPage(Model model, HttpSession httpSession) {
 
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
@@ -68,6 +68,12 @@ public class TherapistController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         //TODO: duplicate email check
+        Optional<User> existingUserWithCurrentEmail = userRepository.findByEmail(therapist.getEmail());
+        if (existingUserWithCurrentEmail.isPresent()) {
+            model.addAttribute("error", "Email already exists for another user. Try with different email");
+            model.addAttribute("therapist", therapist);
+            return "therapists/add-therapist";
+        }
         therapist.setRole("therapist");
         therapist.setRegistrationDate(new Date());
         therapist.setPassword(passwordEncoder.encode(therapist.getPassword()));
@@ -88,7 +94,13 @@ public class TherapistController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         User savedTherapist = userRepository.findById(therapistToUpdate.getId()).get();
-        //TODO: duplicate email check
+        //duplicate email check
+        Optional<User> existingUserWithCurrentEmail = userRepository.findByEmailAndIdNot(therapistToUpdate.getEmail(), therapistToUpdate.getId());
+        if (existingUserWithCurrentEmail.isPresent()) {
+            model.addAttribute("error", "Email already exists for another user. Try with different email");
+            model.addAttribute("therapistToUpdate", therapistToUpdate);
+            return "therapists/update-therapist";
+        }
         savedTherapist.setUserName(therapistToUpdate.getUserName());
         savedTherapist.setEmail(therapistToUpdate.getEmail());
         savedTherapist.setAge(therapistToUpdate.getAge());
@@ -97,7 +109,7 @@ public class TherapistController {
         savedTherapist.setPassword(passwordEncoder.encode(therapistToUpdate.getPassword()));
         userRepository.save(savedTherapist);
 
-        List<User> therapistList = userRepository.findByRole("therapist");;
+        List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
         return "therapists/therapist-list";
     }
