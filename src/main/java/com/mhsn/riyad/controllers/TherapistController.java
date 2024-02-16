@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -38,8 +39,6 @@ public class TherapistController {
         List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
         return "therapists/therapist-list";
-
-
     }
 
     @GetMapping("/show-add-therapist-page")
@@ -59,7 +58,7 @@ public class TherapistController {
 
 
     @PostMapping("/therapist-save")
-    public String therapistSave(Model model, HttpSession httpSession, @ModelAttribute User therapist) {
+    public String therapistSave(Model model, HttpSession httpSession, @ModelAttribute User therapist, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
             model.addAttribute("error", "Login as an admin to save therapist");
@@ -67,7 +66,7 @@ public class TherapistController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        //TODO: duplicate email check
+        //duplicate email check
         Optional<User> existingUserWithCurrentEmail = userRepository.findByEmail(therapist.getEmail());
         if (existingUserWithCurrentEmail.isPresent()) {
             model.addAttribute("error", "Email already exists for another user. Try with different email");
@@ -81,11 +80,14 @@ public class TherapistController {
 
         List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
-        return "therapists/therapist-list";
+        model.addAttribute("success", "Therapist saved successfully");
+        redirectAttributes.addFlashAttribute("therapistList", therapistList);
+        redirectAttributes.addFlashAttribute("success", "Therapist saved successfully");
+        return "redirect:/show-therapist-list";
     }
 
     @PostMapping("/therapist-update")
-    public String therapistUpdate(Model model, HttpSession httpSession, @ModelAttribute User therapistToUpdate) {
+    public String therapistUpdate(Model model, HttpSession httpSession, @ModelAttribute User therapistToUpdate, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
             model.addAttribute("error", "Login as an admin to update therapist");
@@ -111,7 +113,9 @@ public class TherapistController {
 
         List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
-        return "therapists/therapist-list";
+        model.addAttribute("success", "Therapist updated successfully");
+        redirectAttributes.addFlashAttribute("therapistList", therapistList);
+        return "redirect:/show-therapist-list";
     }
 
     @GetMapping("/show-update-therapist-page")
@@ -129,7 +133,7 @@ public class TherapistController {
     }
 
     @GetMapping("/therapist-delete")
-    public String therapistDelete(Model model, HttpSession httpSession, @RequestParam Long id) {
+    public String therapistDelete(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
             model.addAttribute("error", "Login as an admin to delete therapist");
@@ -140,7 +144,8 @@ public class TherapistController {
         userRepository.deleteById(id);
         List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
-        return "therapists/therapist-list";
+        redirectAttributes.addFlashAttribute("therapistList", therapistList);
+        return "redirect:/show-therapist-list";
     }
 
 

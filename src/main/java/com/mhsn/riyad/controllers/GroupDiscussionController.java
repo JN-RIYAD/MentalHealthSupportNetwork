@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -84,7 +85,7 @@ public class GroupDiscussionController {
     }
 
     @PostMapping("/discussion-save")
-    public String discussionSave(Model model, HttpSession httpSession, @ModelAttribute Discussion discussion) {
+    public String discussionSave(Model model, HttpSession httpSession, @ModelAttribute Discussion discussion, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group discussions");
@@ -98,11 +99,12 @@ public class GroupDiscussionController {
 
         List<Discussion> discussionList = discussionRepository.findAll();
         model.addAttribute("discussionList", discussionList);
-        return "discussions/discussion-list";
+        redirectAttributes.addFlashAttribute("discussionList", discussionList);
+        return "redirect:/show-discussion-list";
     }
 
     @PostMapping("/discussion-update")
-    public String discussionUpdate(Model model, HttpSession httpSession, @ModelAttribute Discussion discussionToUpdate) {
+    public String discussionUpdate(Model model, HttpSession httpSession, @ModelAttribute Discussion discussionToUpdate, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group discussions");
@@ -122,11 +124,12 @@ public class GroupDiscussionController {
 
         List<Discussion> discussionList = discussionRepository.findAll();
         model.addAttribute("discussionList", discussionList);
-        return "discussions/discussion-list";
+        redirectAttributes.addFlashAttribute("discussionList", discussionList);
+        return "redirect:/show-discussion-list";
     }
 
     @GetMapping("/discussion-delete")
-    public String discussionDelete(Model model, HttpSession httpSession, @RequestParam Long id) {
+    public String discussionDelete(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group discussions");
@@ -137,6 +140,7 @@ public class GroupDiscussionController {
         discussionRepository.deleteById(id);
         List<Discussion> discussionList = discussionRepository.findAll();
         model.addAttribute("discussionList", discussionList);
-        return "discussions/discussion-list";
+        redirectAttributes.addFlashAttribute("discussionList", discussionList);
+        return "redirect:/show-discussion-list";
     }
 }

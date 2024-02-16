@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,7 +66,8 @@ public class VideoController {
     @PostMapping("/video-save")
     public String videoSave(Model model, HttpSession httpSession,
                             @ModelAttribute Video video,
-                            @RequestParam("file") MultipartFile file) {
+                            @RequestParam("file") MultipartFile file,
+                            RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login as an admin to save video");
@@ -106,7 +108,8 @@ public class VideoController {
         List<Video> videoList = videoRepository.findAll();
         model.addAttribute("videoList", videoList);
 
-        return "videos/video-list";
+        redirectAttributes.addFlashAttribute("videoList", videoList);
+        return "redirect:/show-video-list";
     }
 
     @GetMapping("/videos/{videoFileName}")
@@ -132,7 +135,7 @@ public class VideoController {
     }
 
     @GetMapping("/video-delete")
-    public String deleteVideo(Model model, HttpSession httpSession, @RequestParam Long id) {
+    public String deleteVideo(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login as an admin to delete video");
@@ -160,7 +163,8 @@ public class VideoController {
         }
         List<Video> videoList = videoRepository.findAll();
         model.addAttribute("videoList", videoList);
-        return "videos/video-list";
+        redirectAttributes.addFlashAttribute("videoList", videoList);
+        return "redirect:/show-video-list";
     }
 
 }

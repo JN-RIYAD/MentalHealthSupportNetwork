@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -64,8 +66,9 @@ public class PodcastController {
 
     @PostMapping("/podcast-save")
     public String podcastSave(Model model, HttpSession httpSession,
-                            @ModelAttribute Podcast podcast,
-                            @RequestParam("file") MultipartFile file) {
+                              @ModelAttribute Podcast podcast,
+                              @RequestParam("file") MultipartFile file,
+                              RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login as an admin to save podcast");
@@ -73,20 +76,15 @@ public class PodcastController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-
-        
         try {
             // Generate a unique file name
             String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
             podcast.setPodcastFileName(fileName);
             podcast.setPodcastFileType(file.getContentType());
 
-
             podcast.setUploadedDate(new Date());
 
-
             podcastRepository.save(podcast);
-
 
             String uploadDir = baseUploadDir + "/podcasts";
 
@@ -106,8 +104,8 @@ public class PodcastController {
 
         List<Podcast> podcastList = podcastRepository.findAll();
         model.addAttribute("podcastList", podcastList);
-
-        return "podcasts/podcast-list";
+        redirectAttributes.addFlashAttribute("podcastList", podcastList);
+        return "redirect:/show-podcast-list";
     }
 
     @GetMapping("/podcasts/{podcastFileName}")
@@ -133,7 +131,7 @@ public class PodcastController {
     }
 
     @GetMapping("/podcast-delete")
-    public String deletePodcast(Model model, HttpSession httpSession, @RequestParam Long id) {
+    public String deletePodcast(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login as an admin to delete podcast");
@@ -161,6 +159,7 @@ public class PodcastController {
         }
         List<Podcast> podcastList = podcastRepository.findAll();
         model.addAttribute("podcastList", podcastList);
-        return "podcasts/podcast-list";
+        redirectAttributes.addFlashAttribute("podcastList", podcastList);
+        return "redirect:/show-podcast-list";
     }
 }
