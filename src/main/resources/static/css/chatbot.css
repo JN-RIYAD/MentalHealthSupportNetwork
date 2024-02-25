@@ -1,0 +1,38 @@
+/* CSS for chatbot */
+.chat-container {
+    width: 100%;
+    max-width: 500px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.chat-box {
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    max-height: 300px; /* Adjust the maximum height as needed */
+}
+
+.user-input {
+    width: calc(100% - 70px); /* Adjust input width minus the width of the send button */
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+.send-button {
+    width: 60px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.send-button:hover {
+    background-color: #0056b3;
+}
