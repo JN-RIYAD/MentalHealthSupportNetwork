@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserChatBotHistoryRepository extends JpaRepository<UserChatBotHistory, Long> {
-    List<UserChatBotHistory> findByUserId(Long id);
+    List<UserChatBotHistory> findByUserIdOrderByIdDesc(Long id);
 }

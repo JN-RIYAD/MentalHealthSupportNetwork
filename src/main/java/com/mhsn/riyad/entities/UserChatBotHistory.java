@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Entity
 @Table(name = "user_chat_bot_history")
@@ -22,7 +24,13 @@ public class UserChatBotHistory {
     @Column(name = "question", columnDefinition = "nvarchar(500)")
     private String question;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "createdAt")
+    private Date createdAt;
+
     @ManyToOne
     @JoinColumn(name = "chat_bot_question_answer_id")
     private ChatBotQuestionAnswer chatBotQuestionAnswer;
+
+
 }

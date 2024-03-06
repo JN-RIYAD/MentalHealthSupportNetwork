@@ -24,41 +24,42 @@
 <div th:replace="fragments/sidebar :: sidebar"></div>
 
 <!-- Main content area -->
+<!-- Main content area -->
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
             <div class="chat-container">
-                <div class="chat-box" id="chatbox">
-                    <div th:each="chat : ${chatList}">
-                        <div class="user-message" th:text="${chat.question}"></div>
-                        <div class="bot-message" th:text="${chat.chatBotQuestionAnswer.answer}"></div>
-                    </div>
-                </div>
-                <!-- Pagination buttons -->
-                <button id="showPrevious" class="pagination-button">Previous</button>
-                <button id="showNext" class="pagination-button">Next</button>
-            </div>
-            <!-- Input field for new question -->
-            <!-- Send New Message -->
-            <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
+                <!-- Send New Message -->
+                <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
                      or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)
                      or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
-                <div class="mt-3">
-                    <h4>Send New Message</h4>
-                    <form method="POST" th:action="@{/chat-bot(userId=${userId})}"
-                          th:object="${userChatBotHistory}">
-                        <div class="form-group">
-                            <input type="text" id="userInput" class="user-input" th:field="*{question}" placeholder="Type your message..."
-                                   required rows="3">
+                    <div class="mt-3">
+                        <h4>Send New Message</h4>
+                        <form method="POST" th:action="@{/chat-bot(userId=${userId})}"
+                              th:object="${userChatBotHistory}">
+                            <div class="form-group chat-input-group">
+                                <input type="text" id="userInput" class="user-input" th:field="*{question}" placeholder="Type your message..."
+                                       required rows="3">
+                                <button id="sendMessageBtn" class="send-button" type="submit">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="chat-container">
+                    <div class="chat-box" id="chatbox">
+                        <div th:each="chat: ${chatList}">
+                            <div class="message-container">
+                                <div class="user-message" th:text="${chat.question}"></div>
+                                <div class="time-stamp" th:text="${chat.createdAt}"></div>
+                            </div>
+                            <div class="bot-message" th:text="${chat.chatBotQuestionAnswer.answer}"></div>
                         </div>
-                        <button id="sendMessageBtn" class="send-button" type="submit">Send</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
-
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
@@ -68,6 +69,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
-
 </body>
 </html>

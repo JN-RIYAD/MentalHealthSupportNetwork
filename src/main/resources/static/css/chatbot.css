@@ -9,11 +9,26 @@
     overflow-y: scroll;
 }
 
+.message-container {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+    background-color: #cdd1ce;
+}
+
 .user-message {
-    background-color: #f3f3f3;
+    font-weight: bold; /* Make the user message text bold */
+    background-color: #0c0d0d
+    color: #fff; /* White text color */
     padding: 10px;
     border-radius: 5px;
-    margin-bottom: 10px;
+}
+
+.time-stamp {
+    margin-left: auto; /* Push the timestamp to the right */
+    margin-right: 10px;
+    width: 120px; /* Fixed width for the timestamp */
+    text-align: right; /* Align the text to the right */
 }
 
 .bot-message {
@@ -24,8 +39,12 @@
 }
 
 /* CSS styles for the input field and send button */
+.chat-input-group {
+    display: flex; /* Use flexbox for alignment */
+}
+
 .user-input {
-    width: 100%;
+    flex: 1; /* Take up remaining space */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -36,25 +55,12 @@
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 5px;
+    margin-left: 10px; /* Add some margin between input field and button */
     cursor: pointer;
 }
 
 .send-button:hover {
     background-color: #45a049;
-}
-
-/* CSS styles for the pagination buttons */
-#showPrevious, #showNext {
-    display: none;
-    background-color: #f3f3f3;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-#showPrevious:hover, #showNext:hover {
-    background-color: #ccc;
 }
