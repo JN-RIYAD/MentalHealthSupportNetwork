@@ -93,7 +93,6 @@ public class BlogController {
         blogRepository.save(blog);
 
         List<Blog> blogList = blogRepository.findAll();
-        model.addAttribute("blogList", blogList);
         redirectAttributes.addFlashAttribute("blogList", blogList);
         return "redirect:/show-blog-list";
     }

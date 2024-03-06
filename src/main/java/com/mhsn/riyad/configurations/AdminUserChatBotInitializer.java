@@ -1,6 +1,8 @@
 package com.mhsn.riyad.configurations;
 
+import com.mhsn.riyad.entities.ChatBotQuestionAnswer;
 import com.mhsn.riyad.entities.User;
+import com.mhsn.riyad.repositories.ChatBotQuestionAnswerRepository;
 import com.mhsn.riyad.repositories.UserRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +14,17 @@ import java.util.Date;
 import java.util.Optional;
 
 @Configuration
-public class AdminUserInitializer {
+public class AdminUserChatBotInitializer {
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ChatBotQuestionAnswerRepository chatBotQuestionAnswerRepository;
 
     @PostConstruct
     public void init() {
         String adminEmail = "admin@gmail.com";
-
         // Check if admin user already exists
         Optional<User> existingAdmin = userRepository.findByEmail(adminEmail);
 
@@ -50,6 +53,15 @@ public class AdminUserInitializer {
             admin.setRole("admin");
             admin.setUserName("Riyad");
             userRepository.save(admin);
+        }
+
+        Optional<ChatBotQuestionAnswer> existingQuestionAnswer = chatBotQuestionAnswerRepository.findById(1L);
+        if (existingQuestionAnswer.isEmpty()) {
+            ChatBotQuestionAnswer questionAnswer = new ChatBotQuestionAnswer();
+            questionAnswer.setQuestion("Not matched or undefined question");
+            questionAnswer.setAnswer("Sorry your question didn't match with any answer set. " +
+                    "You can upload the question in group discussion section");
+            chatBotQuestionAnswerRepository.save(questionAnswer);
         }
     }
 }

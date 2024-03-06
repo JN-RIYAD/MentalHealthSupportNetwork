@@ -1,38 +1,60 @@
-/* CSS for chatbot */
+/* CSS styles for the chat container */
 .chat-container {
-    width: 100%;
-    max-width: 500px; /* Adjust the maximum width as needed */
+    max-width: 700px;
     margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
 }
 
 .chat-box {
-    background-color: #f3f3f3;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    overflow-y: auto;
-    max-height: 300px; /* Adjust the maximum height as needed */
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
-.user-input {
-    width: calc(100% - 70px); /* Adjust input width minus the width of the send button */
+.user-message {
+    background-color: #f3f3f3;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.bot-message {
+    background-color: #90ee90;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* CSS styles for the input field and send button */
+.user-input {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .send-button {
-    width: 60px;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 .send-button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
+}
+
+/* CSS styles for the pagination buttons */
+#showPrevious, #showNext {
+    display: none;
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#showPrevious:hover, #showNext:hover {
+    background-color: #ccc;
 }
