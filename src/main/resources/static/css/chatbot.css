@@ -26,7 +26,7 @@
 
 .time-stamp {
     margin-left: auto; /* Push the timestamp to the right */
-    margin-right: 10px;
+    margin-right: 15px;
     width: 120px; /* Fixed width for the timestamp */
     text-align: right; /* Align the text to the right */
 }

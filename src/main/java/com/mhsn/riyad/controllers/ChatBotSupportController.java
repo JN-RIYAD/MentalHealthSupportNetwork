@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-public class ChatBotController {
+public class ChatBotSupportController {
     @Autowired
     private UserService userService;
     @Autowired
@@ -74,7 +74,7 @@ public class ChatBotController {
     private ChatBotQuestionAnswer getMostMatchedQuestionAnswer(String message, User user) {
         // Define words to remove
         Set<String> wordsToRemove = new HashSet<>(Arrays.asList(
-                "what", "who", "why", "am", "is", "are", "where", "how", "a", "an", "the", "?", "!", "@", "%", "&", ",", ":", ";"
+                "am", "is", "are", "a", "an", "the"
         ));
         List<ChatBotQuestionAnswer> questionAnswerList = chatBotQuestionAnswerRepository.findAll();
         ChatBotQuestionAnswer mostMatchedQuestionAnswer = null;

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Not Answered Questions-MHSN</title>
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                <a class="btn btn-warning mb-3" th:href="@{/show-chatbot-question-list}">View ChatBot Question List</a>
+            </div>
+            <h1>Not Answered Questions</h1>
+            <div class="table-responsive">
+                <table class="table table-bordered table-fixed table-striped" id="table">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Question</th>
+                        <th class="text-center">Inquirer</th>
+                        <th class="text-center" style="width: 200px;">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="notAnsweredQuestion: ${notAnsweredQuestionList}">
+                        <td class="text-left" th:text="${notAnsweredQuestion.question}"/>
+                        <td class="text-left" th:text="${notAnsweredQuestion.user.userName}"/>
+                        <td class="text-center">
+                            <a class="btn btn-primary" role="button" th:href="@{/show-set-answer-page(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Set Answer</a>
+                            <a class="btn btn-danger" role="button" th:href="@{/not-answered-question-delete(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <a class="mt-3" th:href="@{/}">Back to Home</a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+
+
+<script>
+    $(document).ready(function() {
+        $("#table").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': true, // Enable sorting for all columns
+                'aTargets': '_all', // Target all columns
+            }],
+            'order': [], // Disable initial sorting
+            'orderCellsTop': true, // Show sorting icons in the header cells
+            'language': {
+                'paginate': {
+                    'next': '<i class="fas fa-chevron-right"></i>', // Next page icon
+                    'previous': '<i class="fas fa-chevron-left"></i>' // Previous page icon
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

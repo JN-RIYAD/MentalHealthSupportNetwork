@@ -22,4 +22,8 @@ public class ChatBotQuestionAnswer {
 
     @Column(name = "answer", columnDefinition = "nvarchar(5000)")
     private String answer;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "createdAt")
+    private Date createdAt;
 }
