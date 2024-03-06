@@ -6,6 +6,7 @@ import com.mhsn.riyad.repositories.BlogRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class BlogController {
         if (user != null) {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<Blog> blogList = blogRepository.findAll(); //findByRole("therapist");
+        List<Blog> blogList = blogRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("blogList", blogList);
         return "blogs/blog-list";
     }
@@ -92,7 +93,7 @@ public class BlogController {
         blog.setPublishedDate(new Date());
         blogRepository.save(blog);
 
-        List<Blog> blogList = blogRepository.findAll();
+        List<Blog> blogList = blogRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         redirectAttributes.addFlashAttribute("blogList", blogList);
         return "redirect:/show-blog-list";
     }
@@ -115,7 +116,7 @@ public class BlogController {
 
         blogRepository.save(savedBlog);
 
-        List<Blog> blogList = blogRepository.findAll();
+        List<Blog> blogList = blogRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("blogList", blogList);
         redirectAttributes.addFlashAttribute("blogList", blogList);
         return "redirect:/show-blog-list";
@@ -131,7 +132,7 @@ public class BlogController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         blogRepository.deleteById(id);
-        List<Blog> blogList = blogRepository.findAll();
+        List<Blog> blogList = blogRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("blogList", blogList);
         redirectAttributes.addFlashAttribute("blogList", blogList);
         return "redirect:/show-blog-list";

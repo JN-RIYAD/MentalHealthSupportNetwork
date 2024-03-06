@@ -26,14 +26,14 @@
     <div class="container">
         <div class="pt-3">
             <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
-                <a class="btn btn-warning mb-3" th:href="@{/show-chatbot-question-list}">View ChatBot Question List</a>
+                <a class="btn btn-warning mb-3" th:href="@{/show-chatbot-question-answer-list}">View ChatBot Question List</a>
             </div>
             <h1>Not Answered Questions</h1>
             <div class="table-responsive">
                 <table class="table table-bordered table-fixed table-striped" id="table">
                     <thead>
                     <tr>
-                        <th class="text-center">Question</th>
+                        <th class="text-center" style="width: 250px;">Question</th>
                         <th class="text-center">Inquirer</th>
                         <th class="text-center" style="width: 200px;">Action</th>
                     </tr>
@@ -43,7 +43,7 @@
                         <td class="text-left" th:text="${notAnsweredQuestion.question}"/>
                         <td class="text-left" th:text="${notAnsweredQuestion.user.userName}"/>
                         <td class="text-center">
-                            <a class="btn btn-primary" role="button" th:href="@{/show-set-answer-page(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Set Answer</a>
+                            <a class="btn btn-primary" role="button" th:href="@{/show-set-answer-to-not-answered-page(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Set Answer</a>
                             <a class="btn btn-danger" role="button" th:href="@{/not-answered-question-delete(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Delete</a>
                         </td>
                     </tr>

@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +45,7 @@ public class VideoController {
         if (user != null) {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<Video> videoList = videoRepository.findAll();
+        List<Video> videoList = videoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("videoList", videoList);
         return "videos/video-list";
     }
@@ -105,7 +106,7 @@ public class VideoController {
             throw new RuntimeException("Failed to store the file", e);
         }
 
-        List<Video> videoList = videoRepository.findAll();
+        List<Video> videoList = videoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("videoList", videoList);
 
         redirectAttributes.addFlashAttribute("videoList", videoList);
@@ -161,7 +162,7 @@ public class VideoController {
         } catch (IOException e) {
             throw new RuntimeException("Failed to delete the file", e);
         }
-        List<Video> videoList = videoRepository.findAll();
+        List<Video> videoList = videoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("videoList", videoList);
         redirectAttributes.addFlashAttribute("videoList", videoList);
         return "redirect:/show-video-list";

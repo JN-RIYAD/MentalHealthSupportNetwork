@@ -7,6 +7,7 @@ import com.mhsn.riyad.repositories.DiscussionRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class GroupDiscussionController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<Discussion> discussionList = discussionRepository.findAll();
+        List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("discussionList", discussionList);
         return "discussions/discussion-list";
     }
@@ -97,7 +98,7 @@ public class GroupDiscussionController {
         discussion.setUser(user);
         discussionRepository.save(discussion);
 
-        List<Discussion> discussionList = discussionRepository.findAll();
+        List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("discussionList", discussionList);
         return "redirect:/show-discussion-list";
@@ -122,7 +123,7 @@ public class GroupDiscussionController {
 
         discussionRepository.save(savedDiscussion);
 
-        List<Discussion> discussionList = discussionRepository.findAll();
+        List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("discussionList", discussionList);
         return "redirect:/show-discussion-list";
@@ -138,7 +139,7 @@ public class GroupDiscussionController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         discussionRepository.deleteById(id);
-        List<Discussion> discussionList = discussionRepository.findAll();
+        List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("discussionList", discussionList);
         return "redirect:/show-discussion-list";

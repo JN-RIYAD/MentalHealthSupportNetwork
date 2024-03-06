@@ -35,7 +35,7 @@
                      or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
                     <div class="mt-3">
                         <h4>Send New Message</h4>
-                        <form method="POST" th:action="@{/chat-bot(userId=${userId})}"
+                        <form method="POST" th:action="@{/new-chat-save(userId=${userId})}"
                               th:object="${userChatBotHistory}">
                             <div class="form-group chat-input-group">
                                 <input type="text" id="userInput" class="user-input" th:field="*{question}" placeholder="Type your message..."

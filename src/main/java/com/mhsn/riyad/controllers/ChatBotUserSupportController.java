@@ -8,6 +8,7 @@ import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-public class ChatBotSupportController {
+public class ChatBotUserSupportController {
     @Autowired
     private UserService userService;
     @Autowired
@@ -48,7 +49,7 @@ public class ChatBotSupportController {
     }
 
     @Transactional
-    @PostMapping("/chat-bot")
+    @PostMapping("/new-chat-save")
     public String newChatSave(Model model, HttpSession httpSession, @ModelAttribute UserChatBotHistory userChatBotHistory, @RequestParam Long userId, RedirectAttributes redirectAttributes){
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
@@ -76,7 +77,7 @@ public class ChatBotSupportController {
         Set<String> wordsToRemove = new HashSet<>(Arrays.asList(
                 "am", "is", "are", "a", "an", "the"
         ));
-        List<ChatBotQuestionAnswer> questionAnswerList = chatBotQuestionAnswerRepository.findAll();
+        List<ChatBotQuestionAnswer> questionAnswerList = chatBotQuestionAnswerRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         ChatBotQuestionAnswer mostMatchedQuestionAnswer = null;
         double maxSimilarity = 0.0;
 

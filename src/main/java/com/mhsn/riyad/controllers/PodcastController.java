@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +46,7 @@ public class PodcastController {
         if (user != null) {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<Podcast> podcastList = podcastRepository.findAll();
+        List<Podcast> podcastList = podcastRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("podcastList", podcastList);
         return "podcasts/podcast-list";
     }
@@ -102,7 +103,7 @@ public class PodcastController {
             throw new RuntimeException("Failed to store the file", e);
         }
 
-        List<Podcast> podcastList = podcastRepository.findAll();
+        List<Podcast> podcastList = podcastRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("podcastList", podcastList);
         redirectAttributes.addFlashAttribute("podcastList", podcastList);
         return "redirect:/show-podcast-list";
@@ -157,7 +158,7 @@ public class PodcastController {
         } catch (IOException e) {
             throw new RuntimeException("Failed to delete the file", e);
         }
-        List<Podcast> podcastList = podcastRepository.findAll();
+        List<Podcast> podcastList = podcastRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("podcastList", podcastList);
         redirectAttributes.addFlashAttribute("podcastList", podcastList);
         return "redirect:/show-podcast-list";
