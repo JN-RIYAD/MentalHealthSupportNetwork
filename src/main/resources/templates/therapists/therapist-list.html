@@ -40,7 +40,8 @@
                         <th class="text-center">Gender</th>
                         <th class="text-center">Address</th>
                         <th class="text-center" style="width: 150px;"
-                            th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">Action
+                            th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin) or
+                                    (isUser != null and !#strings.isEmpty(isUser) and isUser)}">Action
                         </th>
                     </tr>
                     </thead>
@@ -52,18 +53,23 @@
                         <td class="text-left" th:text="${therapist.mobileNo}"/>
                         <td class="text-left" th:text="${therapist.gender}"/>
                         <td class="text-left" th:text="${therapist.address}"/>
-                        <td class="text-center" th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
-                            <span>
+                        <td class="text-center" th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin) or
+                                    (isUser != null and !#strings.isEmpty(isUser) and isUser)}">
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
                                 <a class="btn btn-warning" role="button"
                                    th:href="@{/show-update-therapist-page(id=${therapist.id})}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </span>
-                            <span>
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
                                 <a class="btn btn-danger" role="button"
                                    th:href="@{/therapist-delete(id=${therapist.id})}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
+                            </span>
+                            <span th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
+                                <a class="btn btn-primary" role="button" th:href="@{/}"> Send Message</a>
+                                <!--TODO: User can send message to therapist-->
                             </span>
                         </td>
                     </tr>

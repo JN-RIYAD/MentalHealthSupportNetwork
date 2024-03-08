@@ -31,6 +31,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
+      <a th:href = "@{/}" class="text-center">Forget Password? </a>
+      <!--      TODO: Retrieve Password by user information-->
+      <div class="text-center">Not Registered?
+        <a th:href = "@{/show-registration-page}" class="text-center">Register</a>
+      </div>
     </div>
   </div>
   <!-- Bootstrap Toast for displaying error message -->

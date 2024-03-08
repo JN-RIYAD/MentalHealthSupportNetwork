@@ -109,7 +109,7 @@ public class ChatBotUserSupportController {
 
     private int countWords(String message, Set<String> wordsToRemove) {
         // Split the message by spaces and remove commas and question marks
-        String[] words = message.replaceAll("[,?]", " ").toLowerCase().split("\\s+");
+        String[] words = message.replaceAll("[,?/.]", " ").toLowerCase().split("\\s+");
         return (int) Arrays.stream(words)
                 .filter(word -> !wordsToRemove.contains(word))
                 .count();
@@ -117,8 +117,8 @@ public class ChatBotUserSupportController {
 
     private int countMatchingWords(String message, String question, Set<String> wordsToRemove) {
         // Split the message and question by spaces and remove commas and question marks
-        Set<String> messageWords = new HashSet<>(Arrays.asList(message.replaceAll("[,?]", " ").toLowerCase().split("\\s+")));
-        Set<String> questionWords = new HashSet<>(Arrays.asList(question.replaceAll("[,?]", " ").toLowerCase().split("\\s+")));
+        Set<String> messageWords = new HashSet<>(Arrays.asList(message.replaceAll("[,?/.]", " ").toLowerCase().split("\\s+")));
+        Set<String> questionWords = new HashSet<>(Arrays.asList(question.replaceAll("[,?/.]", " ").toLowerCase().split("\\s+")));
         messageWords.removeAll(wordsToRemove);
         questionWords.removeAll(wordsToRemove);
         messageWords.retainAll(questionWords);
@@ -127,10 +127,10 @@ public class ChatBotUserSupportController {
 
     private double calculateJaccardSimilarity(String message, String question, Set<String> wordsToRemove) {
         // Split message and question into words and remove commas and question marks
-        Set<String> messageWords = Arrays.stream(message.replaceAll("[,?]", " ").toLowerCase().split("\\s+"))
+        Set<String> messageWords = Arrays.stream(message.replaceAll("[,?/.]", " ").toLowerCase().split("\\s+"))
                 .filter(word -> !wordsToRemove.contains(word))
                 .collect(Collectors.toSet());
-        Set<String> questionWords = Arrays.stream(question.replaceAll("[,?]", " ").toLowerCase().split("\\s+"))
+        Set<String> questionWords = Arrays.stream(question.replaceAll("[,?/.]", " ").toLowerCase().split("\\s+"))
                 .filter(word -> !wordsToRemove.contains(word))
                 .collect(Collectors.toSet());
 
