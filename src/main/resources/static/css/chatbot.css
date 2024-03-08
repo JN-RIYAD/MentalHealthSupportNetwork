@@ -18,10 +18,11 @@
 
 .user-message {
     font-weight: bold; /* Make the user message text bold */
-    background-color: #0c0d0d
+    background-color: #0c0d0d;
     color: #fff; /* White text color */
     padding: 10px;
     border-radius: 5px;
+    margin-right: 20px; /* Create space between user and bot message */
 }
 
 .time-stamp {
@@ -36,6 +37,20 @@
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
+    margin-left: 40px; /* Add indentation to the bot message */
+    position: relative; /* Position relative for reply box */
+}
+
+.bot-message:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 15px solid #90ee90; /* Adjust the color to match bot message */
 }
 
 /* CSS styles for the input field and send button */
