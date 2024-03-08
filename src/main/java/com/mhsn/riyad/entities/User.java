@@ -40,6 +40,9 @@ public class User {
     @Column(name = "password", columnDefinition = "nvarchar(500)")
     private String password;
 
+    @Column(name = "image_url", columnDefinition = "nvarchar(500)")
+    private String imageUrl;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "registration_date")
     private Date registrationDate;
@@ -56,6 +59,7 @@ public class User {
                 ", gender='" + gender + '\'' +
                 ", address='" + address + '\'' +
                 ", password='" + password + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", registrationDate=" + registrationDate +
                 '}';
     }

@@ -13,16 +13,11 @@
                     User Options
                 </a>
                 <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
-                    <!-- Check if isAdmin is set in model -->
-                    <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
-                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
-                    </div>
-                    <!-- Check if isTherapist is set in model -->
-                    <div th:if="${isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist}">
-                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
-                    </div>
-                    <!-- Check if isUser is set in model -->
-                    <div th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
+                    <!-- Check if isUser or isAdmin or isTherapist is set in model -->
+                    <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
+                                or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)
+                                or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
+                        <a th:href="@{/show-profile-page}" class="dropdown-item">Profile</a>
                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                     </div>
                     <!-- If none of the roles is set, show login and register links -->

@@ -89,3 +89,10 @@
         tr:nth-child(even) {
           background-color: #e3f7e1;
         }
+
+        .profile-pic {
+            border-radius: 50%; /* Make the image round */
+            width: 50px; /* Adjust the width as needed */
+            height: 50px; /* Adjust the height as needed */
+            object-fit: cover; /* Ensure the image covers the entire container */
+        }
