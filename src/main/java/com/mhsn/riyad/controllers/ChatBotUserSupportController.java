@@ -72,6 +72,22 @@ public class ChatBotUserSupportController {
         return "redirect:/show-chat-list";
     }
 
+    @Transactional
+    @GetMapping("/clear-chat")
+    public String clearChat(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            model.addAttribute("error", "Login to clear previous chat list");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        userChatBotHistoryRepository.deleteAllByUserId(user.getId());
+
+        List<UserChatBotHistory> chatList = userChatBotHistoryRepository.findByUserIdOrderByIdDesc(user.getId());
+        redirectAttributes.addFlashAttribute("chatList", chatList);
+        return "redirect:/show-chat-list";
+    }
     private ChatBotQuestionAnswer getMostMatchedQuestionAnswer(String message, User user) {
         // Define words to remove
         Set<String> wordsToRemove = new HashSet<>(Arrays.asList(
