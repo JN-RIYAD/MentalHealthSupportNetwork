@@ -1,14 +1,17 @@
 package com.mhsn.riyad.controllers;
 
+import com.mhsn.riyad.entities.Blog;
 import com.mhsn.riyad.entities.Podcast;
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.PodcastRepository;
+import com.mhsn.riyad.repositories.UserRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +38,8 @@ public class ProfileController {
     private UserService userService;
     @Value("${upload.base-dir}")
     private String baseUploadDir;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/show-profile-page")
     public String showProfilePage(Model model, HttpSession httpSession) {
@@ -46,5 +51,19 @@ public class ProfileController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         return "profiles/profile";
+    }
+
+    @GetMapping("/show-update-profile-page")
+    public String showUpdateProfilePage(Model model, HttpSession httpSession, @RequestParam Long id) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an user to update profile page");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        User profileToUpdate = userRepository.findById(id).get();
+        model.addAttribute("profileToUpdate", profileToUpdate);
+        return "profiles/update-profile";
     }
 }

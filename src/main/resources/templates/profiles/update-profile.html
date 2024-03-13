@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update User Profile-MHSN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<main role="main" class="main-content">
+  <div class="container">
+    <div class="pt-3">
+      <h1>Update User Profile</h1>
+      <form th:action="@{/profile-update}" th:object="${profileToUpdate}" method="POST">
+        <!-- Fields for Normal User profile update -->
+
+        <!-- Username -->
+        <div class="form-group">
+          <label for="userName">Username</label>
+          <input class="form-control" id="userName" th:field="*{userName}" placeholder="Enter your username" required type="text">
+        </div>
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input class="form-control" id="email" th:field="*{email}" placeholder="Enter your email address" required type="email">
+        </div>
+        <!-- Age -->
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input class="form-control" id="age" th:field="*{age}" placeholder="Enter your age" required type="number">
+        </div>
+        <!-- Mobile Number -->
+        <div class="form-group">
+          <label for="mobileNo">Mobile Number</label>
+          <input class="form-control" id="mobileNo" th:field="*{mobileNo}" placeholder="Enter your mobile number" required type="text">
+        </div>
+        <div class="form-group">
+          <label for="gender">Select Gender</label>
+          <select class="form-control" id="gender" th:field="*{gender}" required>
+            <option th:value="Male">Male</option>
+            <option th:value="Female">Female</option>
+            <option th:value="Other">Other</option>
+          </select>
+        </div>
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input class="form-control" id="address" th:field="*{address}" placeholder="Enter your address" required type="text">
+        </div>
+
+        <input th:field="*{id}" th:value="${profileToUpdate.id}" type="hidden"/>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+
+    </div>
+  </div>
+
+
+</main>
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
