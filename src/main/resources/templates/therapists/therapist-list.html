@@ -68,8 +68,7 @@
                                 </a>
                             </span>
                             <span th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
-                                <a class="btn btn-primary" role="button" th:href="@{/}"> Send Message</a>
-                                <!--TODO: User can send message to therapist-->
+                                <a class="btn btn-primary" role="button" th:href="@{/show-user-therapist-message-list(receiverId=${therapist.id})}"> Send Message</a>
                             </span>
                         </td>
                     </tr>

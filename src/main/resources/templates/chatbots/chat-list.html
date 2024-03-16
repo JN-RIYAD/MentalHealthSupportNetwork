@@ -61,7 +61,6 @@
                     <!-- Clear Chat button is shown only if chatList is not empty -->
                     <div th:if="${chatList != null and chatList.size() > 0}">
                         <a class="btn btn-primary mb-3" th:href="@{/clear-chat}">Clear Chat</a>
-                        <!--TODO: a chat clear route should be implemented by userId-->
                     </div>
                 </div>
             </div>
