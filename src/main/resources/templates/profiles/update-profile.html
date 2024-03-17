@@ -21,7 +21,7 @@
   <div class="container">
     <div class="pt-3">
       <h1>Update User Profile</h1>
-      <form th:action="@{/profile-update}" th:object="${profileToUpdate}" method="POST">
+      <form th:action="@{/update-profile}" th:object="${userToUpdate}" method="POST">
         <!-- Fields for Normal User profile update -->
 
         <!-- Username -->
@@ -58,7 +58,7 @@
           <input class="form-control" id="address" th:field="*{address}" placeholder="Enter your address" required type="text">
         </div>
 
-        <input th:field="*{id}" th:value="${profileToUpdate.id}" type="hidden"/>
+        <input th:field="*{id}" th:value="${userToUpdate.id}" type="hidden"/>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
 

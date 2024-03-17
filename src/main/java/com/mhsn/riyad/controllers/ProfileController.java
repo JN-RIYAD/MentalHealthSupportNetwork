@@ -54,16 +54,41 @@ public class ProfileController {
     }
 
     @GetMapping("/show-update-profile-page")
-    public String showUpdateProfilePage(Model model, HttpSession httpSession, @RequestParam Long id) {
+    public String showEditProfilePage(Model model, HttpSession httpSession, @RequestParam Long id) {
         User user = (User) httpSession.getAttribute("user");
-        if (user == null || !user.getRole().equals("admin")) {
-            model.addAttribute("error", "Login as an user to update profile page");
+        if (user == null ) {
+            model.addAttribute("error", "Login to update Profile");
             return "login";
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        User profileToUpdate = userRepository.findById(id).get();
-        model.addAttribute("profileToUpdate", profileToUpdate);
+        User userToUpdate = userRepository.findById(id).get();
+        model.addAttribute("userToUpdate", userToUpdate);
         return "profiles/update-profile";
     }
+
+
+        @PostMapping("/update-profile")
+        public String profileUpdate(Model model, HttpSession httpSession, @ModelAttribute User userToUpdate, RedirectAttributes redirectAttributes) {
+            User user = (User) httpSession.getAttribute("user");
+            if (user == null) {
+                model.addAttribute("error", "Login to update profile");
+                return "login";
+            } else {
+                userService.setRoleInModelAndHttpSession(httpSession, model, user);
+            }
+            User savedUser = userRepository.findById(user.getId()).get();
+            savedUser.setUserName(userToUpdate.getUserName());
+            savedUser.setEmail(userToUpdate.getEmail());
+            savedUser.setAge(userToUpdate.getAge());
+            savedUser.setMobileNo(userToUpdate.getMobileNo());
+            savedUser.setGender(userToUpdate.getGender());
+            savedUser.setAddress(userToUpdate.getAddress());
+            userRepository.save(savedUser);
+
+            userService.setRoleInModelAndHttpSession(httpSession, model, savedUser);
+
+            return "profiles/profile";
+        }
 }
+
