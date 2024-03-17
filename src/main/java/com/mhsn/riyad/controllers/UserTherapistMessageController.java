@@ -9,10 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
@@ -70,8 +67,9 @@ public class UserTherapistMessageController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        userTherapistMessageToSave.setSenderId(user.getId());
-        userTherapistMessageToSave.setReceiverId(receiverId);
+        User receiver = userService.findById(receiverId).get();
+        userTherapistMessageToSave.setSender(user);
+        userTherapistMessageToSave.setReceiver(receiver);
         userTherapistMessageToSave.setSentAt(new Date());
 
         userTherapistMessageRepository.save(userTherapistMessageToSave);
@@ -81,6 +79,21 @@ public class UserTherapistMessageController {
         UserTherapistMessage userTherapistMessage = new UserTherapistMessage();
         redirectAttributes.addFlashAttribute("userTherapistMessage", userTherapistMessage);
         return "redirect:/show-user-therapist-message-list?receiverId=" + receiverId;
+    }
+
+    @GetMapping("/show-user-message-list")
+    @ResponseBody
+    public String getUserMessages(Model model, HttpSession httpSession, @RequestParam Long userId) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            model.addAttribute("error", "Login first to chat with therapist");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        List<UserTherapistMessage> userTherapistMessageList = userTherapistMessageRepository.findByUserId(user.getId());
+        model.addAttribute("userTherapistMessageList", userTherapistMessageList);
+        return userTherapistMessageList.toString();
     }
 
 }

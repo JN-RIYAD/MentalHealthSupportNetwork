@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Not Answered Questions-MHSN</title>
+<div th:replace="fragments/common-header :: common-header"></div>
 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+<head>
+    <title>Not Answered Questions-MHSN</title>
 
 </head>
 <body>
@@ -26,7 +20,8 @@
     <div class="container">
         <div class="pt-3">
             <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
-                <a class="btn btn-warning mb-3" th:href="@{/show-chatbot-question-answer-list}">View ChatBot Question List</a>
+                <a class="btn btn-warning mb-3" th:href="@{/show-chatbot-question-answer-list}">View ChatBot Question
+                    List</a>
             </div>
             <h1>Not Answered Questions</h1>
             <div class="table-responsive">
@@ -43,8 +38,11 @@
                         <td class="text-left" th:text="${notAnsweredQuestion.question}"/>
                         <td class="text-left" th:text="${notAnsweredQuestion.user.userName}"/>
                         <td class="text-center">
-                            <a class="btn btn-primary" role="button" th:href="@{/show-set-answer-to-not-answered-page(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Set Answer</a>
-                            <a class="btn btn-danger" role="button" th:href="@{/not-answered-question-delete(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Delete</a>
+                            <a class="btn btn-primary" role="button"
+                               th:href="@{/show-set-answer-to-not-answered-page(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Set
+                                Answer</a>
+                            <a class="btn btn-danger" role="button"
+                               th:href="@{/not-answered-question-delete(notAnsweredQuestionId=${notAnsweredQuestion.id})}">Delete</a>
                         </td>
                     </tr>
                     </tbody>

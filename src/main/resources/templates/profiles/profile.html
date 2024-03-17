@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/common-header :: common-header"></div>
+
 <head>
-    <meta charset="UTF-8">
     <title>Profile-MHSN</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
     <link href="css/profile.css" rel="stylesheet">
 
 </head>
@@ -30,10 +28,12 @@
                                 <div class="col-sm-4 bg-c-lite-green user-profile">
                                     <div class="card-block text-center text-white">
                                         <div class="m-b-25" style="position: relative;">
-                                            <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
-                                              <!--TODO: image should be imageUrl-->
+                                            <img alt="User-Profile-Image"
+                                                 class="img-radius"
+                                                 src="https://img.icons8.com/bubbles/100/000000/user.png">
+                                            <!--TODO: image should be imageUrl-->
                                             <br>
-                                            <a th:href="@{/}" class="update-image-link">Update Image</a>
+                                            <a class="update-image-link" th:href="@{/}">Update Image</a>
                                             <!--TODO: update imageUrl with userId-->
                                         </div>
                                         <h3 class="f-w-600" th:text="${user.userName}"></h3>
@@ -72,7 +72,9 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600"></p>
-                                                <a class="btn btn-success mb-3" th:href="@{/show-update-profile-page(id=${user.id})}">Update Profile</a>
+                                                <a class="btn btn-success mb-3"
+                                                   th:href="@{/show-update-profile-page(id=${user.id})}">Update
+                                                    Profile</a>
                                                 <!--TODO: update user with userId-->
                                             </div>
                                         </div>

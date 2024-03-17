@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/common-header :: common-header"></div>
+
 <head>
-    <meta charset="UTF-8">
     <title>ChatBot Question Answer List-MHSN</title>
-
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-
 </head>
 <body>
 
@@ -25,9 +18,12 @@
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
-            <div th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}" class="d-flex justify-content-between">
-                <a class="btn btn-success mb-3" th:href="@{/show-chatbot-question-answer-add-page}">Add New Question-Answer</a>
-                <a class="btn btn-warning mb-3 ml-auto" th:href="@{/show-not-answered-question-list}">View Not Answered Question List</a>
+            <div class="d-flex justify-content-between"
+                 th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                <a class="btn btn-success mb-3" th:href="@{/show-chatbot-question-answer-add-page}">Add New
+                    Question-Answer</a>
+                <a class="btn btn-warning mb-3 ml-auto" th:href="@{/show-not-answered-question-list}">View Not Answered
+                    Question List</a>
             </div>
             <h1>ChatBot Question Answer List</h1>
             <div class="table-responsive">
@@ -44,10 +40,12 @@
                         <td class="text-left" th:text="${chatBotQuestionAnswer.question}"/>
                         <td class="text-left" th:text="${chatBotQuestionAnswer.answer}"/>
                         <td class="text-center">
-                            <a class="btn btn-primary" role="button" th:href="@{/show-chatbot-question-answer-update-page(id=${chatBotQuestionAnswer.id})}">
+                            <a class="btn btn-primary" role="button"
+                               th:href="@{/show-chatbot-question-answer-update-page(id=${chatBotQuestionAnswer.id})}">
                                 <i class="fas fa-edit"></i> <!-- Edit icon -->
                             </a>
-                            <a class="btn btn-danger" role="button" th:href="@{/chatbot-question-answer-delete(id=${chatBotQuestionAnswer.id})}">
+                            <a class="btn btn-danger" role="button"
+                               th:href="@{/chatbot-question-answer-delete(id=${chatBotQuestionAnswer.id})}">
                                 <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
                             </a>
                         </td>

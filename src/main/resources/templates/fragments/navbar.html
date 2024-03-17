@@ -8,8 +8,17 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
+            <!-- Add messenger icon along with "Messages" link -->
+            <li class="nav-item" th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
+                     or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
+                <a class="nav-link" th:href="@{/show-user-message-list(userId = ${user.id})}">
+                    <i class="fab fa-facebook-messenger"></i> <!-- Messenger icon -->
+                    Messages
+                </a>
+            </li>
             <li class="nav-item dropdown">
-                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                   href="#" id="navbarDropdown" role="button">
                     User Options
                 </a>
                 <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">
@@ -17,9 +26,9 @@
                     <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
                                 or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)
                                 or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
-                        <a th:href="@{/show-profile-page}" class="dropdown-item">Profile</a>
-                        <a th:href="@{/}" class="dropdown-item">Change Password</a>
-<!--                        TODO: change password by inputting old password and new password twitch-->
+                        <a class="dropdown-item" th:href="@{/show-profile-page}">Profile</a>
+                        <a class="dropdown-item" th:href="@{/}">Change Password</a>
+                        <!--TODO: change password by inputting old password and new password twitch-->
                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                     </div>
                     <!-- If none of the roles is set, show login and register links -->

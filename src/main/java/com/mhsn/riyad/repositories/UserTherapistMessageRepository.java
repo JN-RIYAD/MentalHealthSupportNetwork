@@ -29,4 +29,13 @@ public interface UserTherapistMessageRepository extends JpaRepository<UserTherap
             nativeQuery = true)
     @Transactional
     void clearMessagesBySenderIdAndReceiverId(Long senderId, Long receiverId);
+
+    @Query(value = """
+            SELECT utm.* FROM user_therapist_message AS utm
+            WHERE
+            utm.sender_id = :userId OR
+            utm.receiver_id = :userId
+            """,
+            nativeQuery = true)
+    List<UserTherapistMessage> findByUserId(Long userId);
 }
