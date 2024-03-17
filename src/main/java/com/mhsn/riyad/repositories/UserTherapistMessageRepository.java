@@ -1,6 +1,7 @@
 package com.mhsn.riyad.repositories;
 
 import com.mhsn.riyad.entities.UserTherapistMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,10 +23,10 @@ public interface UserTherapistMessageRepository extends JpaRepository<UserTherap
 
     @Modifying
     @Query(value = """
-            DELETE FROM user_therapist_message AS utm
-            WHERE
-            utm.sender_id = :senderId AND utm.receiver_id = :receiverId
+                DELETE FROM user_therapist_message
+                WHERE sender_id = :senderId AND receiver_id = :receiverId
             """,
             nativeQuery = true)
+    @Transactional
     void clearMessagesBySenderIdAndReceiverId(Long senderId, Long receiverId);
 }
