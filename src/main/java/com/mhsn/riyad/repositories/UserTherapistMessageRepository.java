@@ -1,8 +1,8 @@
 package com.mhsn.riyad.repositories;
 
-import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.entities.UserTherapistMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -17,6 +17,15 @@ public interface UserTherapistMessageRepository extends JpaRepository<UserTherap
                 (utm.receiver_id = :senderId AND utm.sender_id = :receiverId)
             )
             """,
-    nativeQuery = true)
+            nativeQuery = true)
     List<UserTherapistMessage> findBySenderIdAndReceiverId(Long senderId, Long receiverId);
+
+    @Modifying
+    @Query(value = """
+            DELETE FROM user_therapist_message AS utm
+            WHERE
+            utm.sender_id = :senderId AND utm.receiver_id = :receiverId
+            """,
+            nativeQuery = true)
+    void clearMessagesBySenderIdAndReceiverId(Long senderId, Long receiverId);
 }

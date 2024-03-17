@@ -32,7 +32,7 @@
                 <div class="chat-box" id="chatbox">
                     <div th:each="message: ${userTherapistMessageList}">
                         <!-- Check if the message sender is the current user -->
-                        <div th:if="${message.sender.id == userId}" class="message-container">
+                        <div th:if="${message.senderId == userId}" class="message-container">
                             <div class="sender-message">
                                 <span th:text="${message.content}"></span>
                                 <div class="time-stamp">
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <!-- Check if the message sender is the therapist -->
-                        <div th:if="${message.sender.id != userId}" class="message-container">
+                        <div th:if="${message.senderId != userId}" class="message-container">
                             <div class="receiver-message">
                                 <span th:text="${message.content}"></span>
                                 <div class="time-stamp">
@@ -49,17 +49,15 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <!-- Send New Message -->
                 <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
                      or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
-                    <form id="sendMessageForm" method="POST" th:action="@{/new-message-send}"
+                    <form id="sendMessageForm" method="POST" th:action="@{/new-message-save(receiverId = ${param.receiverId})}"
                           th:object="${userTherapistMessage}">
                         <div class="form-group chat-input-group">
-                            <input type="text" id="userInput" class="user-input" th:field="*{content}" placeholder="Type your message..."
-                                   required rows="3">
+                            <textarea id="userInput" class="user-input" th:field="*{content}" placeholder="Type your message..." required></textarea>
                             <button id="sendMessageBtn" class="send-button" type="submit">Send</button>
                         </div>
                     </form>
@@ -67,6 +65,9 @@
                 <!-- Clear Chat button -->
                 <div th:if="${userTherapistMessageList != null and userTherapistMessageList.size() > 0}">
                     <button id="clearChatBtn" class="btn btn-warning mb-3">Clear Chat</button>
+                    <span class="text-right">
+                    <button id="refreshBtn" class="btn btn-info mb-3">Refresh</button>
+                    </span>
                 </div>
             </div>
         </div>
