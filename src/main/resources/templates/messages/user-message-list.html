@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/common-header :: common-header"></div>
+
+<head>
+    <title>Messages-MHSN</title>
+    <link href="css/message.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <div class="chat-container">
+                <div class="chat-box" id="chatbox">
+                    <h2>Last Conversations</h2>
+                    <hr>
+                    <!--TODO: Needs to modify the css-->
+                    <div th:each="message: ${userTherapistLastMessageList}">
+                        <!-- Check if the message sender is the current user -->
+                        <div class="message-container" th:if="${message.sender.id == userId}">
+                            <div class="sender-message">
+                                <span th:text="${message.content}"></span>
+                                <div class="time-stamp">
+                                    <span th:text="${message.sentAt}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Check if the message sender is the therapist -->
+                        <div class="message-container" th:if="${message.sender.id != userId}">
+                            <div class="receiver-message">
+                                <span th:text="${message.content}"></span>
+                                <div class="time-stamp">
+                                    <span th:text="${message.sentAt}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        $('#clearChatBtn').on('click', function () {
+            if (confirm('Are you sure?')) {
+                // Get the receiverId from the current URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const receiverId = urlParams.get('receiverId');
+
+                // Redirect to the clear-messages route with receiverId
+                window.location.href = '/clear-messages?receiverId=' + receiverId;
+            }
+        });
+    });
+</script>
+</body>
+</html>

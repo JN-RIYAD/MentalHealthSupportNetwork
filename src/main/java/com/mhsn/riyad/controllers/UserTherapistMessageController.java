@@ -9,9 +9,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -82,18 +86,25 @@ public class UserTherapistMessageController {
     }
 
     @GetMapping("/show-user-message-list")
-    @ResponseBody
-    public String getUserMessages(Model model, HttpSession httpSession, @RequestParam Long userId) {
+    public String getUserMessages(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
-            model.addAttribute("error", "Login first to chat with therapist");
+            model.addAttribute("error", "Login first to see message list");
             return "login";
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<UserTherapistMessage> userTherapistMessageList = userTherapistMessageRepository.findByUserId(user.getId());
-        model.addAttribute("userTherapistMessageList", userTherapistMessageList);
-        return userTherapistMessageList.toString();
+        List<UserTherapistMessage> userTherapistLastMessageList = new ArrayList<>();
+        if (user.getRole().equals("user"))
+            userTherapistLastMessageList = userTherapistMessageRepository.getLastMessageListByUserId(user.getId());
+        else if (user.getRole().equals("therapist"))
+            userTherapistLastMessageList = userTherapistMessageRepository.getLastMessageListByTherapistId(user.getId());
+        else {
+            model.addAttribute("error", "Login as user or therapist to see message list");
+            return "login";
+        }
+        model.addAttribute("userTherapistLastMessageList", userTherapistLastMessageList);
+        return "messages/user-message-list";
     }
 
 }
