@@ -18,8 +18,9 @@
                                 or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)
                                 or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
                         <a th:href="@{/show-profile-page}" class="dropdown-item">Profile</a>
-                        <a th:href="@{/}" class="dropdown-item">Change Password</a>
-<!--                        TODO: change password by inputting old password and new password twitch-->
+
+                        <a th:href="@{/show-password-change-page}" class="dropdown-item">Change Password</a>
+                        <!--TODO: change password by inputting old password and new password twitch-->
                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                     </div>
                     <!-- If none of the roles is set, show login and register links -->
