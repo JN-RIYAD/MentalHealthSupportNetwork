@@ -63,7 +63,7 @@
                      th:if="${userTherapistMessageList != null and userTherapistMessageList.size() > 0}">
                     <a class="btn btn-warning mb-3" id="clearChatBtn"
                        th:href="@{/clear-messages(receiverId=${param.receiverId})}">
-                        Clear Chat <i class="fas fa-trash-alt"></i>
+                        Clear Your Chat <i class="fas fa-trash-alt"></i>
                     </a>
                     <a class="btn btn-info mb-3" id="refreshBtn"
                        th:href="@{/show-user-therapist-message-list(receiverId=${param.receiverId})}">
