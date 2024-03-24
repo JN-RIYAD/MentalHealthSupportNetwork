@@ -40,22 +40,27 @@ public interface UserTherapistMessageRepository extends JpaRepository<UserTherap
     List<UserTherapistMessage> findByUserId(Long userId);
 
     @Query(value = """
-            SELECT utm.*
-            FROM user_therapist_message AS utm
-            JOIN (
-                SELECT
-                    CASE
-                        WHEN utm.sender_id = :userId THEN utm.receiver_id
-                        ELSE utm.sender_id
-                    END AS therapist_id,
-                    MAX(utm.sent_at) AS max_sent_at
-                FROM user_therapist_message AS utm
-                WHERE utm.sender_id = :userId OR utm.receiver_id = :userId
-                GROUP BY therapist_id
-            ) AS max_dates
-            ON (utm.sender_id = :userId AND utm.receiver_id = max_dates.therapist_id)
-                OR (utm.receiver_id = :userId AND utm.sender_id = max_dates.therapist_id)
-                AND utm.sent_at = max_dates.max_sent_at;
+                        SELECT m1.*
+                        FROM user_therapist_message m1
+                        JOIN (
+                            SELECT
+                                CASE
+                                    WHEN sender_id = :userId THEN receiver_id
+                                    ELSE sender_id
+                                END AS other_user_id,
+                                MAX(sent_at) AS max_sent_at
+                            FROM user_therapist_message
+                            WHERE sender_id = :userId OR receiver_id = :userId
+                            GROUP BY
+                                CASE
+                                    WHEN sender_id = :userId THEN receiver_id
+                                    ELSE sender_id
+                                END
+                        ) m2 ON
+                            (m1.sender_id = :userId AND m1.receiver_id = m2.other_user_id OR
+                            m1.receiver_id = :userId AND m1.sender_id = m2.other_user_id) AND
+                            m1.sent_at = m2.max_sent_at
+                        ORDER BY m1.sent_at DESC
             """,
             nativeQuery = true)
     List<UserTherapistMessage> getLastMessageListByUserId(Long userId);
@@ -64,7 +69,7 @@ public interface UserTherapistMessageRepository extends JpaRepository<UserTherap
             SELECT utm.*
             FROM user_therapist_message AS utm
             JOIN (
-                SELECT\s
+                SELECT
                     CASE
                         WHEN utm.sender_id = :therapistId THEN utm.receiver_id
                         ELSE utm.sender_id

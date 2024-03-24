@@ -41,20 +41,7 @@ public class AdminUserChatBotInitializer {
             admin.setRole("admin");
             admin.setUserName("Riyad");
             userRepository.save(admin);
-        } else {
-            User admin = existingAdmin.get();
-            admin.setAddress("Dhaka");
-            admin.setAge(25);
-            admin.setEmail(adminEmail);
-            admin.setGender("Male");
-            admin.setMobileNo("01744330734");
-            admin.setPassword(passwordEncoder.encode("123456")); // Use a password encoder
-            admin.setRegistrationDate(new Date());
-            admin.setRole("admin");
-            admin.setUserName("Riyad");
-            userRepository.save(admin);
         }
-
         Optional<ChatBotQuestionAnswer> existingQuestionAnswer = chatBotQuestionAnswerRepository.findById(1L);
         if (existingQuestionAnswer.isEmpty()) {
             ChatBotQuestionAnswer questionAnswer = new ChatBotQuestionAnswer();

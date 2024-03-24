@@ -4,9 +4,7 @@
 
 <head>
     <title>Messages-MHSN</title>
-    <link href="css/message.css" rel="stylesheet">
-
-
+    <link href="css/user-message.css" rel="stylesheet">
 </head>
 <body>
 
@@ -29,21 +27,27 @@
                     <div th:each="message: ${userTherapistLastMessageList}">
                         <!-- Check if the message sender is the current user -->
                         <div class="message-container" th:if="${message.sender.id == userId}">
-                            <div class="sender-message">
+                            <a class="sender-message"
+                               th:href="@{/show-user-therapist-message-list(receiverId=${message.receiver.id})}">
+                                <h6><u><span th:text=${message.receiver.userName}></span></u></h6>
+                                <span>@you said: </span>
                                 <span th:text="${message.content}"></span>
                                 <div class="time-stamp">
-                                    <span th:text="${message.sentAt}"></span>
+                                    on: <span th:text="${message.sentAt}"></span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <!-- Check if the message sender is the therapist -->
-                        <div class="message-container" th:if="${message.sender.id != userId}">
-                            <div class="receiver-message">
+                        <div class="message-container" th:if="${message.receiver.id == userId}">
+                            <a class="receiver-message"
+                               th:href="@{/show-user-therapist-message-list(receiverId=${message.sender.id})}">
+                                <h6><u><span th:text=${message.sender.userName}></span></u></h6>
+                                @<span th:text=${message.sender.userName}></span> said:
                                 <span th:text="${message.content}"></span>
                                 <div class="time-stamp">
-                                    <span th:text="${message.sentAt}"></span>
+                                    on: <span th:text="${message.sentAt}"></span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -54,12 +58,8 @@
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+<div th:replace="fragments/common-scripts :: common-scripts"></div>
+
 <script>
     $(document).ready(function () {
         $('#clearChatBtn').on('click', function () {

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class UserTherapistMessageController {
     private UserTherapistMessageRepository userTherapistMessageRepository;
 
     @GetMapping("/show-user-therapist-message-list")
-    public String showChatList(Model model, HttpSession httpSession, @RequestParam Long receiverId) {
+    public String showUserTherapistMessageList(Model model, HttpSession httpSession, @RequestParam Long receiverId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to chat with therapist");
@@ -94,15 +93,8 @@ public class UserTherapistMessageController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        List<UserTherapistMessage> userTherapistLastMessageList = new ArrayList<>();
-        if (user.getRole().equals("user"))
-            userTherapistLastMessageList = userTherapistMessageRepository.getLastMessageListByUserId(user.getId());
-        else if (user.getRole().equals("therapist"))
-            userTherapistLastMessageList = userTherapistMessageRepository.getLastMessageListByTherapistId(user.getId());
-        else {
-            model.addAttribute("error", "Login as user or therapist to see message list");
-            return "login";
-        }
+        List<UserTherapistMessage> userTherapistLastMessageList = userTherapistMessageRepository.getLastMessageListByUserId(user.getId());
+
         model.addAttribute("userTherapistLastMessageList", userTherapistLastMessageList);
         return "messages/user-message-list";
     }

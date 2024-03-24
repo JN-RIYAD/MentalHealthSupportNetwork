@@ -11,13 +11,18 @@
             <!-- Add messenger icon along with "Messages" link -->
             <li class="nav-item" th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
                      or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
-                <a class="nav-link" th:href="@{/show-user-message-list}">
-                    Messages<i class="fab fa-facebook-messenger"></i> <!-- Messenger icon -->
+                <a class="nav-link text-center" th:href="@{/show-user-message-list}">
+                    <i class="fab fa-facebook-messenger"></i> <!-- Messenger icon -->
+                    <br>
+                    Messages
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
-                   href="#" id="navbarDropdown" role="button">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle text-center"
+                   data-toggle="dropdown"
+                   href="#"
+                   id="navbarDropdown" role="button">
+                    <i class="fas fa-user"></i> <br>
                     User Options
                 </a>
                 <div aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-right">

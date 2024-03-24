@@ -34,7 +34,7 @@
         height: 100vh;
         position: fixed;
         width: 200px; /* Set the sidebar width */
-        top: 70px;
+        top: 80px;
         padding-top: 20px;
     }
     .sidebar .btn {
