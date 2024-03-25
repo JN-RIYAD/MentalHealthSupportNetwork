@@ -23,7 +23,6 @@
                 <div class="chat-box" id="chatbox">
                     <h2>Last Conversations</h2>
                     <hr>
-                    <!--TODO: Needs to modify the css-->
                     <div th:each="message: ${userTherapistLastMessageList}">
                         <!-- Check if the message sender is the current user -->
                         <div class="message-container" th:if="${message.sender.id == userId}">
