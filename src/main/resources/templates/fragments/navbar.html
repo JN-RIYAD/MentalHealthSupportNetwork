@@ -31,7 +31,7 @@
                                 or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)
                                 or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
                         <a class="dropdown-item" th:href="@{/show-profile-page}">Profile</a>
-                        <a class="dropdown-item" th:href="@{/}">Change Password</a>
+                        <a class="dropdown-item" th:href="@{/show-password-change-page}">Change Password</a>
                         <!--TODO: change password by inputting old password and new password twitch-->
                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                     </div>
