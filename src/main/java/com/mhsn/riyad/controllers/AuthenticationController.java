@@ -1,6 +1,7 @@
 package com.mhsn.riyad.controllers;
 
 import com.mhsn.riyad.entities.User;
+import com.mhsn.riyad.repositories.UserRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -27,6 +29,8 @@ public class AuthenticationController {
     private boolean successToastShown = false;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private UserRepository userRepository;
 
 
     @GetMapping("/")
@@ -117,8 +121,8 @@ public class AuthenticationController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
 
-        String encryptedOldPassword = passwordEncoder.encode(oldPassword);
-        if ( encryptedOldPassword != user.getPassword())
+        boolean isMatched = passwordEncoder.matches(oldPassword, user.getPassword());
+        if (!isMatched)
         {
             model.addAttribute("error", "Old password not matched");
             return "password-change";
@@ -131,11 +135,13 @@ public class AuthenticationController {
         String encryptedNewPassword = passwordEncoder.encode(newPassword);
         user.setPassword(encryptedNewPassword);
 
-        userService.saveUser(user);
+        userRepository.save(user);
+
 
         redirectAttributes.addFlashAttribute("success", "Password changed successfully");
+        userService.setRoleInModelAndHttpSession(httpSession, model, user);
 
-        return "password changed";
+        return "redirect:/";
     }
 
 }
