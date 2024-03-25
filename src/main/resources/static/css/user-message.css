@@ -1,0 +1,55 @@
+/* CSS styles for the chat container */
+.chat-container {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.chat-box {
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.message-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    max-width: calc(100% - 20px); /* Take up full width minus padding */
+    word-wrap: break-word;
+}
+
+.message a {
+    text-decoration: none; /* Remove underline from links within message container */
+}
+
+.sender-message,
+.receiver-message {
+    width: 97%;
+    padding: 10px;
+    display: block; /* Ensures entire message container is clickable */
+    text-decoration: none; /* Removes underline from message container */
+    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+    background-color: #dee3df;
+    color: #000;
+}
+
+.sender-message:hover,
+.receiver-message:hover {
+    background-color: #3290f5; /* Change background color on hover */
+    text-decoration: none; /* Removes underline from message container */
+    color: #ffffff;
+}
+
+.sender-message h6,
+.receiver-message h6 {
+    margin: 0; /* Remove default margin from heading */
+}
+
+.time-stamp {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #212529;
+}

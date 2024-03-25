@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Add New ChatBot Question Answer-MHSN</title>
+<div th:replace="fragments/common-header :: common-header"></div>
 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+<head>
+    <title>Add New ChatBot Question Answer-MHSN</title>
 </head>
 <body>
 
@@ -26,11 +22,13 @@
             <form method="POST" th:action="@{/chatbot-question-answer-save}" th:object="${chatBotQuestionAnswer}">
                 <div class="form-group">
                     <label for="question">Question</label>
-                    <input class="form-control" id="question"  placeholder="Enter Question" required th:field="*{question}" type="text">
+                    <input class="form-control" id="question" placeholder="Enter Question" required
+                           th:field="*{question}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="answer">Answer</label>
-                    <textarea class="form-control" id="answer" placeholder="Enter Answer of this Question" required rows="5" th:field="*{answer}"></textarea>
+                    <textarea class="form-control" id="answer" placeholder="Enter Answer of this Question" required
+                              rows="5" th:field="*{answer}"></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
@@ -40,10 +38,8 @@
 
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
-
 <!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:replace="fragments/common-scripts :: common-scripts"></div>
+
 </body>
 </html>

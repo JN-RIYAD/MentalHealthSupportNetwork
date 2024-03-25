@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Therapist-MHSN</title>
+<div th:replace="fragments/common-header :: common-header"></div>
 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+<head>
+    <title>Update Therapist-MHSN</title>
 </head>
 <body>
 
@@ -25,27 +22,32 @@
             <form method="POST" th:action="@{/therapist-update}" th:object="${therapistToUpdate}">
                 <div class="form-group">
                     <label for="userName">Username</label>
-                    <input class="form-control" id="userName" placeholder="Enter therapist's username" required th:field="*{userName}" type="text">
+                    <input class="form-control" id="userName" placeholder="Enter therapist's username" required
+                           th:field="*{userName}" type="text">
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input class="form-control" id="email" placeholder="Enter therapist's email address" required th:field="*{email}" type="email">
+                    <input class="form-control" id="email" placeholder="Enter therapist's email address" required
+                           th:field="*{email}" type="email">
                 </div>
 
                 <div class="form-group">
                     <label for="age">Age</label>
-                    <input class="form-control" id="age" placeholder="Enter therapist's age" required th:field="*{age}" type="number">
+                    <input class="form-control" id="age" placeholder="Enter therapist's age" required th:field="*{age}"
+                           type="number">
                 </div>
 
                 <div class="form-group">
                     <label for="mobileNo">Mobile Number</label>
-                    <input class="form-control" id="mobileNo" placeholder="Enter therapist's mobile number" required th:field="*{mobileNo}" type="text">
+                    <input class="form-control" id="mobileNo" placeholder="Enter therapist's mobile number" required
+                           th:field="*{mobileNo}" type="text">
                 </div>
 
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input class="form-control" id="address" placeholder="Enter therapist's address" required th:field="*{address}" type="text">
+                    <input class="form-control" id="address" placeholder="Enter therapist's address" required
+                           th:field="*{address}" type="text">
                 </div>
                 <!-- Gender -->
                 <div class="form-group">
@@ -60,13 +62,15 @@
                 <!-- Password & Confirm Password -->
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input class="form-control" id="password" th:field="*{password}" placeholder="Enter password" required type="password" pattern=".{6,}">
+                    <input class="form-control" id="password" pattern=".{6,}" placeholder="Enter password"
+                           required th:field="*{password}" type="password">
                 </div>
                 <div class="form-group">
                     <!-- Confirm Password -->
                     <label for="confirmPassword">Confirm Password</label>
-                    <input class="form-control" id="confirmPassword" pattern=".{6,}" placeholder="Confirm password" required type="password">
-                    <span id="passwordError" class="text-danger"></span>
+                    <input class="form-control" id="confirmPassword" pattern=".{6,}" placeholder="Confirm password"
+                           required type="password">
+                    <span class="text-danger" id="passwordError"></span>
                 </div>
                 <input th:field="*{id}" th:value="${therapistToUpdate.id}" type="hidden"/>
                 <button class="btn btn-primary" type="submit">Update</button>
@@ -74,7 +78,8 @@
         </div>
     </div>
     <!--  Toast-->
-    <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 80px; margin-right: 30px;" th:if="${error}">
+    <div class="toast" style="position: absolute; top: 0; right: 0; margin-top: 80px; margin-right: 30px;"
+         th:if="${error}">
         <div class="toast-header bg-dark">
             <strong class="mr-auto text-white">Error</strong>
             <button class="ml-2 mb-1 close" data-dismiss="toast" type="button">&times;</button>
@@ -87,9 +92,8 @@
 <div th:replace="fragments/footer :: footer"></div>
 
 <!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:replace="fragments/common-scripts :: common-scripts"></div>
+
 <script>
     $(document).ready(function () {
         // Script to activate Bootstrap Toast

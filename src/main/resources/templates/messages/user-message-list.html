@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/common-header :: common-header"></div>
+
+<head>
+    <title>Messages-MHSN</title>
+    <link href="css/user-message.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- Sidebar -->
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+<!-- Main content area -->
+<main class="main-content" role="main">
+    <div class="container">
+        <div class="pt-3">
+            <div class="chat-container">
+                <div class="chat-box" id="chatbox">
+                    <h2>Last Conversations</h2>
+                    <hr>
+                    <!--TODO: Needs to modify the css-->
+                    <div th:each="message: ${userTherapistLastMessageList}">
+                        <!-- Check if the message sender is the current user -->
+                        <div class="message-container" th:if="${message.sender.id == userId}">
+                            <a class="sender-message"
+                               th:href="@{/show-user-therapist-message-list(receiverId=${message.receiver.id})}">
+                                <h6><u><span th:text=${message.receiver.userName}></span></u></h6>
+                                <span>@you said: </span>
+                                <span th:text="${message.content}"></span>
+                                <div class="time-stamp">
+                                    on: <span th:text="${message.sentAt}"></span>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- Check if the message sender is the therapist -->
+                        <div class="message-container" th:if="${message.receiver.id == userId}">
+                            <a class="receiver-message"
+                               th:href="@{/show-user-therapist-message-list(receiverId=${message.sender.id})}">
+                                <h6><u><span th:text=${message.sender.userName}></span></u></h6>
+                                @<span th:text=${message.sender.userName}></span> said:
+                                <span th:text="${message.content}"></span>
+                                <div class="time-stamp">
+                                    on: <span th:text="${message.sentAt}"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Footer -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<div th:replace="fragments/common-scripts :: common-scripts"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#clearChatBtn').on('click', function () {
+            if (confirm('Are you sure?')) {
+                // Get the receiverId from the current URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const receiverId = urlParams.get('receiverId');
+
+                // Redirect to the clear-messages route with receiverId
+                window.location.href = '/clear-messages?receiverId=' + receiverId;
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Podcast-MHSN</title>
+<div th:replace="fragments/common-header :: common-header"></div>
 
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+<head>
+    <title>Add Podcast-MHSN</title>
 </head>
 <body>
 
@@ -58,9 +54,7 @@
 <div th:replace="fragments/footer :: footer"></div>
 
 <!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:replace="fragments/common-scripts :: common-scripts"></div>
 <script>
     function validateFileSize(input) {
     const maxSize = 10 * 1024 * 1024; // 10MB

@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/common-header :: common-header"></div>
 <head>
-    <meta charset="UTF-8">
     <title>Add Blog-MHSN</title>
-
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -26,19 +21,23 @@
             <form method="POST" th:action="@{/blog-save}" th:object="${blog}">
                 <div class="form-group">
                     <label for="title">Blog Title</label>
-                    <input class="form-control" id="title" placeholder="Enter Blog Title" required th:field="*{title}" type="text">
+                    <input class="form-control" id="title" placeholder="Enter Blog Title" required th:field="*{title}"
+                           type="text">
                 </div>
                 <div class="form-group">
                     <label for="topic">Topic</label>
-                    <input class="form-control" id="topic" placeholder="Enter Topic of This Blog" required th:field="*{topic}" type="text">
+                    <input class="form-control" id="topic" placeholder="Enter Topic of This Blog" required
+                           th:field="*{topic}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="author">Author</label>
-                    <input class="form-control" id="author" placeholder="Enter Author Name"  required th:field="*{author}" type="text">
+                    <input class="form-control" id="author" placeholder="Enter Author Name" required
+                           th:field="*{author}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="description">Blog Description</label>
-                    <textarea class="form-control" id="description" placeholder="Enter Blog Description" required rows="5" th:field="*{description}"></textarea>
+                    <textarea class="form-control" id="description" placeholder="Enter Blog Description" required
+                              rows="5" th:field="*{description}"></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
@@ -49,9 +48,6 @@
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:replace="fragments/common-scripts :: common-scripts"></div>
 </body>
 </html>
