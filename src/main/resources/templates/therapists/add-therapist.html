@@ -34,12 +34,35 @@
                     <input class="form-control" id="email" placeholder="Enter therapist's email address" required
                            th:field="*{email}" type="email">
                 </div>
+                <!-- Fathers name -->
+                <div class="form-group">
+                    <label for="fatherName">Father name</label>
+                    <input class="form-control" id="fatherName" placeholder="Enter therapist's father name" required
+                           th:field="*{fatherName}" type="text">
+                </div>
+                <!-- mothers name -->
+                <div class="form-group">
+                    <label for="motherName">Mother name</label>
+                    <input class="form-control" id="motherName" placeholder="Enter therapist's mother name" required
+                           th:field="*{motherName}" type="text">
+                </div>
                 <!-- Age & Mobile Number -->
                 <!-- Age -->
+                <div class="form-group">
+                    <label for="dateOfBirth">Date Of Birth</label>
+                    <input class="form-control" id="dateOfBirth" placeholder="Enter therapist's DOB" required
+                           th:field="*{dateOfBirth}" type="text">
+                </div>
+
                 <div class="form-group">
                     <label for="age">Age</label>
                     <input class="form-control" id="age" placeholder="Enter therapist's age" required th:field="*{age}"
                            type="number">
+                </div>
+                <div class="form-group">
+                    <label for="nidNo">NID Number</label>
+                    <input class="form-control" id="nidNo" placeholder="Enter therapist's NID number"
+                           required th:field="*{nidNo}" type="text">
                 </div>
                 <!-- Mobile Number -->
                 <div class="form-group">
@@ -57,6 +80,16 @@
                         <option th:value="other">Other</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="religion">Select Religion</label>
+                    <select class="form-control" id="religion" required th:field="*{religion}">
+                        <option th:value="Muslim">Muslim</option>
+                        <option th:value="Hindu">Hindu</option>
+                        <option th:value="Buddhist">Buddhist</option>
+                        <option th:value="Christian">Christian</option>
+                        <option th:value="Christian">Other</option>
+                    </select>
+                </div>
                 <!-- Address -->
                 <div class="form-group">
                     <label for="address">Address</label>
@@ -66,13 +99,13 @@
                 <!-- Password & Confirm Password -->
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input class="form-control" id="password" pattern=".{6,}" placeholder="Enter your password"
+                    <input class="form-control" id="password" pattern=".{6,}" placeholder="Enter password for therapist"
                            required th:field="*{password}" type="password">
                 </div>
                 <div class="form-group">
                     <!-- Confirm Password -->
                     <label for="confirmPassword">Confirm Password</label>
-                    <input class="form-control" id="confirmPassword" pattern=".{6,}" placeholder="Confirm your password"
+                    <input class="form-control" id="confirmPassword" pattern=".{6,}" placeholder="Confirm password"
                            required type="password">
                     <span class="text-danger" id="passwordError"></span>
                 </div>

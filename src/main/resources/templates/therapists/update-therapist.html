@@ -33,9 +33,33 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="fatherName">Father's name</label>
+                    <input class="form-control" id="fatherName" placeholder="Enter therapist's father's name" required
+                           th:field="*{fatherName}" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="motherName">mother's Name</label>
+                    <input class="form-control" id="motherName" placeholder="Enter therapist's mother's Name" required
+                           th:field="*{motherName}" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfBirth">Age</label>
+                    <input class="form-control" id="dateOfBirth" placeholder="Enter therapist's date Of birth" required th:field="*{age}"
+                           type="text">
+                </div>
+
+                <div class="form-group">
                     <label for="age">Age</label>
                     <input class="form-control" id="age" placeholder="Enter therapist's age" required th:field="*{age}"
                            type="number">
+                </div>
+
+                <div class="form-group">
+                    <label for="nidNo">NID  Number</label>
+                    <input class="form-control" id="nidNo" placeholder="Enter therapist's NID number" required
+                           th:field="*{nidNo}" type="text">
                 </div>
 
                 <div class="form-group">
@@ -56,6 +80,17 @@
                         <option th:value="male">Male</option>
                         <option th:value="female">Female</option>
                         <option th:value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="religion">Select therapist's religion</label>
+                    <select class="form-control" id="religion" required th:field="*{religion}">
+                        <option th:value="Muslim">Muslim</option>
+                        <option th:value="Hindu">Hindu</option>
+                        <option th:value="Buddhist">Buddhist</option>
+                        <option th:value="Christian">Christian</option>
+                        <option th:value="Christian">Other</option>
                     </select>
                 </div>
                 <!-- Password & Confirm Password -->

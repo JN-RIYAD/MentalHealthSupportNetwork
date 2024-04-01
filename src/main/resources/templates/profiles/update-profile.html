@@ -28,6 +28,19 @@
                     <input class="form-control" id="userName" placeholder="Enter your username" required
                            th:field="*{userName}" type="text">
                 </div>
+                <!-- parents name -->
+                <!-- Father name -->
+                <div class="form-group">
+                    <label for="fatherName">Father name</label>
+                    <input class="form-control" id="fatherName" placeholder="Enter your father name" required
+                           th:field="*{fatherName}" type="text">
+                </div>
+                <!-- mother name -->
+                <div class="form-group">
+                    <label for="motherName">Mother name</label>
+                    <input class="form-control" id="motherName" placeholder="Enter your mother name" required
+                           th:field="*{motherName}" type="text">
+                </div>
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -35,6 +48,12 @@
                            th:field="*{email}" type="email">
                 </div>
                 <!-- Age -->
+                <div class="form-group">
+                    <label for="dateOfBirth">Date Of Birth</label>
+                    <input class="form-control" id="dateOfBirth" placeholder="Enter your DOB" required
+                           th:field="*{dateOfBirth}" type="text">
+                </div>
+
                 <div class="form-group">
                     <label for="age">Age</label>
                     <input class="form-control" id="age" placeholder="Enter your age" required th:field="*{age}"

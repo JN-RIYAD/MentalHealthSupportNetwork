@@ -34,12 +34,34 @@
                     <input class="form-control" id="email" placeholder="Enter your email address" required
                            th:field="*{email}" type="email">
                 </div>
-                <!-- Age & Mobile Number -->
+                <!-- Father name -->
+                <div class="form-group">
+                    <label for="fatherName">Father name</label>
+                    <input class="form-control" id="fatherName" placeholder="Enter your father name" required
+                           th:field="*{fatherName}" type="text">
+                </div>
+                <!-- mother name -->
+                <div class="form-group">
+                    <label for="motherName">Mother name</label>
+                    <input class="form-control" id="motherName" placeholder="Enter your mother name" required
+                           th:field="*{motherName}" type="text">
+                </div>
                 <!-- Age -->
+                <div class="form-group">
+                    <label for="dateOfBirth">Date Of Birth</label>
+                    <input class="form-control" id="dateOfBirth" placeholder="Enter your DOB" required
+                           th:field="*{dateOfBirth}" type="text">
+                </div>
                 <div class="form-group">
                     <label for="age">Age</label>
                     <input class="form-control" id="age" placeholder="Enter your age" required th:field="*{age}"
                            type="number">
+                </div>
+
+                <div class="form-group">
+                    <label for="nidNo">NID Number</label>
+                    <input class="form-control" id="nidNo" placeholder="Enter your NID number"
+                           required th:field="*{nidNo}" type="text">
                 </div>
                 <!-- Mobile Number -->
                 <div class="form-group">
@@ -55,12 +77,44 @@
                         <option th:value="Other">Other</option>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="religion">Select Religion</label>
+                    <select class="form-control" id="religion" required th:field="*{religion}">
+                        <option th:value="Muslim">Muslim</option>
+                        <option th:value="Hindu">Hindu</option>
+                        <option th:value="Buddhist">Buddhist</option>
+                        <option th:value="Christian">Christian</option>
+                    </select>
+                </div>
                 <!-- Address -->
                 <div class="form-group">
                     <label for="address">Address</label>
                     <input class="form-control" id="address" placeholder="Enter your address" required
                            th:field="*{address}" type="text">
                 </div>
+                <!-- question and answer for reset Password -->
+                <div class="form-group">
+                    <label for="question1">first Question</label>
+                    <input class="form-control" id="question1"  placeholder="Enter your first Question"
+                           required th:field="*{question1}" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="answer1">first answer</label>
+                    <input class="form-control" id="answer1"  placeholder="Enter your answer"
+                           required th:field="*{answer1}" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="question2">second Question</label>
+                    <input class="form-control" id="question2"  placeholder="Enter your second Question"
+                           required th:field="*{question2}" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="answer2">second answer</label>
+                    <input class="form-control" id="answer2"  placeholder="Enter your answer"
+                           required th:field="*{answer2}" type="text">
+                </div>
+
                 <!-- Password & Confirm Password -->
                 <div class="form-group">
                     <label for="password">Password</label>
