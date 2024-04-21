@@ -9,11 +9,12 @@
         <a class="btn" th:href="@{/show-blog-list}">Blogs</a>
         <a class="btn" th:href="@{/show-podcast-list}">Podcasts</a>
         <a class="btn" th:href="@{/show-video-list}">Videos</a>
+        <a class="btn" th:href="@{/show-event-list}">Events</a>
         <a class="btn" th:href="@{/show-therapist-list}">Therapists</a>
         <a class="btn" th:href="@{/show-discussion-list}">Group Discussions</a>
         <a class="btn" th:href="@{/show-chat-list}">ChatBot Support</a>
-        <a th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}" class="btn"
-           th:href="@{/show-not-answered-question-list}">ChatBot Configuration</a>
+        <a class="btn" th:href="@{/show-not-answered-question-list}"
+           th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">ChatBot Configuration</a>
 
         <!-- Add more buttons as needed -->
     </div>
