@@ -98,6 +98,14 @@ public class AuthenticationController {
         }
     }
 
+    @GetMapping("/show-forget-password-page")
+    public ModelAndView showForgetPasswordPage() {
+        User user = new User();
+        ModelAndView modelAndView = new ModelAndView("forget-password");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
     @GetMapping("/show-password-change-page")
     public String showPasswordChangePage(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -127,10 +135,7 @@ public class AuthenticationController {
             model.addAttribute("error", "Old password not matched");
             return "password-change";
         }
-//        if (!newPassword.equals(confirmPassword)) {
-//            model.addAttribute("error", "New password and confirm password do not match");
-//            return "password-change";
-//        }
+
 
         String encryptedNewPassword = passwordEncoder.encode(newPassword);
         user.setPassword(encryptedNewPassword);

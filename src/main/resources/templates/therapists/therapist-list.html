@@ -28,9 +28,14 @@
                     <tr>
                         <th class="text-center">Name</th>
                         <th class="text-center">Email</th>
+                        <th class="text-center">Fathers Name</th>
+                        <th class="text-center">Mothers Name</th>
+                        <th class="text-center">Date of Birth</th>
                         <th class="text-center">Age</th>
+                        <th class="text-center">NID No</th>
                         <th class="text-center">Mobile</th>
                         <th class="text-center">Gender</th>
+                        <th class="text-center">Religion</th>
                         <th class="text-center">Address</th>
                         <th class="text-center" style="width: 150px;"
                             th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin) or
@@ -42,9 +47,14 @@
                     <tr th:each="therapist: ${therapistList}">
                         <td class="text-left" th:text="${therapist.userName}"/>
                         <td class="text-left" th:text="${therapist.email}"/>
+                        <td class="text-left" th:text="${therapist.fatherName}"/>
+                        <td class="text-left" th:text="${therapist.motherName}"/>
+                        <td class="text-left" th:text="${therapist.dateOfBirth}"/>
                         <td class="text-left" th:text="${therapist.age}"/>
+                        <td class="text-left" th:text="${therapist.nidNo}"/>
                         <td class="text-left" th:text="${therapist.mobileNo}"/>
                         <td class="text-left" th:text="${therapist.gender}"/>
+                        <td class="text-left" th:text="${therapist.religion}"/>
                         <td class="text-left" th:text="${therapist.address}"/>
                         <td class="text-center" th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin) or
                                     (isUser != null and !#strings.isEmpty(isUser) and isUser)}">
