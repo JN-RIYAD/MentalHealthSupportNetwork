@@ -28,7 +28,7 @@
                     <tr>
                         <th class="text-center">Event Title</th>
                         <th class="text-center">Location</th>
-                        <th class="text-center">Date & Time</th>
+                        <th class="text-center" style="width: 200px;">Date & Time</th>
                         <th class="text-center">Status</th>
                         <th class="text-center" style="width: 200px;">Action</th>
                     </tr>
@@ -38,7 +38,7 @@
                         <td class="text-left" th:text="${event.title}"/>
                         <td class="text-left" th:text="${event.location}"/>
                         <td class="text-left" th:text="${event.dateAndTime}"/>
-                        <td class="text-left" th:text="${event.status}"/>
+                        <td class="text-left" th:text="Active"/>
                         <td class="text-center">
                             <a class="btn btn-info" role="button"
                                th:href="@{/show-event-details(id=${event.id})}">

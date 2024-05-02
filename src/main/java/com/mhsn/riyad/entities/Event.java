@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Event {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_and_time")
-    private Date dateAndTime;
+    private LocalDateTime dateAndTime;
 
     @Column(name = "organizer", columnDefinition = "nvarchar(300)")
     private String organizer;
@@ -45,11 +46,16 @@ public class Event {
     @Column(name = "chief_guest_designation", columnDefinition = "nvarchar(100)")
     private String chiefGuestDesignation;
 
-    @Column(name = "banner_url", columnDefinition = "nvarchar(500)")
-    private String banner_url;
 
-    @Column(name = "status", length = 10)
-    private String status;
+    @Column(name = "banner_file_name", columnDefinition = "nvarchar(255)")
+    private String bannerFileName;
+
+    @Column(name = "banner_file_type", columnDefinition = "nvarchar(255)")
+    private String bannerFileType;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "uploaded_date")
+    private Date uploadedDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "event")
     private List<Participant> partcipantList;
