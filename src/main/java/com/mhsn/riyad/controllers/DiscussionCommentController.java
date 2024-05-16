@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-public class CommentController {
+public class DiscussionCommentController {
     @Autowired
     private DiscussionRepository discussionRepository;
 
@@ -29,7 +29,12 @@ public class CommentController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/comment-save")
+    public static void setupNewDiscussionComment(Model model) {
+        DiscussionComment newComment = new DiscussionComment();
+        model.addAttribute("newComment", newComment);
+    }
+
+    @PostMapping("/discussion-comment-save")
     public String discussionCommentSave(Model model, HttpSession httpSession, @ModelAttribute DiscussionComment comment, @RequestParam Long discussionId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
@@ -56,13 +61,12 @@ public class CommentController {
         Discussion newDiscussionWithComment = discussionRepository.findById(discussionId).get();
         model.addAttribute("discussion", newDiscussionWithComment);
 
-        DiscussionComment newComment = new DiscussionComment();
-        model.addAttribute("newComment", newComment);
+        setupNewDiscussionComment(model);
 
         return "discussions/discussion-details";
     }
 
-    @GetMapping("/show-update-comment-page")
+    @GetMapping("/show-update-discussion-comment-page")
     public String showUpdateDiscussionPage(Model model, HttpSession httpSession, @RequestParam Long commentId, @RequestParam Long discussionId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
@@ -81,7 +85,7 @@ public class CommentController {
         return "discussions/update-comment";
     }
 
-    @PostMapping("/comment-update")
+    @PostMapping("/discussion-comment-update")
     public String commentUpdate(Model model, HttpSession httpSession, @ModelAttribute DiscussionComment comment, @RequestParam Long discussionId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
@@ -99,16 +103,13 @@ public class CommentController {
         commentRepository.save(comment);
 
         model.addAttribute("discussion", discussion);
-
-        DiscussionComment newComment = new DiscussionComment();
-
-        model.addAttribute("newComment", newComment);
+        setupNewDiscussionComment(model);
 
         return "discussions/discussion-details";
 
     }
 
-    @GetMapping("/comment-delete")
+    @GetMapping("/discussion-comment-delete")
     public String discussionDelete(Model model, HttpSession httpSession, @RequestParam Long commentId, @RequestParam Long discussionId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
@@ -122,9 +123,7 @@ public class CommentController {
         Discussion discussion = discussionRepository.findById(discussionId).get();
         model.addAttribute("discussion", discussion);
 
-        DiscussionComment newComment = new DiscussionComment();
-
-        model.addAttribute("newComment", newComment);
+        setupNewDiscussionComment(model);
 
         return "discussions/discussion-details";
     }

@@ -18,8 +18,8 @@ public class Participant {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "participation_type")
-    private String participationType;
+//    @Column(name = "participation_type")
+//    private String participationType;
 
     @ManyToOne
     @JoinColumn(name = "event_id")

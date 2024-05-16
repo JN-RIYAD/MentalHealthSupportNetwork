@@ -1,7 +1,6 @@
 package com.mhsn.riyad.controllers;
 
 import com.mhsn.riyad.entities.Discussion;
-import com.mhsn.riyad.entities.DiscussionComment;
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.DiscussionRepository;
 import com.mhsn.riyad.services.UserService;
@@ -18,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
+
+import static com.mhsn.riyad.controllers.DiscussionCommentController.setupNewDiscussionComment;
 
 @Controller
 public class GroupDiscussionController {
@@ -51,8 +52,9 @@ public class GroupDiscussionController {
         }
         Discussion discussion = discussionRepository.findById(id).get();
         model.addAttribute("discussion", discussion);
-        DiscussionComment newComment = new DiscussionComment();
-        model.addAttribute("newComment", newComment);
+
+        setupNewDiscussionComment(model);
+
 
         return "discussions/discussion-details";
     }

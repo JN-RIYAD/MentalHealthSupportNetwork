@@ -24,7 +24,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
+import static com.mhsn.riyad.controllers.EventCommentController.setupNewEventComment;
 
 @Controller
 public class EventController {
@@ -70,7 +73,7 @@ public class EventController {
                             @RequestParam("banner") MultipartFile banner,
                             RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
-        if (user == null) {
+        if (user == null || !user.getRole().equals("admin")) {
             model.addAttribute("error", "Login as an admin to add new event");
             return "login";
         } else {
@@ -105,6 +108,24 @@ public class EventController {
         model.addAttribute("eventList", eventList);
         redirectAttributes.addFlashAttribute("eventList", eventList);
         return "redirect:/show-event-list";
+    }
+
+    @GetMapping("/show-event-details")
+    public String showEventDetails(Model model, HttpSession httpSession, @RequestParam Long id) {
+
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            model.addAttribute("error", "Login to view event details");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+
+        Optional<Event> event = eventRepository.findById(id);
+
+        model.addAttribute("event", event.get());
+        setupNewEventComment(model);
+        return "events/event-details";
     }
 
 

@@ -3,7 +3,7 @@
 <div th:replace="fragments/common-header :: common-header"></div>
 
 <head>
-    <title>Query Details-MHSN</title>
+    <title>Event Details-MHSN</title>
 </head>
 <body>
 
@@ -18,43 +18,47 @@
 <main class="main-content" role="main">
     <div class="container">
         <div class="pt-3">
-            <h2 class="card-title" th:text="${discussion.queryTopic}"></h2>
+            <h2 class="card-title" th:text="${event.title}"></h2>
             <div class="card">
                 <div class="card-body">
-                    <hr>
-                    <p class="card-text text-justify" th:text="${discussion.queryDescription}"></p>
-                    <hr>
-                    <p><b class="card-text">Author:</b> <span th:text="${discussion.inquirerName}"></span></p>
-                    <p><b class="card-text">Inquirer Gender:</b> <span th:text="${discussion.inquirerGender}"></span>
-                    </p>
-                    <p><b class="card-text">Query Date:</b> <span th:text="${discussion.queryDate}"></span></p>
-                    <p><b class="card-text">Updated Date:</b> <span th:text="${discussion.updatedDate}"></span></p>
+                    <!--                    TODO : Need to add banner-->
+                    <p><b class="card-text">Description:</b> <span th:text="${event.description}"></span></p>
+                    <p><b class="card-text">Location:</b> <span th:text="${event.location}"></span></p>
+                    <p><b class="card-text">Event Date & Time:</b> <span th:text="${event.dateAndTime}"></span></p>
+                    <!--                    TODO : Need to separate date and time  -->
+                    <p><b class="card-text">Organizer:</b> <span th:text="${event.organizer}"></span></p>
+                    <p><b class="card-text">Speaker:</b> <span th:text="${event.speaker}"></span>(<span
+                            th:text="${event.speakerDesignation}"></span>)</p>
+                    <p><b class="card-text">Chief Guest:</b> <span th:text="${event.chiefGuest}"></span>(<span
+                            th:text="${event.chiefGuestDesignation}"></span>)</p>
+                    <p><b class="card-text">Total Participants:</b> <span th:text="${100}"></span></p>
+                    <!--                    TODO : Need to count total participants-->
                 </div>
             </div>
+
+            <!--                    TODO : Need to add going section  -->
 
             <!-- Comments Section -->
             <div class="mt-4">
                 <h3>Comments</h3>
-                <ul class="list-group" th:each="comment, commentIndex: ${discussion.commentList}">
+                <ul class="list-group" th:each="comment, commentIndex: ${event.commentList}">
                     <li th:classappend="${commentIndex.odd}? 'list-group-item': 'list-group-item deep-ash-color'">
                         <b>
                             @<span th:text="${comment.user.userName}"></span>(Role = <span
-                                th:text="${comment.user.role}"></span>) advised:
-                        </b>
-                        <span th:text="${comment.commentContent}"> </span>
+                                th:text="${comment.user.role}"></span>)
+                        </b> said: <span th:text="${comment.commentContent}"> </span>
 
                         <!-- Add update and delete buttons -->
                         <span th:if="${comment.user.id == userId}">
                                 <a class="btn btn-warning btn-sm" role="button"
-                                   th:href="@{/show-update-discussion-comment-page(commentId=${comment.id}, discussionId=${discussion.id})}">
-                                   <i class="fas fa-edit"></i>
+                                   th:href="@{/show-update-event-comment-page(commentId=${comment.id}, eventId=${event.id})}">
+                                    <i class="fas fa-edit"></i>
                                 </a>
                             </span>
-                        <span th:if="${(comment.user.id == userId)
-                                            or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
+                        <span th:if="${(comment.user.id == userId) or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
                                 <a class="btn btn-danger btn-sm" role="button"
-                                   th:href="@{/discussion-comment-delete(commentId=${comment.id}, discussionId=${discussion.id})}">
-                                    <i class="fas fa-trash"></i>
+                                   th:href="@{/event-comment-delete(commentId=${comment.id}, eventId=${event.id})}">
+                                   <i class="fas fa-trash"></i>
                                 </a>
                         </span>
                         <div>
@@ -72,7 +76,7 @@
                      or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
                     <div class="mt-3">
                         <h4>Add New Comment</h4>
-                        <form method="POST" th:action="@{/discussion-comment-save(discussionId=${discussion.id})}"
+                        <form method="POST" th:action="@{/event-comment-save(eventId=${event.id})}"
                               th:object="${newComment}">
                             <div class="form-group">
                                 <label for="commentContent">Comment Here:</label>
@@ -84,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <a class="mt-3" th:href="@{/show-discussion-list}">Back to Discussions</a>
+            <a class="mt-3" th:href="@{/show-event-list}">Back to Events</a>
         </div>
     </div>
 </main>

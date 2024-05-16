@@ -46,7 +46,6 @@ public class Event {
     @Column(name = "chief_guest_designation", columnDefinition = "nvarchar(100)")
     private String chiefGuestDesignation;
 
-
     @Column(name = "banner_file_name", columnDefinition = "nvarchar(255)")
     private String bannerFileName;
 
@@ -58,10 +57,31 @@ public class Event {
     private Date uploadedDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "event")
-    private List<Participant> partcipantList;
+    private List<Participant> participantList;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "event")
     private List<EventComment> commentList;
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", dateAndTime=" + dateAndTime +
+                ", organizer='" + organizer + '\'' +
+                ", speaker='" + speaker + '\'' +
+                ", speakerDesignation='" + speakerDesignation + '\'' +
+                ", chiefGuest='" + chiefGuest + '\'' +
+                ", chiefGuestDesignation='" + chiefGuestDesignation + '\'' +
+                ", bannerFileName='" + bannerFileName + '\'' +
+                ", bannerFileType='" + bannerFileType + '\'' +
+                ", uploadedDate=" + uploadedDate +
+                ", participantList=" + participantList +
+                ", commentList=" + commentList +
+                '}';
+    }
 
 
 }
