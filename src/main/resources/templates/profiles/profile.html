@@ -31,10 +31,7 @@
                                             <img alt="User-Profile-Image"
                                                  class="img-radius"
                                                  src="https://img.icons8.com/bubbles/100/000000/user.png">
-                                            <!--TODO: image should be imageUrl-->
                                             <br>
-                                            <a class="update-image-link" th:href="@{/}">Update Image</a>
-                                            <!--TODO: update imageUrl with userId-->
                                         </div>
                                         <h3 class="f-w-600" th:text="${user.userName}"></h3>
                                         <b>(<span th:text="${user.role}"></span>)</b>
@@ -46,16 +43,6 @@
                                         <h3 class="m-b-20 p-b-5 b-b-default f-w-600">Profile Information</h3>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Email</p>
-                                                <h6 class="text-muted f-w-400" th:text="${user.email}"></h6>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Mobile</p>
-                                                <h6 class="text-muted f-w-400" th:text="${user.mobileNo}"></h6>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Father's Name</p>
                                                 <h6 class="text-muted f-w-400" th:text="${user.fatherName}"></h6>
                                             </div>
@@ -64,33 +51,66 @@
                                                 <h6 class="text-muted f-w-400" th:text="${user.motherName}"></h6>
                                             </div>
                                         </div>
+                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Date of Birth</p>
-                                                <h6 class="text-muted f-w-400" th:text="${user.dateOfBirth}"></h6>
+                                                <p class="m-b-10 f-w-600">Email</p>
+                                                <h6 class="text-muted f-w-400" th:text="${user.email}"></h6>
                                             </div>
                                             <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Religion</p>
-                                                <h6 class="text-muted f-w-400" th:text="${user.religion}"></h6>
+                                                <p class="m-b-10 f-w-600">Mobile</p>
+                                                <h6 class="text-muted f-w-400" th:text="${user.mobileNo}"></h6>
                                             </div>
                                         </div>
                                         <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <p class="m-b-10 f-w-600">Gender</p>
-                                                <h6 class="text-muted f-w-400" th:text="${user.gender}"></h6>
+                                                <p class="m-b-10 f-w-600">Date of Birth</p>
+                                                <h6 class="text-muted f-w-400" th:if="${formattedDateOfBirth != null}"
+                                                    th:text="${formattedDateOfBirth}"></h6>
                                             </div>
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Age</p>
                                                 <h6 class="text-muted f-w-400" th:text="${user.age}"></h6>
                                             </div>
                                         </div>
+                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Religion</p>
+                                                <h6 class="text-muted f-w-400" th:text="${user.religion}"></h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Gender</p>
+                                                <h6 class="text-muted f-w-400" th:text="${user.gender}"></h6>
+                                            </div>
+                                        </div>
+                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Password Forgetting Question</p>
+                                                <h6 class="text-muted f-w-400"
+                                                    th:text="${selectedQuestion}"></h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Answer</p>
+                                                <h6 class="text-muted f-w-400" th:text="${user.answer}"></h6>
+                                            </div>
+                                        </div>
+                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Address</p>
                                                 <h6 class="text-muted f-w-400" th:text="${user.address}"></h6>
                                             </div>
                                             <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Nid Number</p>
+                                                <h6 class="text-muted f-w-400" th:text="${user.nidNo}"></h6>
+                                            </div>
+                                        </div>
+                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
+                                        <div class="row">
+                                            <div class="col-sm-12">
                                                 <p class="m-b-10 f-w-600"></p>
                                                 <a class="btn btn-success mb-3"
                                                    th:href="@{/show-update-profile-page(id=${user.id})}">Update

@@ -86,8 +86,6 @@ public class EventController {
             event.setBannerFileType(banner.getContentType());
             event.setUploadedDate(new Date());
 
-            eventRepository.save(event);
-
             String uploadDir = baseUploadDir + "/banners";
 
             // Create the target directory if it doesn't exist
@@ -99,6 +97,12 @@ public class EventController {
             // Copy the file to the target directory
             Path targetPath = uploadPath.resolve(fileName);
             Files.copy(banner.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+            // Set the image URL
+            String imageUrl = baseUploadDir + "banners/" + fileName;
+            event.setBannerUrl(imageUrl);
+
+            eventRepository.save(event);
 
         } catch (IOException e) {
             throw new RuntimeException("Failed to store the file", e);

@@ -36,21 +36,20 @@
                 </div>
                 <!-- Father name -->
                 <div class="form-group">
-                    <label for="fatherName">Father name</label>
+                    <label for="fatherName">Father's name</label>
                     <input class="form-control" id="fatherName" placeholder="Enter your father name" required
                            th:field="*{fatherName}" type="text">
                 </div>
                 <!-- mother name -->
                 <div class="form-group">
-                    <label for="motherName">Mother name</label>
+                    <label for="motherName">Mother's name</label>
                     <input class="form-control" id="motherName" placeholder="Enter your mother name" required
                            th:field="*{motherName}" type="text">
                 </div>
-                <!-- Age -->
                 <div class="form-group">
                     <label for="dateOfBirth">Date Of Birth</label>
-                    <input class="form-control" id="dateOfBirth" placeholder="Enter your DOB" required
-                           th:field="*{dateOfBirth}" type="text">
+                    <input class="form-control" id="dateOfBirth" required
+                           th:field="*{dateOfBirth}" type="date">
                 </div>
                 <div class="form-group">
                     <label for="age">Age</label>
@@ -58,16 +57,17 @@
                            type="number">
                 </div>
 
-                <div class="form-group">
-                    <label for="nidNo">NID Number</label>
-                    <input class="form-control" id="nidNo" placeholder="Enter your NID number"
-                           required th:field="*{nidNo}" type="text">
-                </div>
                 <!-- Mobile Number -->
                 <div class="form-group">
                     <label for="mobileNo">Mobile Number</label>
                     <input class="form-control" id="mobileNo" placeholder="Enter your mobile number"
                            required th:field="*{mobileNo}" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="nidNo">NID Number</label>
+                    <input class="form-control" id="nidNo" placeholder="Enter your NID number"
+                           required th:field="*{nidNo}" type="text">
                 </div>
                 <div class="form-group">
                     <label for="gender">Select Gender</label>
@@ -81,10 +81,10 @@
                 <div class="form-group">
                     <label for="religion">Select Religion</label>
                     <select class="form-control" id="religion" required th:field="*{religion}">
-                        <option th:value="Muslim">Muslim</option>
-                        <option th:value="Hindu">Hindu</option>
-                        <option th:value="Buddhist">Buddhist</option>
-                        <option th:value="Christian">Christian</option>
+                        <option th:value="Islam">Islam</option>
+                        <option th:value="Hinduism">Hinduism</option>
+                        <option th:value="Buddhism">Buddhism</option>
+                        <option th:value="Christianity">Christianity</option>
                     </select>
                 </div>
                 <!-- Address -->
@@ -94,26 +94,7 @@
                            th:field="*{address}" type="text">
                 </div>
                 <!-- question and answer for reset Password -->
-                <div class="form-group">
-                    <label for="question1">first Question</label>
-                    <input class="form-control" id="question1"  placeholder="Enter your first Question"
-                           required th:field="*{question1}" type="text">
-                </div>
-                <div class="form-group">
-                    <label for="answer1">first answer</label>
-                    <input class="form-control" id="answer1"  placeholder="Enter your answer"
-                           required th:field="*{answer1}" type="text">
-                </div>
-                <div class="form-group">
-                    <label for="question2">second Question</label>
-                    <input class="form-control" id="question2"  placeholder="Enter your second Question"
-                           required th:field="*{question2}" type="text">
-                </div>
-                <div class="form-group">
-                    <label for="answer2">second answer</label>
-                    <input class="form-control" id="answer2"  placeholder="Enter your answer"
-                           required th:field="*{answer2}" type="text">
-                </div>
+
 
                 <!-- Password & Confirm Password -->
                 <div class="form-group">
@@ -127,6 +108,31 @@
                     <input class="form-control" id="confirmPassword" pattern=".{6,}" placeholder="Confirm your password"
                            required type="password">
                     <span class="text-danger" id="passwordError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="passwordForgetQuestionNo">Password Forgetting Question</label>
+                    <select class="form-control" id="passwordForgetQuestionNo" required
+                            th:field="*{passwordForgetQuestionNo}">
+                        <option th:selected="*{passwordForgetQuestionNo} == '1'" th:value="1">What is Your Favourite
+                            Flower?
+                        </option>
+                        <option th:selected="*{passwordForgetQuestionNo} == '2'" th:value="2">What is Your Favourite
+                            Place?
+                        </option>
+                        <option th:selected="*{passwordForgetQuestionNo} == '3'" th:value="3">What is Your Favourite
+                            Movie Name?
+                        </option>
+                        <option th:selected="*{passwordForgetQuestionNo} == '4'" th:value="4">What is your hobby?
+                        </option>
+                        <option th:selected="*{passwordForgetQuestionNo} == '5'" th:value="5">Your own secret
+                            question.
+                        </option>
+                    </select>
+                    <div class="form-group">
+                        <label for="answer">Answer to your password forgetting question</label>
+                        <input class="form-control" id="answer" placeholder="Enter your secret answer"
+                               required th:field="*{answer}" type="text">
+                    </div>
                 </div>
                 <button class="btn btn-primary" type="submit">Register</button>
             </form>

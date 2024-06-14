@@ -3,6 +3,7 @@ package com.mhsn.riyad.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -31,8 +32,10 @@ public class User {
     @Column(name = "mother_name", columnDefinition = "nvarchar(100)")
     private String motherName;
 
-    @Column(name = "date_of_birth", columnDefinition = "nvarchar(100)")
-    private String dateOfBirth;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
 
     @Column(name = "age")
     private Integer age;
@@ -52,23 +55,15 @@ public class User {
     @Column(name = "address", columnDefinition = "nvarchar(500)")
     private String address;
 
-    @Column(name = "question1", columnDefinition = "nvarchar(100)")
-    private String question1;
+    @Column(name = "password_forget_question_no")
+    private Integer passwordForgetQuestionNo;
 
-    @Column(name = "answer1", columnDefinition = "nvarchar(100)")
-    private String answer1;
+    @Column(name = "answer", columnDefinition = "nvarchar(100)")
+    private String answer;
 
-    @Column(name = "question2", columnDefinition = "nvarchar(100)")
-    private String question2;
-
-    @Column(name = "answer2", columnDefinition = "nvarchar(100)")
-    private String answer2;
 
     @Column(name = "password", columnDefinition = "nvarchar(500)")
     private String password;
-
-    @Column(name = "image_url", columnDefinition = "nvarchar(500)")
-    private String imageUrl;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "registration_date")
@@ -90,12 +85,9 @@ public class User {
                 ", gender='" + gender + '\'' +
                 ", religion='" + religion + '\'' +
                 ", address='" + address + '\'' +
-                ", question1='" + question1 + '\'' +
-                ", answer1='" + answer1 + '\'' +
-                ", question1='" + question1 + '\'' +
-                ", answer2='" + answer2 + '\'' +
+                ", passwordForgetQuestionNo='" + passwordForgetQuestionNo + '\'' +
+                ", answer='" + answer + '\'' +
                 ", password='" + password + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
                 ", registrationDate=" + registrationDate +
                 '}';
     }

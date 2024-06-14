@@ -46,6 +46,9 @@ public class Event {
     @Column(name = "chief_guest_designation", columnDefinition = "nvarchar(100)")
     private String chiefGuestDesignation;
 
+    @Column(name = "banner_url", columnDefinition = "nvarchar(500)")
+    private String bannerUrl;
+
     @Column(name = "banner_file_name", columnDefinition = "nvarchar(255)")
     private String bannerFileName;
 
