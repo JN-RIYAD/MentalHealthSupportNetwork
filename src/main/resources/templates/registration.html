@@ -59,7 +59,6 @@
                            type="number">
                 </div>
 
-                <!-- Mobile Number -->
                 <div class="form-group">
                     <label for="mobileNo">Mobile Number</label>
                     <input class="form-control" id="mobileNo" placeholder="Enter your mobile number"
@@ -87,6 +86,7 @@
                         <option th:value="Hinduism">Hinduism</option>
                         <option th:value="Buddhism">Buddhism</option>
                         <option th:value="Christianity">Christianity</option>
+                        <option th:value="Other">Other</option>
                     </select>
                 </div>
                 <!-- Address -->
@@ -95,7 +95,6 @@
                     <input class="form-control" id="address" placeholder="Enter your address" required
                            th:field="*{address}" type="text">
                 </div>
-                <!-- question and answer for reset Password -->
 
 
                 <!-- Password & Confirm Password -->
@@ -111,6 +110,8 @@
                            required type="password">
                     <span class="text-danger" id="passwordError"></span>
                 </div>
+
+                <!-- question and answer for reset Password -->
                 <div class="form-group">
                     <label for="passwordForgetQuestionNo">Password Forgetting Question</label>
                     <select class="form-control" id="passwordForgetQuestionNo" required

@@ -69,10 +69,11 @@ public class TherapistController {
         //duplicate email check
         Optional<User> existingUserWithCurrentEmail = userRepository.findByEmail(therapist.getEmail());
         if (existingUserWithCurrentEmail.isPresent()) {
-            model.addAttribute("error", "Email already exists for another user. Try with different email");
+            model.addAttribute("error", "Email already exists for another user");
             model.addAttribute("therapist", therapist);
             return "therapists/add-therapist";
         }
+
         therapist.setRole("therapist");
         therapist.setRegistrationDate(new Date());
         therapist.setPassword(passwordEncoder.encode(therapist.getPassword()));
@@ -99,21 +100,27 @@ public class TherapistController {
         //duplicate email check
         Optional<User> existingUserWithCurrentEmail = userRepository.findByEmailAndIdNot(therapistToUpdate.getEmail(), therapistToUpdate.getId());
         if (existingUserWithCurrentEmail.isPresent()) {
-            model.addAttribute("error", "Email already exists for another user. Try with different email");
+            model.addAttribute("error", "Email already exists for another user.");
             model.addAttribute("therapistToUpdate", therapistToUpdate);
             return "therapists/update-therapist";
         }
         savedTherapist.setUserName(therapistToUpdate.getUserName());
         savedTherapist.setEmail(therapistToUpdate.getEmail());
+        savedTherapist.setFatherName(therapistToUpdate.getFatherName());
+        savedTherapist.setMotherName(therapistToUpdate.getMotherName());
+        savedTherapist.setDateOfBirth(therapistToUpdate.getDateOfBirth());
         savedTherapist.setAge(therapistToUpdate.getAge());
         savedTherapist.setMobileNo(therapistToUpdate.getMobileNo());
+        savedTherapist.setNidNo(therapistToUpdate.getNidNo());
+        savedTherapist.setGender(therapistToUpdate.getGender());
+        savedTherapist.setReligion(therapistToUpdate.getReligion());
         savedTherapist.setAddress(therapistToUpdate.getAddress());
-        savedTherapist.setPassword(passwordEncoder.encode(therapistToUpdate.getPassword()));
+        savedTherapist.setPasswordForgetQuestionNo(therapistToUpdate.getPasswordForgetQuestionNo());
+        savedTherapist.setAnswer(therapistToUpdate.getAnswer());
         userRepository.save(savedTherapist);
 
         List<User> therapistList = userRepository.findByRole("therapist");
-        model.addAttribute("therapistList", therapistList);
-        model.addAttribute("success", "Therapist updated successfully");
+        redirectAttributes.addFlashAttribute("success", "Therapist updated successfully");
         redirectAttributes.addFlashAttribute("therapistList", therapistList);
         return "redirect:/show-therapist-list";
     }
@@ -142,6 +149,7 @@ public class TherapistController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         userRepository.deleteById(id);
+
         List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
         redirectAttributes.addFlashAttribute("therapistList", therapistList);
