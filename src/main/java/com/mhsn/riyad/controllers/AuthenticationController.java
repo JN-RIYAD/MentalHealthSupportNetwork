@@ -16,19 +16,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
 public class AuthenticationController {
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserService userService;
     @Autowired
     private HttpSession httpSession;
-
     private boolean successToastShown = false;
-
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
 
@@ -55,20 +53,21 @@ public class AuthenticationController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user.get());
             if (!successToastShown) {
                 model.addAttribute("success", "Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
+                System.out.println("Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
                 successToastShown = true; // Set the flag to true
             }
             return "index";
         } else {
             model.addAttribute("error", "Invalid email or password...!!!");
+            System.out.println("Invalid email or password...!!!");
             return "login";
         }
     }
 
 
     @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
+    public String logout(HttpSession httpSession, Model model) {
         httpSession.invalidate();
-
         return "redirect:/";
     }
 
@@ -99,11 +98,46 @@ public class AuthenticationController {
     }
 
     @GetMapping("/show-forget-password-page")
-    public ModelAndView showForgetPasswordPage() {
-        User user = new User();
-        ModelAndView modelAndView = new ModelAndView("forget-password");
-        modelAndView.addObject("user", user);
-        return modelAndView;
+    public ModelAndView showForgetPasswordPage(Model model) {
+        return new ModelAndView("forget-password");
+    }
+
+    @PostMapping("/forgotten-password-change")
+    public String changeForgottenPassword(Model model, @RequestParam String email, @RequestParam LocalDate dateOfBirth,
+                                          @RequestParam String mobileNo, @RequestParam String nidNo,
+                                          @RequestParam Integer passwordForgetQuestionNo, @RequestParam String answer,
+                                          @RequestParam String newPassword) {
+
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            if (!user.getDateOfBirth().toString().equals(dateOfBirth.toString())) {
+                model.addAttribute("error", "Date of birth not matched");
+                return "forget-password";
+            } else if (!user.getMobileNo().equals(mobileNo)) {
+                model.addAttribute("error", "Mobile number not matched");
+                return "forget-password";
+            } else if (!user.getNidNo().equals(nidNo)) {
+                model.addAttribute("error", "Nid not matched");
+                return "forget-password";
+            } else if (user.getPasswordForgetQuestionNo() != passwordForgetQuestionNo) {
+                model.addAttribute("error", "Password forgetting question not matched");
+                return "forget-password";
+            } else if (!user.getAnswer().equals(answer)) {
+                model.addAttribute("error", "Secret answer not matched");
+                return "forget-password";
+            } else {
+                String encryptedNewPassword = passwordEncoder.encode(newPassword);
+                user.setPassword(encryptedNewPassword);
+                userRepository.save(user);
+                model.addAttribute("success", "Password changed successfully...!!! Login Now.");
+                return "login";
+            }
+        } else {
+            model.addAttribute("error", "User not exists with this email");
+            return "forget-password";
+        }
+
     }
 
     @GetMapping("/show-password-change-page")
@@ -130,8 +164,7 @@ public class AuthenticationController {
         }
 
         boolean isMatched = passwordEncoder.matches(oldPassword, user.getPassword());
-        if (!isMatched)
-        {
+        if (!isMatched) {
             model.addAttribute("error", "Old password not matched");
             return "password-change";
         }

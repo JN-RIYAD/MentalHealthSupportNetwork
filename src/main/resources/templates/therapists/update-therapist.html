@@ -46,7 +46,8 @@
 
                 <div class="form-group">
                     <label for="dateOfBirth">Age</label>
-                    <input class="form-control" id="dateOfBirth" placeholder="Enter therapist's date Of birth" required th:field="*{age}"
+                    <input class="form-control" id="dateOfBirth" placeholder="Enter therapist's date Of birth" required
+                           th:field="*{age}"
                            type="text">
                 </div>
 
@@ -57,7 +58,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="nidNo">NID  Number</label>
+                    <label for="nidNo">NID Number</label>
                     <input class="form-control" id="nidNo" placeholder="Enter therapist's NID number" required
                            th:field="*{nidNo}" type="text">
                 </div>
@@ -94,7 +95,6 @@
                     </select>
                 </div>
                 <!-- Password & Confirm Password -->
-                <!-- Password & Confirm Password -->
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input class="form-control" id="password" pattern=".{6,}" placeholder="Enter password"
@@ -127,7 +127,17 @@
 <div th:replace="fragments/footer :: footer"></div>
 
 <!-- Scripts -->
-<div th:replace="fragments/common-scripts :: common-scripts"></div>
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+<script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 
 <script>
     $(document).ready(function () {
