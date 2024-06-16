@@ -97,10 +97,22 @@ public class TherapistController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         User savedTherapist = userRepository.findById(therapistToUpdate.getId()).get();
-        //duplicate email check
+        //duplicate check
         Optional<User> existingUserWithCurrentEmail = userRepository.findByEmailAndIdNot(therapistToUpdate.getEmail(), therapistToUpdate.getId());
         if (existingUserWithCurrentEmail.isPresent()) {
             model.addAttribute("error", "Email already exists for another user.");
+            model.addAttribute("therapistToUpdate", therapistToUpdate);
+            return "therapists/update-therapist";
+        }
+        Optional<User> existingUserWithCurrentNid = userRepository.findByNidNoAndIdNot(therapistToUpdate.getNidNo(), therapistToUpdate.getId());
+        if (existingUserWithCurrentNid.isPresent()) {
+            model.addAttribute("error", "Nid already exists for another user.");
+            model.addAttribute("therapistToUpdate", therapistToUpdate);
+            return "therapists/update-therapist";
+        }
+        Optional<User> existingUserWithCurrentMobileNo = userRepository.findByMobileNoAndIdNot(therapistToUpdate.getMobileNo(), therapistToUpdate.getId());
+        if (existingUserWithCurrentMobileNo.isPresent()) {
+            model.addAttribute("error", "Mobile number already exists for another user.");
             model.addAttribute("therapistToUpdate", therapistToUpdate);
             return "therapists/update-therapist";
         }

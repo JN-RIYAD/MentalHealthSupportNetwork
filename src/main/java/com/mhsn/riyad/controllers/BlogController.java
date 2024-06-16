@@ -94,6 +94,7 @@ public class BlogController {
         blogRepository.save(blog);
 
         List<Blog> blogList = blogRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        redirectAttributes.addFlashAttribute("success", "Blog saved successfully");
         redirectAttributes.addFlashAttribute("blogList", blogList);
         return "redirect:/show-blog-list";
     }
@@ -118,6 +119,7 @@ public class BlogController {
 
         List<Blog> blogList = blogRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("blogList", blogList);
+        redirectAttributes.addFlashAttribute("success", "Blog updated successfully");
         redirectAttributes.addFlashAttribute("blogList", blogList);
         return "redirect:/show-blog-list";
     }
@@ -134,6 +136,7 @@ public class BlogController {
         blogRepository.deleteById(id);
         List<Blog> blogList = blogRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("blogList", blogList);
+        redirectAttributes.addFlashAttribute("success", "Blog deleted successfully");
         redirectAttributes.addFlashAttribute("blogList", blogList);
         return "redirect:/show-blog-list";
     }
