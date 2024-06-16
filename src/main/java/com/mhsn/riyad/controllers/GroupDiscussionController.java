@@ -103,6 +103,7 @@ public class GroupDiscussionController {
         List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("discussionList", discussionList);
+        redirectAttributes.addFlashAttribute("success", "Group discussion saved successfully.");
         return "redirect:/show-discussion-list";
     }
 
@@ -128,6 +129,8 @@ public class GroupDiscussionController {
         List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("discussionList", discussionList);
+        redirectAttributes.addFlashAttribute("success", "Group discussion updated successfully.");
+
         return "redirect:/show-discussion-list";
     }
 
@@ -144,6 +147,8 @@ public class GroupDiscussionController {
         List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("discussionList", discussionList);
+        redirectAttributes.addFlashAttribute("success", "Group discussion deleted successfully.");
+
         return "redirect:/show-discussion-list";
     }
 }

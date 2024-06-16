@@ -48,7 +48,6 @@ public class DiscussionCommentController {
         comment.setDiscussion(discussion);
         comment.setUser(user);
 
-
         if (discussion.getCommentList() == null) {
             List<DiscussionComment> commentList = new ArrayList<>();
             commentList.add(comment);
@@ -60,8 +59,8 @@ public class DiscussionCommentController {
 
         Discussion newDiscussionWithComment = discussionRepository.findById(discussionId).get();
         model.addAttribute("discussion", newDiscussionWithComment);
-
         setupNewDiscussionComment(model);
+        model.addAttribute("success", "Comment saved successfully.");
 
         return "discussions/discussion-details";
     }
@@ -104,6 +103,7 @@ public class DiscussionCommentController {
 
         model.addAttribute("discussion", discussion);
         setupNewDiscussionComment(model);
+        model.addAttribute("success", "Comment updated successfully.");
 
         return "discussions/discussion-details";
 
@@ -124,6 +124,7 @@ public class DiscussionCommentController {
         model.addAttribute("discussion", discussion);
 
         setupNewDiscussionComment(model);
+        model.addAttribute("success", "Comment deleted successfully.");
 
         return "discussions/discussion-details";
     }

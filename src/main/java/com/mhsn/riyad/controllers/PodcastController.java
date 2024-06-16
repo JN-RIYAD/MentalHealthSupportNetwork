@@ -40,7 +40,7 @@ public class PodcastController {
     private String baseUploadDir;
 
     @GetMapping("/show-podcast-list")
-    public String showPodcastList(Model model, HttpSession httpSession) {
+    public String showPodcastList(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes) {
 
         User user = (User) httpSession.getAttribute("user");
         if (user != null) {
@@ -106,6 +106,7 @@ public class PodcastController {
         List<Podcast> podcastList = podcastRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("podcastList", podcastList);
         redirectAttributes.addFlashAttribute("podcastList", podcastList);
+        redirectAttributes.addFlashAttribute("success", "Podcast saved successfully");
         return "redirect:/show-podcast-list";
     }
 
@@ -161,6 +162,7 @@ public class PodcastController {
         List<Podcast> podcastList = podcastRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("podcastList", podcastList);
         redirectAttributes.addFlashAttribute("podcastList", podcastList);
+        redirectAttributes.addFlashAttribute("success", "Podcast deleted successfully");
         return "redirect:/show-podcast-list";
     }
 }

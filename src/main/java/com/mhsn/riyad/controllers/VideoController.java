@@ -108,8 +108,8 @@ public class VideoController {
 
         List<Video> videoList = videoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("videoList", videoList);
-
         redirectAttributes.addFlashAttribute("videoList", videoList);
+        redirectAttributes.addFlashAttribute("success", "Video saved successfully");
         return "redirect:/show-video-list";
     }
 
@@ -165,6 +165,8 @@ public class VideoController {
         List<Video> videoList = videoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("videoList", videoList);
         redirectAttributes.addFlashAttribute("videoList", videoList);
+        redirectAttributes.addFlashAttribute("success", "Video deleted successfully");
+
         return "redirect:/show-video-list";
     }
 
