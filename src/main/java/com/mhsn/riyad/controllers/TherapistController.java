@@ -139,22 +139,5 @@ public class TherapistController {
         return "therapists/update-therapist";
     }
 
-    @GetMapping("/therapist-delete")
-    public String therapistDelete(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
-        User user = (User) httpSession.getAttribute("user");
-        if (user == null || !user.getRole().equals("admin")) {
-            model.addAttribute("error", "Login as an admin to delete therapist");
-            return "login";
-        } else {
-            userService.setRoleInModelAndHttpSession(httpSession, model, user);
-        }
-        userRepository.deleteById(id);
-
-        List<User> therapistList = userRepository.findByRole("therapist");
-        model.addAttribute("therapistList", therapistList);
-        redirectAttributes.addFlashAttribute("therapistList", therapistList);
-        return "redirect:/show-therapist-list";
-    }
-
 
 }
