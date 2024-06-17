@@ -1,9 +1,10 @@
 package com.mhsn.riyad.controllers;
 
-import com.mhsn.riyad.entities.*;
+import com.mhsn.riyad.entities.ChatBotQuestionAnswer;
+import com.mhsn.riyad.entities.NotAnsweredQuestion;
+import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.ChatBotQuestionAnswerRepository;
 import com.mhsn.riyad.repositories.NotAnsweredQuestionRepository;
-import com.mhsn.riyad.repositories.UserChatBotHistoryRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ChatBotNotAnsweredQuestionController {
@@ -64,7 +66,7 @@ public class ChatBotNotAnsweredQuestionController {
 
 
     @PostMapping("/not-answered-question-answer-save")
-    public String notAnsweredQuestionAnswerSave(Model model, HttpSession httpSession, @ModelAttribute ChatBotQuestionAnswer chatBotQuestionAnswer,  @RequestParam Long notAnsweredQuestionId, RedirectAttributes redirectAttributes) {
+    public String notAnsweredQuestionAnswerSave(Model model, HttpSession httpSession, @ModelAttribute ChatBotQuestionAnswer chatBotQuestionAnswer, @RequestParam Long notAnsweredQuestionId, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
             model.addAttribute("error", "Login as an admin to answer chatbot question");
@@ -79,10 +81,13 @@ public class ChatBotNotAnsweredQuestionController {
 
         List<NotAnsweredQuestion> notAnsweredQuestionList = notAnsweredQuestionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         redirectAttributes.addFlashAttribute("notAnsweredQuestionList", notAnsweredQuestionList);
+        redirectAttributes.addFlashAttribute("success", "Answer set successfully.");
+
         return "redirect:/show-not-answered-question-list";
     }
+
     @GetMapping("/not-answered-question-delete")
-    public String notAnsweredQuestionDelete(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
+    public String notAnsweredQuestionDelete(Model model, HttpSession httpSession, @RequestParam Long notAnsweredQuestionId, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
             model.addAttribute("error", "Login as an admin to delete not answered question");
@@ -90,10 +95,12 @@ public class ChatBotNotAnsweredQuestionController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        notAnsweredQuestionRepository.deleteById(id);
+        notAnsweredQuestionRepository.deleteById(notAnsweredQuestionId);
         List<NotAnsweredQuestion> notAnsweredQuestionList = notAnsweredQuestionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("notAnsweredQuestionList", notAnsweredQuestionList);
         redirectAttributes.addFlashAttribute("notAnsweredQuestionList", notAnsweredQuestionList);
+        redirectAttributes.addFlashAttribute("success", "Question deleted successfully.");
+
         return "redirect:/show-not-answered-question-list";
     }
 

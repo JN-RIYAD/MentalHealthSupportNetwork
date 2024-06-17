@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments/common-header :: common-header"></div>
 
 <head>
     <title>Messages-MHSN</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="css/message.css" rel="stylesheet">
 
 
@@ -17,7 +21,6 @@
 <!-- Sidebar -->
 <div th:replace="fragments/sidebar :: sidebar"></div>
 
-<!-- Main content area -->
 <!-- Main content area -->
 <main class="main-content" role="main">
     <div class="container">
@@ -61,10 +64,6 @@
                 <!-- Clear Chat and Refresh button -->
                 <div class="d-flex justify-content-between"
                      th:if="${userTherapistMessageList != null and userTherapistMessageList.size() > 0}">
-                    <a class="btn btn-warning mb-3" id="clearChatBtn"
-                       th:href="@{/clear-messages(receiverId=${param.receiverId})}">
-                        Clear Your Chat <i class="fas fa-trash-alt"></i>
-                    </a>
                     <a class="btn btn-info mb-3" id="refreshBtn"
                        th:href="@{/show-user-therapist-message-list(receiverId=${param.receiverId})}">
                         Refresh <i class="fas fa-sync-alt"></i>

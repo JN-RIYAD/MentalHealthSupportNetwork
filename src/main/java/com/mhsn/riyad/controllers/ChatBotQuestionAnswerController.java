@@ -1,11 +1,8 @@
 package com.mhsn.riyad.controllers;
 
 import com.mhsn.riyad.entities.ChatBotQuestionAnswer;
-import com.mhsn.riyad.entities.NotAnsweredQuestion;
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.ChatBotQuestionAnswerRepository;
-import com.mhsn.riyad.repositories.NotAnsweredQuestionRepository;
-import com.mhsn.riyad.repositories.UserChatBotHistoryRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +71,8 @@ public class ChatBotQuestionAnswerController {
 
         List<ChatBotQuestionAnswer> chatBotQuestionAnswerList = chatBotQuestionAnswerRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         redirectAttributes.addFlashAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
+        redirectAttributes.addFlashAttribute("success", "Question/Answer saved successfully.");
+
         return "redirect:/show-chatbot-question-answer-list";
     }
 
@@ -93,6 +92,7 @@ public class ChatBotQuestionAnswerController {
 
         return "chatbots/chatbot-question-answer-update";
     }
+
     @PostMapping("/chatbot-question-answer-update")
     public String chatBotQuestionAnswerUpdate(Model model, HttpSession httpSession, @ModelAttribute ChatBotQuestionAnswer chatBotQuestionAnswerToUpdate, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
@@ -107,6 +107,8 @@ public class ChatBotQuestionAnswerController {
 
         List<ChatBotQuestionAnswer> chatBotQuestionAnswerList = chatBotQuestionAnswerRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         redirectAttributes.addFlashAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
+        redirectAttributes.addFlashAttribute("success", "Question/Answer updated successfully.");
+
         return "redirect:/show-chatbot-question-answer-list";
     }
 
@@ -123,6 +125,8 @@ public class ChatBotQuestionAnswerController {
         List<ChatBotQuestionAnswer> chatBotQuestionAnswerList = chatBotQuestionAnswerRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
         redirectAttributes.addFlashAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
+        redirectAttributes.addFlashAttribute("success", "Deleted successfully.");
+
         return "redirect:/show-chatbot-question-answer-list";
     }
 

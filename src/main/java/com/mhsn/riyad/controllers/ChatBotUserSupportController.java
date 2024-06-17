@@ -1,6 +1,9 @@
 package com.mhsn.riyad.controllers;
 
-import com.mhsn.riyad.entities.*;
+import com.mhsn.riyad.entities.ChatBotQuestionAnswer;
+import com.mhsn.riyad.entities.NotAnsweredQuestion;
+import com.mhsn.riyad.entities.User;
+import com.mhsn.riyad.entities.UserChatBotHistory;
 import com.mhsn.riyad.repositories.ChatBotQuestionAnswerRepository;
 import com.mhsn.riyad.repositories.NotAnsweredQuestionRepository;
 import com.mhsn.riyad.repositories.UserChatBotHistoryRepository;
@@ -33,7 +36,7 @@ public class ChatBotUserSupportController {
     private NotAnsweredQuestionRepository notAnsweredQuestionRepository;
 
     @GetMapping("/show-chat-list")
-    public String showChatList(Model model, HttpSession httpSession) {
+    public String showChatList(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access Chat-Bot support");
@@ -50,7 +53,7 @@ public class ChatBotUserSupportController {
 
     @Transactional
     @PostMapping("/new-chat-save")
-    public String newChatSave(Model model, HttpSession httpSession, @ModelAttribute UserChatBotHistory userChatBotHistory, @RequestParam Long userId, RedirectAttributes redirectAttributes){
+    public String newChatSave(Model model, HttpSession httpSession, @ModelAttribute UserChatBotHistory userChatBotHistory, @RequestParam Long userId, RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access Chat-Bot support");
@@ -86,8 +89,10 @@ public class ChatBotUserSupportController {
 
         List<UserChatBotHistory> chatList = userChatBotHistoryRepository.findByUserIdOrderByIdDesc(user.getId());
         redirectAttributes.addFlashAttribute("chatList", chatList);
+        redirectAttributes.addFlashAttribute("success", "Your chat list with MHSN-ChatBot cleared successfully");
         return "redirect:/show-chat-list";
     }
+
     private ChatBotQuestionAnswer getMostMatchedQuestionAnswer(String message, User user) {
         // Define words to remove
         Set<String> wordsToRemove = new HashSet<>(Arrays.asList(
