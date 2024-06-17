@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Data
@@ -46,24 +47,27 @@ public class Event {
     @Column(name = "chief_guest_designation", columnDefinition = "nvarchar(100)")
     private String chiefGuestDesignation;
 
-    @Column(name = "banner_url", columnDefinition = "nvarchar(500)")
-    private String bannerUrl;
+    @Column(name = "number_of_participants")
+    private Integer numberOfParticipants;
 
-    @Column(name = "banner_file_name", columnDefinition = "nvarchar(255)")
-    private String bannerFileName;
-
-    @Column(name = "banner_file_type", columnDefinition = "nvarchar(255)")
-    private String bannerFileType;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "uploaded_date")
-    private Date uploadedDate;
+    @Column(name = "event_status")
+    private String eventStatus;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "event")
     private List<Participant> participantList;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "event")
     private List<EventComment> commentList;
+
+    // Separate date and time getters
+    public String getEventDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return dateAndTime.toLocalDate().format(formatter);
+    }
+
+    public LocalTime getEventTime() {
+        return dateAndTime.toLocalTime();
+    }
 
     @Override
     public String toString() {
@@ -78,9 +82,8 @@ public class Event {
                 ", speakerDesignation='" + speakerDesignation + '\'' +
                 ", chiefGuest='" + chiefGuest + '\'' +
                 ", chiefGuestDesignation='" + chiefGuestDesignation + '\'' +
-                ", bannerFileName='" + bannerFileName + '\'' +
-                ", bannerFileType='" + bannerFileType + '\'' +
-                ", uploadedDate=" + uploadedDate +
+                ", numberOfParticipants='" + numberOfParticipants + '\'' +
+                ", eventStatus='" + eventStatus + '\'' +
                 ", participantList=" + participantList +
                 ", commentList=" + commentList +
                 '}';

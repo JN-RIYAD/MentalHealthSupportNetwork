@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments/common-header :: common-header"></div>
 
 <head>
     <title>Events-MHSN</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -37,8 +40,8 @@
                     <tr th:each="event: ${eventList}">
                         <td class="text-left" th:text="${event.title}"/>
                         <td class="text-left" th:text="${event.location}"/>
-                        <td class="text-left" th:text="${event.dateAndTime}"/>
-                        <td class="text-left" th:text="Active"/>
+                        <td class="text-left" th:text="${event.eventDate} + ' on ' + ${event.eventTime}"/>
+                        <td class="text-left" th:text="${event.eventStatus}"/>
                         <td class="text-center">
                             <a class="btn btn-info" role="button"
                                th:href="@{/show-event-details(id=${event.id})}">
@@ -65,41 +68,54 @@
             <a class="mt-3" th:href="@{/}">Back to Home</a>
         </div>
     </div>
+    <!-- Bootstrap Toast for displaying error message -->
+    <div aria-atomic="true" aria-live="assertive" class="toast"
+         role="alert" style="position: absolute; top: 0; right: 0; margin-top: 80px; margin-right: 30px;"
+         th:if="${error}">
+        <div class="toast-header bg-dark">
+            <strong class="mr-auto text-white">Error</strong>
+            <button aria-label="Close" class="ml-2 mb-1 close" data-dismiss="toast" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body bg-danger text-white" th:text="${error}"></div>
+    </div>
+
+    <!-- Bootstrap Toast for displaying success message -->
+    <div aria-atomic="true" aria-live="assertive" class="toast"
+         role="alert" style="position: absolute; top: 0; right: 0; margin-top: 50px; margin-right: 30px;"
+         th:if="${success}">
+        <div class="toast-header bg-dark">
+            <strong class="mr-auto text-white">Success</strong>
+            <button aria-label="Close" class="ml-2 mb-1 close" data-dismiss="toast" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body bg-success text-white" th:text="${success}"></div>
+    </div>
 </main>
 
 <!-- Footer -->
 <div th:replace="fragments/footer :: footer"></div>
 
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 <script>
-    $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
-
-
-<script>
-    $(document).ready(function() {
-        $("#table").DataTable({
-            'aoColumnDefs': [{
-                'bSortable': true, // Enable sorting for all columns
-                'aTargets': '_all', // Target all columns
-            }],
-            'order': [], // Disable initial sorting
-            'orderCellsTop': true, // Show sorting icons in the header cells
-            'language': {
-                'paginate': {
-                    'next': '<i class="fas fa-chevron-right"></i>', // Next page icon
-                    'previous': '<i class="fas fa-chevron-left"></i>' // Previous page icon
-                }
-            }
+    $(document).ready(function () {
+        $('#table').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "lengthMenu": [5, 10, 25, 50, 100]
         });
+
+        $('.toast').toast({
+            autohide: true,
+            delay: 5000 // 5 seconds
+        }).toast('show');
     });
 </script>
-</body>
-</html>

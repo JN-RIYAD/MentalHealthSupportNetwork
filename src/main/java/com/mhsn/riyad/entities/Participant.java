@@ -18,18 +18,14 @@ public class Participant {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "participation_type")
-    private String participationType;
-
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
     @Override
     public String toString() {
-        return "EventComment{" +
+        return "Participant{" +
                 "id=" + id +
-                ", participationType='" + participationType + '\'' +
                 ", event=" + event +
                 ", user=" + user +
                 '}';

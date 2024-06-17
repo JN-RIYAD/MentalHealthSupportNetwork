@@ -14,18 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.mhsn.riyad.controllers.EventCommentController.setupNewEventComment;
 
@@ -70,7 +62,6 @@ public class EventController {
     @PostMapping("/event-save")
     public String eventSave(Model model, HttpSession httpSession,
                             @ModelAttribute Event event,
-                            @RequestParam("banner") MultipartFile banner,
                             RedirectAttributes redirectAttributes) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null || !user.getRole().equals("admin")) {
@@ -79,38 +70,13 @@ public class EventController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        try {
-            // Generate a unique file name
-            String fileName = UUID.randomUUID() + "_" + banner.getOriginalFilename();
-            event.setBannerFileName(fileName);
-            event.setBannerFileType(banner.getContentType());
-            event.setUploadedDate(new Date());
-
-            String uploadDir = baseUploadDir + "/banners";
-
-            // Create the target directory if it doesn't exist
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            // Copy the file to the target directory
-            Path targetPath = uploadPath.resolve(fileName);
-            Files.copy(banner.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-
-            // Set the image URL
-            String imageUrl = baseUploadDir + "banners/" + fileName;
-            event.setBannerUrl(imageUrl);
-
-            eventRepository.save(event);
-
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to store the file", e);
-        }
+        event.setEventStatus("Active");
+        eventRepository.save(event);
 
         List<Event> eventList = eventRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         model.addAttribute("eventList", eventList);
         redirectAttributes.addFlashAttribute("eventList", eventList);
+        redirectAttributes.addFlashAttribute("success", "Event saved successfully.");
         return "redirect:/show-event-list";
     }
 
