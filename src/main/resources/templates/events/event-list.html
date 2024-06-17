@@ -40,8 +40,18 @@
                     <tr th:each="event: ${eventList}">
                         <td class="text-left" th:text="${event.title}"/>
                         <td class="text-left" th:text="${event.location}"/>
-                        <td class="text-left" th:text="${event.eventDate} + ' on ' + ${event.eventTime}"/>
-                        <td class="text-left" th:text="${event.eventStatus}"/>
+                        <td class="text-center" th:text="${event.eventDate} + ' on ' + ${event.eventTime}"/>
+                        <td class="text-center">
+                            <span th:text="${event.eventStatus}"> </span>
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin and event.eventStatus == 'Active'}">
+                                <hr>
+                                <a class="btn btn-sm btn-warning" role="button"
+                                   th:href="@{/inactivate-event(id=${event.id})}">
+                                    Inactivate
+                                </a>
+                            </span>
+                        </td>
+
                         <td class="text-center">
                             <a class="btn btn-info" role="button"
                                th:href="@{/show-event-details(id=${event.id})}">
@@ -59,7 +69,6 @@
                                     <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
                                 </a>
                             </span>
-
                         </td>
                     </tr>
                     </tbody>

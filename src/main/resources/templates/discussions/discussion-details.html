@@ -60,10 +60,11 @@
                                 </a>
                         </span>
                         <div>
-                            <b>Commented On: </b> <span th:text="${comment.commentDate}"> </span>
+                            <b>Commented On: </b> <span
+                                th:text="${comment.commentDate} + ' on ' + ${comment.commentTime}"> </span>
                             <br>
-                            <b>Updated On: </b> <span th:text="${comment.updatedDate}"> </span>
-
+                            <span th:if="${comment.updatedDateTime != null}"><b>Updated On: </b> <span
+                                    th:text="${comment.updatedDate} + ' on ' + ${comment.updatedTime}"> </span></span>
                         </div>
                     </li>
                 </ul>

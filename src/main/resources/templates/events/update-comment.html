@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments/common-header :: common-header"></div>
 
 <head>
     <title>Update Event Comment-MHSN</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
 
@@ -20,20 +22,21 @@
         <div class="pt-3">
             <h2 class="card-title" th:text="${event.title}"></h2>
             <div class="card">
-                <div class="card-body">
-                    <!--                    TODO : Need to add banner-->
-                    <p><b class="card-text">Description:</b> <span th:text="${event.description}"></span></p>
-                    <p><b class="card-text">Location:</b> <span th:text="${event.location}"></span></p>
-                    <p><b class="card-text">Event Date & Time:</b> <span th:text="${event.dateAndTime}"></span></p>
-                    <!--                    TODO : Need to separate date and time  -->
-                    <p><b class="card-text">Organizer:</b> <span th:text="${event.organizer}"></span></p>
-                    <p><b class="card-text">Speaker:</b> <span th:text="${event.speaker}"></span>(<span
-                            th:text="${event.speakerDesignation}"></span>)</p>
-                    <p><b class="card-text">Chief Guest:</b> <span th:text="${event.chiefGuest}"></span>(<span
-                            th:text="${event.chiefGuestDesignation}"></span>)</p>
-                    <p><b class="card-text">Total Participants:</b> <span th:text="${100}"></span></p>
-                    <!--                    TODO : Need to count total participants-->
+                <div class="card">
+                    <div class="card-body">
+                        <p><b class="card-text">Description:</b> <span th:text="${event.description}"></span></p>
+                        <p><b class="card-text">Location:</b> <span th:text="${event.location}"></span></p>
+                        <p><b class="card-text">Event Date & Time:</b> <span
+                                th:text="${event.eventDate} + ' on ' + ${event.eventTime}"></span></p>
+                        <p><b class="card-text">Organizer:</b> <span th:text="${event.organizer}"></span></p>
+                        <p><b class="card-text">Speaker:</b> <span th:text="${event.speaker}"></span>(<span
+                                th:text="${event.speakerDesignation}"></span>)</p>
+                        <p><b class="card-text">Chief Guest:</b> <span th:text="${event.chiefGuest}"></span>(<span
+                                th:text="${event.chiefGuestDesignation}"></span>)</p>
+                        <p><b class="card-text">Total Participants:</b> <span th:text="${totalParticipants}"></span></p>
+                    </div>
                 </div>
+                <br>
             </div>
 
             <!-- Update Comment -->
@@ -50,6 +53,7 @@
                                       th:field="*{commentContent}"></textarea>
                         </div>
                         <input th:field="*{id}" type="hidden"/>
+                        <input th:field="*{commentDateTime}" type="hidden"/>
                         <button class="btn btn-primary" type="submit">Update</button>
                         <a class="btn btn-warning" role="button"
                            th:href="@{/show-event-details(id=${event.id})}">

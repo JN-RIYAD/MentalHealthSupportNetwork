@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -35,7 +36,7 @@ public class DiscussionCommentController {
     }
 
     @PostMapping("/discussion-comment-save")
-    public String discussionCommentSave(Model model, HttpSession httpSession, @ModelAttribute DiscussionComment comment, @RequestParam Long discussionId) {
+    public String discussionCommentSave(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @ModelAttribute DiscussionComment comment, @RequestParam Long discussionId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group discussions");
@@ -44,7 +45,7 @@ public class DiscussionCommentController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         Discussion discussion = discussionRepository.findById(discussionId).get();
-        comment.setCommentDate(new Date());
+        comment.setCommentDateTime(LocalDateTime.now());
         comment.setDiscussion(discussion);
         comment.setUser(user);
 
@@ -56,13 +57,9 @@ public class DiscussionCommentController {
             discussion.getCommentList().add(comment);
         }
         discussionRepository.save(discussion);
-
-        Discussion newDiscussionWithComment = discussionRepository.findById(discussionId).get();
-        model.addAttribute("discussion", newDiscussionWithComment);
-        setupNewDiscussionComment(model);
-        model.addAttribute("success", "Comment saved successfully.");
-
-        return "discussions/discussion-details";
+        redirectAttributes.addFlashAttribute("success", "Comment saved successfully.");
+        redirectAttributes.addAttribute("id", discussionId);
+        return "redirect:/show-discussion-details";
     }
 
     @GetMapping("/show-update-discussion-comment-page")
@@ -85,7 +82,7 @@ public class DiscussionCommentController {
     }
 
     @PostMapping("/discussion-comment-update")
-    public String commentUpdate(Model model, HttpSession httpSession, @ModelAttribute DiscussionComment comment, @RequestParam Long discussionId) {
+    public String commentUpdate(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @ModelAttribute DiscussionComment comment, @RequestParam Long discussionId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group discussions");
@@ -95,22 +92,20 @@ public class DiscussionCommentController {
         }
         Discussion discussion = discussionRepository.findById(discussionId).get();
 
-        comment.setUpdatedDate(new Date());
+        comment.setUpdatedDateTime(LocalDateTime.now());
         comment.setDiscussion(discussion);
         comment.setUser(user);
 
         commentRepository.save(comment);
 
-        model.addAttribute("discussion", discussion);
-        setupNewDiscussionComment(model);
-        model.addAttribute("success", "Comment updated successfully.");
-
-        return "discussions/discussion-details";
+        redirectAttributes.addFlashAttribute("success", "Comment updated successfully.");
+        redirectAttributes.addAttribute("id", discussionId);
+        return "redirect:/show-discussion-details";
 
     }
 
     @GetMapping("/discussion-comment-delete")
-    public String discussionDelete(Model model, HttpSession httpSession, @RequestParam Long commentId, @RequestParam Long discussionId) {
+    public String discussionDelete(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @RequestParam Long commentId, @RequestParam Long discussionId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group discussions");
@@ -121,11 +116,9 @@ public class DiscussionCommentController {
         commentRepository.deleteById(commentId);
 
         Discussion discussion = discussionRepository.findById(discussionId).get();
-        model.addAttribute("discussion", discussion);
 
-        setupNewDiscussionComment(model);
-        model.addAttribute("success", "Comment deleted successfully.");
-
-        return "discussions/discussion-details";
+        redirectAttributes.addFlashAttribute("success", "Comment deleted successfully.");
+        redirectAttributes.addAttribute("id", discussionId);
+        return "redirect:/show-discussion-details";
     }
 }

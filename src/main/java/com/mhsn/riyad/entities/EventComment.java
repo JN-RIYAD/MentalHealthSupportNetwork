@@ -3,9 +3,10 @@ package com.mhsn.riyad.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
@@ -20,15 +21,13 @@ public class EventComment {
     @Column(name = "comment_content", columnDefinition = "nvarchar(500)", nullable = false)
     private String commentContent;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "comment_date")
-    private Date commentDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "comment_date_time")
+    private LocalDateTime commentDateTime;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "updated_date")
-    private Date updatedDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_date_time", nullable = true)
+    private LocalDateTime updatedDateTime;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -38,13 +37,29 @@ public class EventComment {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
+    public String getCommentDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return commentDateTime.toLocalDate().format(formatter);
+    }
+
+    public LocalTime getCommentTime() {
+        return commentDateTime.toLocalTime();
+    }
+
+    public String getUpdatedDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return updatedDateTime.toLocalDate().format(formatter);
+    }
+
+    public LocalTime getUpdatedTime() {
+        return updatedDateTime.toLocalTime();
+    }
+
     @Override
     public String toString() {
         return "EventComment{" +
                 "id=" + id +
                 ", commentContent='" + commentContent + '\'' +
-                ", commentDate=" + commentDate +
-                ", updatedDate=" + updatedDate +
                 ", event=" + event +
                 ", user=" + user +
                 '}';

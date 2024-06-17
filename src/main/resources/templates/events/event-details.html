@@ -32,17 +32,23 @@
                             th:text="${event.speakerDesignation}"></span>)</p>
                     <p><b class="card-text">Chief Guest:</b> <span th:text="${event.chiefGuest}"></span>(<span
                             th:text="${event.chiefGuestDesignation}"></span>)</p>
-                    <p><b class="card-text">Total Participants:</b> <span th:text="${100}"></span></p>
-                    <!--                    TODO : Need to count total participants-->
+                    <p><b class="card-text">Total Participants:</b> <span th:text="${totalParticipants}"></span></p>
+                </div>
+                <div th:if="${event.eventStatus == 'Active'}">
+                <span th:if="${isGoing != null and !#strings.isEmpty(isGoing) and isGoing == 'yes'}">
+                 <a class="btn btn-warning" role="button"
+                    th:href="@{/event-not-going(eventId=${event.id})}">Not Going to the Event</a>
+                 </span>
+                    <span th:if="${isGoing != null and !#strings.isEmpty(isGoing) and isGoing == 'no'}">
+                 <a class="btn btn-success" role="button"
+                    th:href="@{/event-going(eventId=${event.id})}">I'm Going to the Event</a>
+                 </span>
+                </div>
+                <div th:unless="${event.eventStatus == 'Active'}">
+                    <a class="btn btn-lg btn-secondary disabled" href="#"><span>Event Inactive</span></a>
                 </div>
             </div>
-
-            <!--                    TODO : Need to implement going section  -->
             <br>
-            <div class="text-center">
-                <a class="btn btn-lg btn-success" th:href="@{/event-going(eventId=${event.id})}"><span>I'm Going</span></a>
-            </div>
-
 
             <!-- Comments Section -->
             <div class="mt-4">
@@ -55,31 +61,32 @@
                         </b> said: <span th:text="${comment.commentContent}"> </span>
 
                         <!-- Add update and delete buttons -->
-                        <span th:if="${comment.user.id == userId}">
+                        <span th:if="${comment.user.id == userId and event.eventStatus == 'Active'}">
                                 <a class="btn btn-warning btn-sm" role="button"
                                    th:href="@{/show-update-event-comment-page(commentId=${comment.id}, eventId=${event.id})}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </span>
-                        <span th:if="${(comment.user.id == userId) or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
+                        <span th:if="${(comment.user.id == userId and event.eventStatus == 'Active') or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
                                 <a class="btn btn-danger btn-sm" role="button"
                                    th:href="@{/event-comment-delete(commentId=${comment.id}, eventId=${event.id})}">
                                    <i class="fas fa-trash"></i>
                                 </a>
                         </span>
                         <div>
-                            <b>Commented On: </b> <span th:text="${comment.commentDate}"> </span>
+                            <b>Commented On: </b> <span
+                                th:text="${comment.commentDate} + ' on ' + ${comment.commentTime}"> </span>
                             <br>
-                            <b>Updated On: </b> <span th:text="${comment.updatedDate}"> </span>
-
+                            <span th:if="${comment.updatedDateTime != null}"><b>Updated On: </b> <span
+                                    th:text="${comment.updatedDate} + ' on ' + ${comment.updatedTime}"> </span></span>
                         </div>
                     </li>
                 </ul>
 
                 <!-- Add New Comment -->
-                <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
+                <div th:if="${(event.eventStatus == 'Active') and ((isUser != null and !#strings.isEmpty(isUser) and isUser)
                      or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)
-                     or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">
+                     or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin))}">
                     <div class="mt-3">
                         <h4>Add New Comment</h4>
                         <form method="POST" th:action="@{/event-comment-save(eventId=${event.id})}"

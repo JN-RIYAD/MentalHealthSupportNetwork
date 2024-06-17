@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -35,7 +36,7 @@ public class EventCommentController {
     }
 
     @PostMapping("/event-comment-save")
-    public String eventCommentSave(Model model, HttpSession httpSession, @ModelAttribute EventComment comment, @RequestParam Long eventId) {
+    public String eventCommentSave(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @ModelAttribute EventComment comment, @RequestParam Long eventId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group events");
@@ -44,7 +45,7 @@ public class EventCommentController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         Event event = eventRepository.findById(eventId).get();
-        comment.setCommentDate(new Date());
+        comment.setCommentDateTime(LocalDateTime.now());
         comment.setEvent(event);
         comment.setUser(user);
 
@@ -58,11 +59,9 @@ public class EventCommentController {
         }
         eventRepository.save(event);
 
-        Event newEventWithComment = eventRepository.findById(eventId).get();
-        model.addAttribute("event", newEventWithComment);
-        setupNewEventComment(model);
-
-        return "events/event-details";
+        redirectAttributes.addFlashAttribute("success", "Comment saved successfully.");
+        redirectAttributes.addAttribute("id", eventId);
+        return "redirect:/show-event-details";
     }
 
     @GetMapping("/show-update-event-comment-page")
@@ -85,7 +84,7 @@ public class EventCommentController {
     }
 
     @PostMapping("/event-comment-update")
-    public String commentUpdate(Model model, HttpSession httpSession, @ModelAttribute EventComment comment, @RequestParam Long eventId) {
+    public String commentUpdate(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @ModelAttribute EventComment comment, @RequestParam Long eventId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group events");
@@ -95,19 +94,20 @@ public class EventCommentController {
         }
         Event event = eventRepository.findById(eventId).get();
 
-        comment.setUpdatedDate(new Date());
+        comment.setUpdatedDateTime(LocalDateTime.now());
         comment.setEvent(event);
         comment.setUser(user);
 
         commentRepository.save(comment);
-        model.addAttribute("event", event);
-        setupNewEventComment(model);
-        return "events/event-details";
+
+        redirectAttributes.addFlashAttribute("success", "Comment updated successfully.");
+        redirectAttributes.addAttribute("id", eventId);
+        return "redirect:/show-event-details";
 
     }
 
     @GetMapping("/event-comment-delete")
-    public String eventDelete(Model model, HttpSession httpSession, @RequestParam Long commentId, @RequestParam Long eventId) {
+    public String eventDelete(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @RequestParam Long commentId, @RequestParam Long eventId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
             model.addAttribute("error", "Login first to access group events");
@@ -116,12 +116,8 @@ public class EventCommentController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         commentRepository.deleteById(commentId);
-
-        Event event = eventRepository.findById(eventId).get();
-        model.addAttribute("event", event);
-
-        setupNewEventComment(model);
-
-        return "events/event-details";
+        redirectAttributes.addFlashAttribute("success", "Comment deleted successfully.");
+        redirectAttributes.addAttribute("id", eventId);
+        return "redirect:/show-event-details";
     }
 }
