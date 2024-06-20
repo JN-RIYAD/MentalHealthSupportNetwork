@@ -69,9 +69,6 @@ public class ChatBotUserSupportController {
         userChatBotHistory.setChatBotQuestionAnswer(chatBotQuestionAnswer);
         userChatBotHistory.setCreatedAt(new Date());
         userChatBotHistoryRepository.save(userChatBotHistory);
-
-        List<UserChatBotHistory> chatList = userChatBotHistoryRepository.findByUserIdOrderByIdDesc(userId);
-        redirectAttributes.addFlashAttribute("chatList", chatList);
         return "redirect:/show-chat-list";
     }
 
@@ -86,9 +83,7 @@ public class ChatBotUserSupportController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         userChatBotHistoryRepository.deleteAllByUserId(user.getId());
-
-        List<UserChatBotHistory> chatList = userChatBotHistoryRepository.findByUserIdOrderByIdDesc(user.getId());
-        redirectAttributes.addFlashAttribute("chatList", chatList);
+        
         redirectAttributes.addFlashAttribute("success", "Your chat list with MHSN-ChatBot cleared successfully");
         return "redirect:/show-chat-list";
     }

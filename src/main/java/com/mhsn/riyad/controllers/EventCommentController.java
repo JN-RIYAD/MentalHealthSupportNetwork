@@ -39,7 +39,7 @@ public class EventCommentController {
     public String eventCommentSave(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @ModelAttribute EventComment comment, @RequestParam Long eventId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
-            model.addAttribute("error", "Login first to access group events");
+            model.addAttribute("error", "Login first to access events");
             return "login";
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
@@ -68,7 +68,7 @@ public class EventCommentController {
     public String showUpdateEventPage(Model model, HttpSession httpSession, @RequestParam Long commentId, @RequestParam Long eventId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
-            model.addAttribute("error", "Login first to access group events");
+            model.addAttribute("error", "Login first to access events");
             return "login";
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
@@ -87,7 +87,7 @@ public class EventCommentController {
     public String commentUpdate(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes, @ModelAttribute EventComment comment, @RequestParam Long eventId) {
         User user = (User) httpSession.getAttribute("user");
         if (user == null) {
-            model.addAttribute("error", "Login first to access group events");
+            model.addAttribute("error", "Login first to access events");
             return "login";
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);

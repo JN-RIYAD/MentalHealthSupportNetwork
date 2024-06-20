@@ -79,10 +79,6 @@ public class TherapistController {
         therapist.setPassword(passwordEncoder.encode(therapist.getPassword()));
         userRepository.save(therapist);
 
-        List<User> therapistList = userRepository.findByRole("therapist");
-        model.addAttribute("therapistList", therapistList);
-        model.addAttribute("success", "Therapist saved successfully");
-        redirectAttributes.addFlashAttribute("therapistList", therapistList);
         redirectAttributes.addFlashAttribute("success", "Therapist saved successfully");
         return "redirect:/show-therapist-list";
     }
@@ -131,9 +127,7 @@ public class TherapistController {
         savedTherapist.setAnswer(therapistToUpdate.getAnswer());
         userRepository.save(savedTherapist);
 
-        List<User> therapistList = userRepository.findByRole("therapist");
         redirectAttributes.addFlashAttribute("success", "Therapist updated successfully");
-        redirectAttributes.addFlashAttribute("therapistList", therapistList);
         return "redirect:/show-therapist-list";
     }
 

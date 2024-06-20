@@ -68,9 +68,7 @@ public class ChatBotQuestionAnswerController {
         }
         chatBotQuestionAnswer.setCreatedAt(new Date());
         chatBotQuestionAnswerRepository.save(chatBotQuestionAnswer);
-
-        List<ChatBotQuestionAnswer> chatBotQuestionAnswerList = chatBotQuestionAnswerRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        redirectAttributes.addFlashAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
+        
         redirectAttributes.addFlashAttribute("success", "Question/Answer saved successfully.");
 
         return "redirect:/show-chatbot-question-answer-list";
@@ -105,8 +103,6 @@ public class ChatBotQuestionAnswerController {
         chatBotQuestionAnswerToUpdate.setCreatedAt(new Date());
         chatBotQuestionAnswerRepository.save(chatBotQuestionAnswerToUpdate);
 
-        List<ChatBotQuestionAnswer> chatBotQuestionAnswerList = chatBotQuestionAnswerRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        redirectAttributes.addFlashAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
         redirectAttributes.addFlashAttribute("success", "Question/Answer updated successfully.");
 
         return "redirect:/show-chatbot-question-answer-list";
@@ -122,9 +118,6 @@ public class ChatBotQuestionAnswerController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         chatBotQuestionAnswerRepository.deleteById(id);
-        List<ChatBotQuestionAnswer> chatBotQuestionAnswerList = chatBotQuestionAnswerRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        model.addAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
-        redirectAttributes.addFlashAttribute("chatBotQuestionAnswerList", chatBotQuestionAnswerList);
         redirectAttributes.addFlashAttribute("success", "Deleted successfully.");
 
         return "redirect:/show-chatbot-question-answer-list";

@@ -79,8 +79,6 @@ public class ChatBotNotAnsweredQuestionController {
 
         notAnsweredQuestionRepository.deleteById(notAnsweredQuestionId);
 
-        List<NotAnsweredQuestion> notAnsweredQuestionList = notAnsweredQuestionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        redirectAttributes.addFlashAttribute("notAnsweredQuestionList", notAnsweredQuestionList);
         redirectAttributes.addFlashAttribute("success", "Answer set successfully.");
 
         return "redirect:/show-not-answered-question-list";
@@ -96,9 +94,7 @@ public class ChatBotNotAnsweredQuestionController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         notAnsweredQuestionRepository.deleteById(notAnsweredQuestionId);
-        List<NotAnsweredQuestion> notAnsweredQuestionList = notAnsweredQuestionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        model.addAttribute("notAnsweredQuestionList", notAnsweredQuestionList);
-        redirectAttributes.addFlashAttribute("notAnsweredQuestionList", notAnsweredQuestionList);
+
         redirectAttributes.addFlashAttribute("success", "Question deleted successfully.");
 
         return "redirect:/show-not-answered-question-list";

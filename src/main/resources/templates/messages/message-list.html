@@ -28,6 +28,7 @@
             <div class="chat-container">
                 <div class="chat-box" id="chatbox">
                     <div th:each="message: ${userTherapistMessageList}">
+                        <!--                        TODO:solve message sequence problem-->
                         <!-- Check if the message sender is the current user -->
                         <div class="message-container" th:if="${message.sender.id == userId}">
                             <div class="sender-message">

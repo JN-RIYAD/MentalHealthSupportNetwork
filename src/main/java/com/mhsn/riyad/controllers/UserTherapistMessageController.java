@@ -41,24 +41,24 @@ public class UserTherapistMessageController {
         return "messages/message-list";
     }
 
-    @GetMapping("/clear-messages")
-    public String clearMessages(Model model, HttpSession httpSession, @RequestParam Long receiverId, RedirectAttributes redirectAttributes) {
-        User user = (User) httpSession.getAttribute("user");
-        if (user == null) {
-            model.addAttribute("error", "Login to clear previous chat list");
-            return "login";
-        } else {
-            userService.setRoleInModelAndHttpSession(httpSession, model, user);
-        }
-        userTherapistMessageRepository.clearMessagesBySenderIdAndReceiverId(user.getId(), receiverId);
-
-        List<UserTherapistMessage> userTherapistMessageList = userTherapistMessageRepository.findBySenderIdAndReceiverId(user.getId(), receiverId);
-        redirectAttributes.addFlashAttribute("userTherapistMessageList", userTherapistMessageList);
-        UserTherapistMessage userTherapistMessage = new UserTherapistMessage();
-        redirectAttributes.addFlashAttribute("userTherapistMessage", userTherapistMessage);
-        return "redirect:/show-user-therapist-message-list?receiverId=" + receiverId;
-    }
-
+//    @GetMapping("/clear-messages")
+//    public String clearMessages(Model model, HttpSession httpSession, @RequestParam Long receiverId, RedirectAttributes redirectAttributes) {
+//        User user = (User) httpSession.getAttribute("user");
+//        if (user == null) {
+//            model.addAttribute("error", "Login to clear previous chat list");
+//            return "login";
+//        } else {
+//            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+//        }
+//        userTherapistMessageRepository.clearMessagesBySenderIdAndReceiverId(user.getId(), receiverId);
+//
+//        List<UserTherapistMessage> userTherapistMessageList = userTherapistMessageRepository.findBySenderIdAndReceiverId(user.getId(), receiverId);
+//        redirectAttributes.addFlashAttribute("userTherapistMessageList", userTherapistMessageList);
+//        UserTherapistMessage userTherapistMessage = new UserTherapistMessage();
+//        redirectAttributes.addFlashAttribute("userTherapistMessage", userTherapistMessage);
+//        return "redirect:/show-user-therapist-message-list?receiverId=" + receiverId;
+//    }
+//
 
     @Transactional
     @PostMapping("/new-message-save")

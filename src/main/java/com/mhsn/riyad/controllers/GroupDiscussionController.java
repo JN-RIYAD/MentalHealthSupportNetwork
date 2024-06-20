@@ -99,8 +99,6 @@ public class GroupDiscussionController {
         discussion.setUser(user);
         discussionRepository.save(discussion);
 
-        List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        redirectAttributes.addFlashAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("success", "Group discussion saved successfully.");
         return "redirect:/show-discussion-list";
     }
@@ -124,8 +122,6 @@ public class GroupDiscussionController {
 
         discussionRepository.save(savedDiscussion);
 
-        List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        redirectAttributes.addFlashAttribute("discussionList", discussionList);
         redirectAttributes.addFlashAttribute("success", "Group discussion updated successfully.");
 
         return "redirect:/show-discussion-list";
@@ -141,8 +137,7 @@ public class GroupDiscussionController {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
         discussionRepository.deleteById(id);
-        List<Discussion> discussionList = discussionRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        redirectAttributes.addFlashAttribute("discussionList", discussionList);
+
         redirectAttributes.addFlashAttribute("success", "Group discussion deleted successfully.");
 
         return "redirect:/show-discussion-list";

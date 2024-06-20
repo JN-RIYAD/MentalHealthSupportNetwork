@@ -34,7 +34,7 @@ public class ProfileController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
-        
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM, yyyy");
         String formattedDateOfBirth = formatter.format(user.getDateOfBirth());
         model.addAttribute("formattedDateOfBirth", formattedDateOfBirth);
@@ -96,6 +96,9 @@ public class ProfileController {
         userRepository.save(savedUser);
 
         userService.setRoleInModelAndHttpSession(httpSession, model, savedUser);
+
+        redirectAttributes.addFlashAttribute("success", "Profile updated successfully");
+
 
         return "redirect:/show-profile-page";
     }

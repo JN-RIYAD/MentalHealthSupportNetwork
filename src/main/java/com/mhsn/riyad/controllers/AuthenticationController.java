@@ -175,7 +175,6 @@ public class AuthenticationController {
 
         userRepository.save(user);
 
-
         redirectAttributes.addFlashAttribute("success", "Password changed successfully");
         userService.setRoleInModelAndHttpSession(httpSession, model, user);
 

@@ -50,6 +50,20 @@ public class EventController {
         return "events/event-list";
     }
 
+    @GetMapping("/show-update-event-page")
+    public String showUpdateEventPage(Model model, HttpSession httpSession, @RequestParam Long id) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            model.addAttribute("error", "Login first to access events");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        Event eventToUpdate = eventRepository.findById(id).get();
+        model.addAttribute("eventToUpdate", eventToUpdate);
+        return "events/update-event";
+    }
+
     @GetMapping("/show-add-event-page")
     public String showAddEventPage(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -82,12 +96,40 @@ public class EventController {
 
         eventRepository.save(event);
 
-        List<Event> eventList = eventRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        model.addAttribute("eventList", eventList);
-        redirectAttributes.addFlashAttribute("eventList", eventList);
-        redirectAttributes.addFlashAttribute("success", "Event saved successfully.");
+        redirectAttributes.addFlashAttribute("success", "Event created successfully.");
         return "redirect:/show-event-list";
     }
+
+    @PostMapping("/event-update")
+    public String eventUpdate(Model model, HttpSession httpSession, @ModelAttribute Event eventToUpdate, RedirectAttributes redirectAttributes) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null) {
+            model.addAttribute("error", "Login first to access events");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+
+        Event savedEvent = eventRepository.findById(eventToUpdate.getId()).get();
+
+        savedEvent.setTitle(eventToUpdate.getTitle());
+        savedEvent.setDescription(eventToUpdate.getDescription());
+        savedEvent.setLocation(eventToUpdate.getLocation());
+        savedEvent.setDateAndTime(eventToUpdate.getDateAndTime());
+        savedEvent.setOrganizer(eventToUpdate.getOrganizer());
+        savedEvent.setSpeaker(eventToUpdate.getSpeaker());
+        savedEvent.setSpeakerDesignation(eventToUpdate.getSpeakerDesignation());
+        savedEvent.setChiefGuest(eventToUpdate.getChiefGuest());
+        savedEvent.setChiefGuestDesignation(eventToUpdate.getChiefGuestDesignation());
+        savedEvent.setEventStatus(eventToUpdate.getEventStatus());
+
+        eventRepository.save(savedEvent);
+
+        redirectAttributes.addFlashAttribute("success", "Event updated successfully.");
+
+        return "redirect:/show-event-list";
+    }
+
 
     @GetMapping("/show-event-details")
     public String showEventDetails(Model model, HttpSession httpSession, @RequestParam Long id) {
@@ -138,7 +180,6 @@ public class EventController {
         eventRepository.save(savedEvent);
 
         redirectAttributes.addFlashAttribute("success", "You are going to this event");
-
         redirectAttributes.addAttribute("id", eventId);
         return "redirect:/show-event-details";
     }
@@ -177,13 +218,24 @@ public class EventController {
         }
 
         Event event = eventRepository.findById(id).get();
-
         event.setEventStatus("Inactive");
-
         eventRepository.save(event);
         redirectAttributes.addFlashAttribute("success", "Event Inactivated successfully.");
         return "redirect:/show-event-list";
     }
 
+    @GetMapping("/event-delete")
+    public String eventDelete(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to delete event");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        eventRepository.deleteById(id);
+        redirectAttributes.addFlashAttribute("success", "Event deleted successfully");
+        return "redirect:/show-event-list";
+    }
 
 }
