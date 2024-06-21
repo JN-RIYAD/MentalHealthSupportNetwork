@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Entity
@@ -24,11 +26,20 @@ public class UserTherapistMessage {
     @JoinColumn(name = "receiver_id", nullable = false)
     private User receiver;
 
-    @Column(name = "content", columnDefinition = "nvarchar(1000)", nullable = false)
+    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "sent_at")
-    private Date sentAt;
+    private LocalDateTime sentAt;
+
+    public String getSentDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return sentAt.toLocalDate().format(formatter);
+    }
+
+    public LocalTime getSentTime() {
+        return sentAt.toLocalTime();
+    }
 }
 
