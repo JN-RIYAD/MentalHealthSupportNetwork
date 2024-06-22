@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -37,7 +38,7 @@ public class PaymentController {
         }
         PaymentHistory paymentHistory = new PaymentHistory();
         model.addAttribute("paymentHistory", paymentHistory);
-        return "payments/add-balance-request";
+        return "payments/send-balance-adding-request";
     }
 
     @PostMapping("/payment-history-save")
@@ -77,5 +78,45 @@ public class PaymentController {
 
         model.addAttribute("paymentHistories", paymentHistories);
         return "payments/payment-histories";
+    }
+
+    @GetMapping("/show-balance-adding-request-update-page")
+    public String showBalanceAddingRequestUpdatePage(Model model, HttpSession httpSession, @RequestParam Long id) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null || !user.getRole().equals("user")) {
+            model.addAttribute("error", "Login as a user to update balance adding request");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        PaymentHistory paymentHistoryToUpdate = paymentHistoryRepository.findById(id).get();
+        model.addAttribute("paymentHistoryToUpdate", paymentHistoryToUpdate);
+        return "payments/update-balance-adding-request";
+    }
+
+    @PostMapping("/payment-history-update")
+    public String paymentHistoryUpdate(Model model, HttpSession httpSession, @ModelAttribute PaymentHistory paymentHistoryToUpdate, RedirectAttributes redirectAttributes) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null || !user.getRole().equals("user")) {
+            model.addAttribute("error", "Login as a user to update balance adding request");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        PaymentHistory savedPaymentHistory = paymentHistoryRepository.findById(paymentHistoryToUpdate.getId()).get();
+        savedPaymentHistory.setPaymentMedium(paymentHistoryToUpdate.getPaymentMedium());
+        savedPaymentHistory.setAmount(paymentHistoryToUpdate.getAmount());
+        savedPaymentHistory.setSenderAccount(paymentHistoryToUpdate.getSenderAccount());
+        savedPaymentHistory.setUser(user);
+        savedPaymentHistory.setTransactionId(paymentHistoryToUpdate.getTransactionId());
+        savedPaymentHistory.setReference(paymentHistoryToUpdate.getReference());
+        savedPaymentHistory.setPaymentDateAndTime(paymentHistoryToUpdate.getPaymentDateAndTime());
+        savedPaymentHistory.setRequestDateAndTime(LocalDateTime.now());
+        savedPaymentHistory.setPaymentStatus(paymentHistoryToUpdate.getPaymentStatus());
+
+        paymentHistoryRepository.save(savedPaymentHistory);
+
+        redirectAttributes.addFlashAttribute("success", "Updated balance adding request submitted successfully. Please wait for admin's approval");
+        return "redirect:/show-payment-histories";
     }
 }

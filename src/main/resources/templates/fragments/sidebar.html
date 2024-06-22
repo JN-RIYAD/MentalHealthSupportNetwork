@@ -15,6 +15,10 @@
         <a class="btn" th:href="@{/show-chat-list}">ChatBot Support</a>
         <a class="btn" th:href="@{/show-not-answered-question-list}"
            th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">ChatBot Configuration</a>
+        <a class="btn" th:href="@{/show-payment-histories}"
+           th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)}">Approve Payments</a>
+        <a class="btn" th:href="@{/show-payment-histories}"
+           th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)}">View Payment Histories</a>
 
         <!-- Add more buttons as needed -->
     </div>

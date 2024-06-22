@@ -22,6 +22,12 @@
     <div class="container">
         <div class="pt-3">
             <h1>Payment Histories</h1>
+
+            <div class="d-flex justify-content-between"
+                 th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
+                <strong>**Your Current Balance: BDT-<span th:text="${user.balance}"></span>tk </strong>
+                <a class="btn btn-success mb-3" th:href="@{/initiate-payment}">Pay Now</a>
+            </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-fixed table-striped" id="table">
                     <thead>
@@ -58,15 +64,15 @@
                         <td class="text-left" th:text="${paymentHistory.paymentStatus}"/>
                         <td class="text-center" th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin) or
                                     (isUser != null and !#strings.isEmpty(isUser) and isUser)}">
-                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}">
+                            <span th:if="(${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}) and (${paymentHistory.paymentStatus != Approved})})">
                                 <a class="btn btn-warning" role="button"
                                    th:href="@{/approve-balance-adding-request(id=${paymentHistory.id})}">
                                     Approve
                                 </a>
                             </span>
-                            <span th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
+                            <span th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)}">
                                 <a class="btn btn-primary" role="button"
-                                   th:href="@{/edit-balance-adding-request(id=${paymentHistory.id})}">
+                                   th:href="@{/show-balance-adding-request-update-page(id=${paymentHistory.id})}">
                                     Edit Request
                                 </a>
                             </span>

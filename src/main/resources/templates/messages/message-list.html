@@ -30,10 +30,10 @@
                     </div>
                 </div>
                 <!-- Refresh button and Payment-->
-                <div class="d-flex justify-content-between"
-                     th:if="${userTherapistMessageList != null and userTherapistMessageList.size() > 0}">
+                <div class="d-flex justify-content-between">
                     <a class="btn btn-secondary mb-3" id="refreshBtn"
-                       th:href="@{/show-user-therapist-message-list(receiverId=${param.receiverId})}">
+                       th:href="@{/show-user-therapist-message-list(receiverId=${param.receiverId})}"
+                       th:if="${userTherapistMessageList != null and userTherapistMessageList.size() > 0}">
                         Refresh <i class="fas fa-sync-alt"></i>
                     </a>
                     <a class="btn btn-warning mb-3" id="payNowBtn"

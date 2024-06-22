@@ -14,19 +14,20 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
 
     public boolean authenticate(String password, String encodedPassword) {
-            return passwordEncoder.matches(password, encodedPassword);
+        return passwordEncoder.matches(password, encodedPassword);
     }
+
     public void saveUser(User user) {
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setRole("user");
         user.setRegistrationDate(new Date());
         user.setPassword(encryptedPassword);
+        user.setBalance(0);
         userRepository.save(user);
     }
 
