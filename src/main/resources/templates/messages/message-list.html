@@ -29,6 +29,18 @@
                             details</strong> <br>
                     </div>
                 </div>
+                <!-- Refresh button and Payment-->
+                <div class="d-flex justify-content-between"
+                     th:if="${userTherapistMessageList != null and userTherapistMessageList.size() > 0}">
+                    <a class="btn btn-secondary mb-3" id="refreshBtn"
+                       th:href="@{/show-user-therapist-message-list(receiverId=${param.receiverId})}">
+                        Refresh <i class="fas fa-sync-alt"></i>
+                    </a>
+                    <a class="btn btn-warning mb-3" id="payNowBtn"
+                       th:href="@{/initiate-payment}">
+                        Pay Now
+                    </a>
+                </div>
                 <div class="chat-box" id="chatbox">
                     <div th:each="message: ${userTherapistMessageList}">
                         <!-- Check if the message sender is the current user -->
@@ -63,14 +75,6 @@
                             <button class="send-button" id="sendMessageBtn" type="submit">Send</button>
                         </div>
                     </form>
-                </div>
-                <!-- Clear Chat and Refresh button -->
-                <div class="d-flex justify-content-between"
-                     th:if="${userTherapistMessageList != null and userTherapistMessageList.size() > 0}">
-                    <a class="btn btn-info mb-3" id="refreshBtn"
-                       th:href="@{/show-user-therapist-message-list(receiverId=${param.receiverId})}">
-                        Refresh <i class="fas fa-sync-alt"></i>
-                    </a>
                 </div>
             </div>
         </div>

@@ -69,6 +69,9 @@ public class User {
     @Column(name = "registration_date")
     private Date registrationDate;
 
+    @Column(name = "balance")
+    private Integer balance;
+
     @Override
     public String toString() {
         return "User{" +
