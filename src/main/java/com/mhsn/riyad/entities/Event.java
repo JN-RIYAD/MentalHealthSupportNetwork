@@ -65,8 +65,9 @@ public class Event {
         return dateAndTime.toLocalDate().format(formatter);
     }
 
-    public LocalTime getEventTime() {
-        return dateAndTime.toLocalTime();
+    public String getEventTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        return dateAndTime.format(formatter);
     }
 
     @Override

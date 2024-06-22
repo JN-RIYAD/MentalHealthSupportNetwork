@@ -54,8 +54,9 @@ public class PaymentHistory {
         return paymentDateAndTime.toLocalDate().format(formatter);
     }
 
-    public LocalTime getPaymentTime() {
-        return paymentDateAndTime.toLocalTime();
+    public String getPaymentTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        return paymentDateAndTime.format(formatter);
     }
 
     public String getRequestDate() {
@@ -63,8 +64,9 @@ public class PaymentHistory {
         return requestDateAndTime.toLocalDate().format(formatter);
     }
 
-    public LocalTime getRequestTime() {
-        return requestDateAndTime.toLocalTime();
+    public String getRequestTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        return requestDateAndTime.format(formatter);
     }
 
     @Override

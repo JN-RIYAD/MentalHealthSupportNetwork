@@ -52,6 +52,11 @@ public class PaymentController {
         } else {
             userService.setRoleInModelAndHttpSession(httpSession, model, user);
         }
+        LocalDateTime paymentDateAndTime = paymentHistory.getPaymentDateAndTime();
+        if (paymentDateAndTime != null) {
+            paymentDateAndTime = paymentDateAndTime.withSecond(0).withNano(0);
+            paymentHistory.setPaymentDateAndTime(paymentDateAndTime);
+        }
         paymentHistory.setPaymentStatus("Waiting for Approval");
         paymentHistory.setRequestDateAndTime(LocalDateTime.now());
         paymentHistory.setUser(user);
@@ -110,9 +115,13 @@ public class PaymentController {
         savedPaymentHistory.setUser(user);
         savedPaymentHistory.setTransactionId(paymentHistoryToUpdate.getTransactionId());
         savedPaymentHistory.setReference(paymentHistoryToUpdate.getReference());
-        savedPaymentHistory.setPaymentDateAndTime(paymentHistoryToUpdate.getPaymentDateAndTime());
         savedPaymentHistory.setRequestDateAndTime(LocalDateTime.now());
-        savedPaymentHistory.setPaymentStatus(paymentHistoryToUpdate.getPaymentStatus());
+        savedPaymentHistory.setPaymentStatus("Waiting for Approval");
+        LocalDateTime paymentDateAndTime = paymentHistoryToUpdate.getPaymentDateAndTime();
+        if (paymentDateAndTime != null) {
+            paymentDateAndTime = paymentDateAndTime.withSecond(0).withNano(0);
+            savedPaymentHistory.setPaymentDateAndTime(paymentDateAndTime);
+        }
 
         paymentHistoryRepository.save(savedPaymentHistory);
 

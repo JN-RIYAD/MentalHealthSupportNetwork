@@ -38,8 +38,9 @@ public class UserTherapistMessage {
         return sentAt.toLocalDate().format(formatter);
     }
 
-    public LocalTime getSentTime() {
-        return sentAt.toLocalTime();
+    public String getSentTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        return sentAt.format(formatter);
     }
 }
 

@@ -64,13 +64,13 @@
                         <td class="text-left" th:text="${paymentHistory.paymentStatus}"/>
                         <td class="text-center" th:if="${(isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin) or
                                     (isUser != null and !#strings.isEmpty(isUser) and isUser)}">
-                            <span th:if="(${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin}) and (${paymentHistory.paymentStatus != Approved})})">
+                            <span th:if="${isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin and paymentHistory.paymentStatus != 'Approved'}">
                                 <a class="btn btn-warning" role="button"
                                    th:href="@{/approve-balance-adding-request(id=${paymentHistory.id})}">
                                     Approve
                                 </a>
                             </span>
-                            <span th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)}">
+                            <span th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser and paymentHistory.paymentStatus != 'Approved'}">
                                 <a class="btn btn-primary" role="button"
                                    th:href="@{/show-balance-adding-request-update-page(id=${paymentHistory.id})}">
                                     Edit Request
