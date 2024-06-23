@@ -3,6 +3,7 @@ package com.mhsn.riyad.controllers;
 import com.mhsn.riyad.entities.PaymentHistory;
 import com.mhsn.riyad.entities.User;
 import com.mhsn.riyad.repositories.PaymentHistoryRepository;
+import com.mhsn.riyad.repositories.UserRepository;
 import com.mhsn.riyad.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class PaymentController {
     private UserService userService;
     @Autowired
     private PaymentHistoryRepository paymentHistoryRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/initiate-payment")
     public String initiatePayment(Model model, HttpSession httpSession) {
@@ -128,4 +131,30 @@ public class PaymentController {
         redirectAttributes.addFlashAttribute("success", "Updated balance adding request submitted successfully. Please wait for admin's approval");
         return "redirect:/show-payment-histories";
     }
+
+    @GetMapping("/approve-balance-adding-request")
+    public String approveBalanceAddingRequest(Model model, HttpSession httpSession, @RequestParam Long id, RedirectAttributes redirectAttributes) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user == null || !user.getRole().equals("admin")) {
+            model.addAttribute("error", "Login as an admin to approve balance adding request");
+            return "login";
+        } else {
+            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        }
+        PaymentHistory paymentHistory = paymentHistoryRepository.findById(id).get();
+        paymentHistory.setPaymentStatus("Approved");
+
+        User payingUser = paymentHistory.getUser();
+
+        payingUser.setBalance(payingUser.getBalance() + paymentHistory.getAmount());
+
+        paymentHistoryRepository.save(paymentHistory);
+
+        userRepository.save(payingUser);
+
+        redirectAttributes.addFlashAttribute("success", "Balance adding request approved successfully.");
+
+        return "redirect:/show-payment-histories";
+    }
+
 }

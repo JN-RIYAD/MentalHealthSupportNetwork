@@ -26,7 +26,6 @@ public class AuthenticationController {
     private UserService userService;
     @Autowired
     private HttpSession httpSession;
-    private boolean successToastShown = false;
     @Autowired
     private UserRepository userRepository;
 
@@ -51,11 +50,7 @@ public class AuthenticationController {
 
         if (user.isPresent() && userService.authenticate(password, user.get().getPassword())) {
             userService.setRoleInModelAndHttpSession(httpSession, model, user.get());
-            if (!successToastShown) {
-                model.addAttribute("success", "Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
-                System.out.println("Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
-                successToastShown = true; // Set the flag to true
-            }
+            model.addAttribute("success", "Welcome, " + user.get().getUserName() + "! You have successfully logged in.");
             return "index";
         } else {
             model.addAttribute("error", "Invalid email or password...!!!");

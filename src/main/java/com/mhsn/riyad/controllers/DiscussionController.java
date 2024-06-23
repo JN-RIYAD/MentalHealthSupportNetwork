@@ -21,7 +21,7 @@ import java.util.List;
 import static com.mhsn.riyad.controllers.DiscussionCommentController.setupNewDiscussionComment;
 
 @Controller
-public class GroupDiscussionController {
+public class DiscussionController {
     @Autowired
     private DiscussionRepository discussionRepository;
     @Autowired

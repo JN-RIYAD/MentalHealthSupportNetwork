@@ -5,7 +5,6 @@
 <head>
     <title>Messages-MHSN</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
     <link href="css/message.css" rel="stylesheet">
 </head>
 <body>
@@ -21,13 +20,19 @@
     <div class="container">
         <div class="pt-3">
             <div class="chat-container">
+                <div class="text-center">
+                    <h3 th:if="${therapistName != null and !#strings.isEmpty(therapistName)}">Therapist Name : <span th:text="${therapistName}"></span></h3>
+                    <h3 th:if="${patientName != null and !#strings.isEmpty(patientName)}">Patient Name : <span th:text="${patientName}"></span></h3>
+                    <hr>
+                </div>
                 <div class="text-center" th:if="${isUser != null and !#strings.isEmpty(isUser) and isUser}">
                     <div>
-                        <strong>**Your Current Balance: BDT-1000tk</strong> <br>
+                        <strong>**Your Current Balance: BDT-<span th:text="${user.balance}"></span>tk</strong> <br>
                         <strong class="bg-danger">**Each message will cost you BDT-100tk.</strong> <br>
                         <strong>**So, describe your mental health problems to therapist in
                             details</strong> <br>
                     </div>
+                    <hr>
                 </div>
                 <!-- Refresh button and Payment-->
                 <div class="d-flex justify-content-between">
@@ -37,6 +42,7 @@
                         Refresh <i class="fas fa-sync-alt"></i>
                     </a>
                     <a class="btn btn-warning mb-3" id="payNowBtn"
+                       th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)}"
                        th:href="@{/initiate-payment}">
                         Pay Now
                     </a>

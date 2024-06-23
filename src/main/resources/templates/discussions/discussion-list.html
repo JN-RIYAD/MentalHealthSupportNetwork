@@ -22,7 +22,7 @@
     <div class="container">
         <div class="pt-3">
             <h1>Group Discussions</h1>
-            <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser and discussion.user.id == userId)
+            <div th:if="${(isUser != null and !#strings.isEmpty(isUser) and isUser)
                         or (isAdmin != null and !#strings.isEmpty(isAdmin) and isAdmin)
                         or (isTherapist != null and !#strings.isEmpty(isTherapist) and isTherapist)}">
                 <a class="btn btn-success mb-3" th:href="@{/show-add-discussion-page}">Ask New Query</a>

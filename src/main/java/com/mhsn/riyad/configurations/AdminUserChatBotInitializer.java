@@ -40,6 +40,9 @@ public class AdminUserChatBotInitializer {
             admin.setRegistrationDate(new Date());
             admin.setRole("admin");
             admin.setUserName("Riyad");
+            admin.setBalance(0);
+            admin.setPasswordForgetQuestionNo(5);
+            admin.setAnswer("admin");
             userRepository.save(admin);
         }
         Optional<ChatBotQuestionAnswer> existingQuestionAnswer = chatBotQuestionAnswerRepository.findById(1L);

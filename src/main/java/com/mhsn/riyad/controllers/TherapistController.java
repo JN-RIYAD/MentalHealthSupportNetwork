@@ -33,9 +33,11 @@ public class TherapistController {
     public String showTherapistList(Model model, HttpSession httpSession) {
 
         User user = (User) httpSession.getAttribute("user");
-        if (user != null) {
-            userService.setRoleInModelAndHttpSession(httpSession, model, user);
+        if (user == null) {
+            model.addAttribute("error", "Login to view therapist list.");
+            return "login";
         }
+        userService.setRoleInModelAndHttpSession(httpSession, model, user);
         List<User> therapistList = userRepository.findByRole("therapist");
         model.addAttribute("therapistList", therapistList);
         return "therapists/therapist-list";
